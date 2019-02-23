@@ -1,0 +1,46 @@
+name:                CEREScript-Minimal
+version:             0.0.0.1
+github:              "MiRiS-Project/CEREScript-Minimal"
+license:             OtherLicense
+author:              "MiRiS Project"
+maintainer:          "YongJoon Joe <developer@miris-project.net>"
+copyright:           "2019 MiRiS Project"
+
+extra-source-files:
+- README.md
+- ChangeLog.md
+
+# Metadata used when publishing your package
+# synopsis:            Short description of your package
+# category:            Web
+
+description:         Please see the README on GitHub at <https://github.com/MiRiS-Project/CEREScript-Minimal#readme>
+
+dependencies:
+- base >= 4.7 && < 5
+- text
+
+library:
+  source-dirs: src
+
+executables:
+  CEREScript-Minimal-exe:
+    main:                Main.hs
+    source-dirs:         app
+    ghc-options:
+    - -threaded
+    - -rtsopts
+    - -with-rtsopts=-N
+    dependencies:
+    - CEREScript-Minimal
+
+tests:
+  CEREScript-Minimal-test:
+    main:                Spec.hs
+    source-dirs:         test
+    ghc-options:
+    - -threaded
+    - -rtsopts
+    - -with-rtsopts=-N
+    dependencies:
+    - CEREScript-Minimal
