@@ -10,4 +10,10 @@ CEREScript only for control an state DB
 ## Unfixed Features
 
 * Manipulate Control
-  * Not sure 
+  * Not sure
+
+## Limitation
+
+### Current limitations
+
+* Edit only for current data
