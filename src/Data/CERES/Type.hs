@@ -1,4 +1,4 @@
-module Data.Type where
+module Data.CERES.Type where
 
 import Data.Text (Text)
 

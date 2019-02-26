@@ -1,5 +1,5 @@
 name:                CEREScript-Minimal
-version:             0.0.0.1
+version:             0.0.0.2
 github:              "MiRiS-Project/CEREScript-Minimal"
 license:             OtherLicense
 author:              "MiRiS Project"
@@ -33,6 +33,7 @@ executables:
     - -with-rtsopts=-N
     dependencies:
     - CEREScript-Minimal
+    - containers
 
 tests:
   CEREScript-Minimal-test:
@@ -44,3 +45,4 @@ tests:
     - -with-rtsopts=-N
     dependencies:
     - CEREScript-Minimal
+    - containers
