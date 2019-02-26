@@ -1,6 +1,6 @@
 module Data.CERES.Value where
 
-import Data.Text (Text)
+import           Data.Text (Text)
 import qualified Data.Text as T
 
 import Data.CERES.Type
@@ -8,7 +8,7 @@ import Data.CERES.Type
 
 data ValueTyper = ValueTyper
   { valueTyperName :: Name
-  , valueType :: ValueType
+  , valueType      :: ValueType
   } deriving (Show, Eq)
 
 data Value
@@ -16,6 +16,7 @@ data Value
   | DblValue { dV :: Double }
   | StrValue { sV :: Text }
   | BoolValue { bV :: Bool }
+  | ErrValue { errMessage :: Message }
   deriving (Eq, Ord)
 
 instance Show Value where
@@ -23,12 +24,14 @@ instance Show Value where
   show (DblValue dV)  = "DV<| " ++ show dV ++ " |>"
   show (StrValue sV)  = "SV<\"" ++ T.unpack sV ++ "\">"
   show (BoolValue bV) = "BV<| " ++ show bV ++ " |>"
+  show (ErrValue bV) = "EV<| " ++ T.unpack bV ++ " |>"
 
 data ValueType
   = VTInt
   | VTDbl
   | VTStr
   | VTBool
+  | VTErr
   deriving (Eq, Ord, Enum)
 
 instance Show ValueType where
@@ -36,3 +39,4 @@ instance Show ValueType where
   show VTDbl  = "C-Dbl"
   show VTStr  = "C-Str"
   show VTBool = "CBool"
+  show VTErr  = "C-Err"
