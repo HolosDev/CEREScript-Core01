@@ -31,7 +31,7 @@ modifyValue operator localEnv value = newValue
     newValue
       = maybe
           (ErrValue "Null register 0")
-          ((operatorSelector operator) value)
+          (operatorSelector operator value)
           mOperand
 
 operatorSelector operator

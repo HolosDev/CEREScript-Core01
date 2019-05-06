@@ -26,30 +26,30 @@ runCERES (aCERES:ceresList) env localEnv = do
   runCERES ceresList newEnv newLocalEnv
 
 viewEnv :: Name -> Env -> IO ()
-viewEnv envName env =
-  mapM_ (\x -> T.putStrLn . T.concat  $ [ envName, T.pack . show $ x ]) env
+viewEnv envName =
+  mapM_ (\x -> T.putStrLn . T.concat  $ [ envName, T.pack . show $ x ])
 
 interpreteCERES (InitValue vc value) env localEnv = (newEnv,newLocalEnv)
   where
-    (newEnv,newLocalEnv) = case (valuePlace vc) of
+    (newEnv,newLocalEnv) = case valuePlace vc of
       AtLocal -> (env, IM.insert (valueID vc) value localEnv)
       AtWorld -> (IM.insert (valueID vc) value env, localEnv)
 
 interpreteCERES (SetValue vc value) env localEnv = (newEnv,newLocalEnv)
   where
-    (newEnv,newLocalEnv) = case (valuePlace vc) of
+    (newEnv,newLocalEnv) = case valuePlace vc of
       AtLocal -> (env, IM.insert (valueID vc) value localEnv)
       AtWorld -> (IM.insert (valueID vc) value env, localEnv)
 
 interpreteCERES (DeleteValue vc) env localEnv = (newEnv,newLocalEnv)
   where
-    (newEnv,newLocalEnv) = case (valuePlace vc) of
+    (newEnv,newLocalEnv) = case valuePlace vc of
       AtLocal -> (env, IM.delete (valueID vc) localEnv)
       AtWorld -> (IM.delete (valueID vc) env, localEnv)
 
 interpreteCERES (ModifyValue vc operator) env localEnv = (newEnv,newLocalEnv)
   where
-    mValue = case (valuePlace vc) of
+    mValue = case valuePlace vc of
       AtLocal -> IM.lookup (valueID vc) localEnv
       AtWorld -> IM.lookup (valueID vc) env
     newValue
@@ -60,6 +60,6 @@ interpreteCERES (ModifyValue vc operator) env localEnv = (newEnv,newLocalEnv)
             vc
             operator)
           (modifyValue operator localEnv) mValue
-    (newEnv,newLocalEnv) = case (valuePlace vc) of
+    (newEnv,newLocalEnv) = case valuePlace vc of
       AtLocal -> (env, IM.insert (valueID vc) newValue localEnv)
       AtWorld -> (IM.insert (valueID vc) newValue env, localEnv)
