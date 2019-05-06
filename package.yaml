@@ -1,5 +1,5 @@
 name:                CEREScript-Minimal
-version:             0.0.0.2
+version:             0.1.0.0
 github:              "MiRiS-Project/CEREScript-Minimal"
 license:             OtherLicense
 author:              "MiRiS Project"
@@ -19,6 +19,10 @@ description:         Please see the README on GitHub at <https://github.com/MiRi
 dependencies:
 - base >= 4.7 && < 5
 - text
+- containers
+
+default-extensions:
+- OverloadedStrings
 
 library:
   source-dirs: src
@@ -45,4 +49,12 @@ tests:
     - -with-rtsopts=-N
     dependencies:
     - CEREScript-Minimal
+    - HUnit
+    - QuickCheck
+    - silently
+    - test-framework
+    - test-framework-hunit
+    - test-framework-quickcheck2
+    - test-framework-th
+    - call-stack
     - containers
