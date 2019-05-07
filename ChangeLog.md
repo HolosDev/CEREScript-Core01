@@ -8,6 +8,12 @@
 
 Change type of `CERES` and `Value` as parametric to allow to change type of Str, etc.
 
+## [0.2.0.0] - 2019-05-07
+### Changed
+* Rename `ValueContainer` to `VariablePosition`
+### Added
+* Implement `ValueContainer` newly
+
 ## [0.1.0.0] - 2019-05-06
 ### Changed
 * Move functional modules from `Data.CERES.*` to `CERES.*`

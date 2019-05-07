@@ -11,6 +11,17 @@ data ValueTyper = ValueTyper
   , valueType      :: ValueType
   } deriving (Show, Eq)
 
+data ValueContainer = VC
+  { value :: Value
+  , valueInfo :: ValueInfo
+  } deriving (Show, Eq)
+
+-- TODO: Not yet Implemented
+data ValueInfo = ValueInfo
+  { valueEdited :: Bool
+  , valueDependencies :: [Branch]
+  } deriving (Show, Eq)
+
 -- TODO: Can't determine whether `(ErrValue _) /= (ErrValue _)` or not
 data Value
   = IntValue { iV :: Int }

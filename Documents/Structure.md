@@ -33,3 +33,8 @@ Script interpreter, data operators and some helper/integration functions will be
 ### VariablePosition
 
 Just an variable position identifier, not variable itself.
+This indicates where stores the variable.
+
+## ValueContainer
+
+A metadata bundling container for Value.
