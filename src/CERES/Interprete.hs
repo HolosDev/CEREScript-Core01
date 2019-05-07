@@ -31,27 +31,27 @@ viewEnv envName =
 
 interpreteCERES (InitValue vc value) env localEnv = (newEnv,newLocalEnv)
   where
-    (newEnv,newLocalEnv) = case valuePlace vc of
-      AtLocal -> (env, IM.insert (valueID vc) value localEnv)
-      AtWorld -> (IM.insert (valueID vc) value env, localEnv)
+    (newEnv,newLocalEnv) = case variablePlace vc of
+      AtLocal -> (env, IM.insert (variableID vc) value localEnv)
+      AtWorld -> (IM.insert (variableID vc) value env, localEnv)
 
 interpreteCERES (SetValue vc value) env localEnv = (newEnv,newLocalEnv)
   where
-    (newEnv,newLocalEnv) = case valuePlace vc of
-      AtLocal -> (env, IM.insert (valueID vc) value localEnv)
-      AtWorld -> (IM.insert (valueID vc) value env, localEnv)
+    (newEnv,newLocalEnv) = case variablePlace vc of
+      AtLocal -> (env, IM.insert (variableID vc) value localEnv)
+      AtWorld -> (IM.insert (variableID vc) value env, localEnv)
 
 interpreteCERES (DeleteValue vc) env localEnv = (newEnv,newLocalEnv)
   where
-    (newEnv,newLocalEnv) = case valuePlace vc of
-      AtLocal -> (env, IM.delete (valueID vc) localEnv)
-      AtWorld -> (IM.delete (valueID vc) env, localEnv)
+    (newEnv,newLocalEnv) = case variablePlace vc of
+      AtLocal -> (env, IM.delete (variableID vc) localEnv)
+      AtWorld -> (IM.delete (variableID vc) env, localEnv)
 
 interpreteCERES (ModifyValue vc operator) env localEnv = (newEnv,newLocalEnv)
   where
-    mValue = case valuePlace vc of
-      AtLocal -> IM.lookup (valueID vc) localEnv
-      AtWorld -> IM.lookup (valueID vc) env
+    mValue = case variablePlace vc of
+      AtLocal -> IM.lookup (variableID vc) localEnv
+      AtWorld -> IM.lookup (variableID vc) env
     newValue
       = maybe
           (errValueWith2
@@ -60,6 +60,6 @@ interpreteCERES (ModifyValue vc operator) env localEnv = (newEnv,newLocalEnv)
             vc
             operator)
           (modifyValue operator localEnv) mValue
-    (newEnv,newLocalEnv) = case valuePlace vc of
-      AtLocal -> (env, IM.insert (valueID vc) newValue localEnv)
-      AtWorld -> (IM.insert (valueID vc) newValue env, localEnv)
+    (newEnv,newLocalEnv) = case variablePlace vc of
+      AtLocal -> (env, IM.insert (variableID vc) newValue localEnv)
+      AtWorld -> (IM.insert (variableID vc) newValue env, localEnv)

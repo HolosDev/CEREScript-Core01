@@ -28,13 +28,13 @@ env_set01 = IM.fromList [(1, i2), (3, s1)]
 env_set02 = IM.fromList [(1, d1), (3, s1)]
 env_set03 = IM.fromList [(1, s1), (3, s1)]
 
-env_modify01 = IM.fromList [(1, i1), (2, errValueWith2 "interpreteCERES-ModifyValue" "NotFound" (VC 2 AtWorld) (COAMulWith (IntValue 4))), (3, s1)]
+env_modify01 = IM.fromList [(1, i1), (2, errValueWith2 "interpreteCERES-ModifyValue" "NotFound" (VP 2 AtWorld) (COAMulWith (IntValue 4))), (3, s1)]
 
-c_set01 = (env_set01,emptyEnv) @?= interpreteCERES (SetValue (VC 1 AtWorld) i2) initialEnv emptyEnv
-c_set02 = (env_set02,emptyEnv) @?= interpreteCERES (SetValue (VC 1 AtWorld) d1) initialEnv emptyEnv
-c_set03 = (env_set03,emptyEnv) @?= interpreteCERES (SetValue (VC 1 AtWorld) s1) initialEnv emptyEnv
+c_set01 = (env_set01,emptyEnv) @?= interpreteCERES (SetValue (VP 1 AtWorld) i2) initialEnv emptyEnv
+c_set02 = (env_set02,emptyEnv) @?= interpreteCERES (SetValue (VP 1 AtWorld) d1) initialEnv emptyEnv
+c_set03 = (env_set03,emptyEnv) @?= interpreteCERES (SetValue (VP 1 AtWorld) s1) initialEnv emptyEnv
 
-c_modify01 = (env_modify01,emptyEnv) @?= interpreteCERES (ModifyValue (VC 2 AtWorld) (COAMulWith (IntValue 4))) initialEnv emptyEnv
+c_modify01 = (env_modify01,emptyEnv) @?= interpreteCERES (ModifyValue (VP 2 AtWorld) (COAMulWith (IntValue 4))) initialEnv emptyEnv
 
 test_BasicInterprete =
   [ testCase ("SetValue 1 " ++ show i2) c_set01

@@ -7,24 +7,24 @@ import Data.CERES.Type
 import Data.CERES.Value
 
 
-type ValuePlace = StandardValuePlace
-type VContainer = ValueContainer ValuePlace
+type VariablePlace = StandardVariablePlace
+type VPosition = VariablePosition VariablePlace
 
 data CERES
-  -- | Initialize Value at VContainer A as Value B
-  = InitValue    VContainer Value
-  -- | Set Value at VContainer A as Value B
+  -- | Initialize Variable at VPosition A as Value B
+  = InitValue    VPosition Value
+  -- | Set Variable at VPosition A as Value B
   -- TODO: InitValueWith
-  | SetValue     VContainer Value
-  -- | Delete Value at VContainer A
-  | DeleteValue  VContainer
-  -- | Modify Value at VContainer A by CERESOperator with VContainer B
-  | ModifyValue  VContainer CERESOperator
+  | SetValue     VPosition Value
+  -- | Delete Variable at VPosition A
+  | DeleteValue  VPosition
+  -- | Modify Variable at VPosition A by CERESOperator with Value at VPosition B
+  | ModifyValue  VPosition CERESOperator
   -- TODO: ModifyValueWith
-  -- | Copy Value at VContainer A to Value at VContainer B
-  | CopyValue    VContainer VContainer
-  -- | Convert type of Value at VContainer A as like as VContainer B
-  | ConvertValue VContainer VContainer
+  -- | Copy Value at VPosition B to Variable at VPosition B
+  | CopyValue    VPosition VPosition
+  -- | Convert type of Value at VPosition A as like as Value at VPosition B
+  | ConvertValue VPosition VPosition
   -- TODO: ConvertValueTo
 
 data CERESOperator

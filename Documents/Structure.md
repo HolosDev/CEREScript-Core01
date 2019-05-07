@@ -15,7 +15,7 @@ Script itself, CERES identifiers, and data storing code will be placed here.
   * Common types used in CERES
 * Data.CERES.Value
   * Value types defined for CERES
-  * ValueContainer for abstraction
+  * VariablePosition for abstraction
 
 ## CERES
 
@@ -30,6 +30,6 @@ Script interpreter, data operators and some helper/integration functions will be
 
 ## Data Structure
 
-### ValueContainer
+### VariablePosition
 
-Just an value allocation identifier, not value itself.
+Just an variable position identifier, not variable itself.

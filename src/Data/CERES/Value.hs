@@ -59,16 +59,16 @@ instance Show ValueType where
   show VTBool = "CBool"
   show VTErr  = "C-Err"
 
--- Value Container for abstract vaule's real place and type
-data ValueContainer vp = VC
-  { valueID :: ID
-  , valuePlace :: vp -- ValuePlace
+-- Variable Position for abstract variable's real place
+data VariablePosition vp = VP
+  { variableID :: ID
+  , variablePlace :: vp -- variablePlace
   } deriving (Eq, Ord)
 
-instance Show vp => Show (ValueContainer vp) where
-  show vc = "<[" ++ show (valueID vc) ++ "@" ++ show (valuePlace vc) ++ "]>"
+instance Show vp => Show (VariablePosition vp) where
+  show vc = "<[" ++ show (variableID vc) ++ "@" ++ show (variablePlace vc) ++ "]>"
 
-data StandardValuePlace
+data StandardVariablePlace
   = AtLocal
   | AtTime
   | AtWorld
