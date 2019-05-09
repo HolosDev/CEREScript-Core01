@@ -12,13 +12,13 @@ type VPosition = VariablePosition VariablePlace
 
 data CERES
   -- | Initialize Variable at VPosition A as Value B
-  = InitValue    VPosition Value
-  -- | Set Variable at VPosition A as Value B
-  -- TODO: InitValueWith
+  = InitVariable    VPosition Value
+  -- TODO: InitVariableWith
+  -- | Set Value at VPosition A as Value B
   | SetValue     VPosition Value
   -- | Delete Variable at VPosition A
-  | DeleteValue  VPosition
-  -- | Modify Variable at VPosition A by CERESOperator with Value at VPosition B
+  | DeleteVariable  VPosition
+  -- | Modify Value at VPosition A by CERESOperator with Value at VPosition B
   | ModifyValue  VPosition CERESOperator
   -- TODO: ModifyValueWith
   -- | Copy Value at VPosition B to Variable at VPosition B
