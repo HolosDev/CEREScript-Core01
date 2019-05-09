@@ -17,12 +17,23 @@ import Data.CERES.Value
 --  * 1. Refered, Added, or Changed
 --  * 2. Refered, but deleted
 
-type EnvSet = (Env,Env)
 -- TODO: Value -> ValueContainer
 type Env = IM.IntMap Value
-type VV = (VPosition, Maybe Value)
-type VVMap = M.Map VPosition (Maybe Value)
+viewEnv :: Name -> Env -> IO ()
+viewEnv envName =
+  mapM_ (\x -> T.putStrLn . T.concat  $ [ envName, T.pack . show $ x ])
+
+type EnvSet = (Env,Env)
+type VV = (VPosition, RW (Maybe Value))
+type VVMap = M.Map VPosition (RW (Maybe Value))
 type CEREScript = [CERES]
+
+data RW a = R a | W a | RW a
+runRW (R a) = a
+runRW (W a) = a
+runRW (RW a) = a
+notR (R _) = False
+notR _ = True
 
 runCERES :: CEREScript -> EnvSet -> IO EnvSet
 runCERES [] (env, localEnv) = return (env, localEnv)
@@ -34,15 +45,11 @@ runCERES (aCERES:ceresList) (env, localEnv) = do
   viewEnv "LEnv" newLocalEnv
   runCERES ceresList (newEnv, newLocalEnv)
 
-viewEnv :: Name -> Env -> IO ()
-viewEnv envName =
-  mapM_ (\x -> T.putStrLn . T.concat  $ [ envName, T.pack . show $ x ])
-
 interpreteCERES :: CERES -> EnvSet -> IO EnvSet
 interpreteCERES anInstruction envSet = do
   let rvMap = readByInstruction envSet anInstruction M.empty
   vvMap <- runOperator anInstruction rvMap
-  return $ setValuesToEnvSet envSet (M.toList vvMap)
+  return $ setValuesToEnvSet envSet (filter (notR . snd) . M.toList $ vvMap)
 
 -- TODO: Should be recursively
 readByInstruction :: EnvSet -> CERES -> VVMap -> VVMap
@@ -57,7 +64,7 @@ readByInstruction envSet anInstruction rvMap =
 readValueFromEnvSet :: EnvSet -> VVMap -> [VPosition] -> VVMap
 readValueFromEnvSet _ vvMap [] = vvMap
 readValueFromEnvSet envSet@(env, localEnv) vvMap (vp:rest) =
-  readValueFromEnvSet envSet (M.insert vp (Just theValue) vvMap) rest
+  readValueFromEnvSet envSet (M.insert vp (R (Just theValue)) vvMap) rest
   where
     mValue = case variablePlace vp of
       AtLocal -> IM.lookup (variableID vp) localEnv
@@ -72,29 +79,41 @@ readValueFromEnvSet envSet@(env, localEnv) vvMap (vp:rest) =
 
 setValuesToEnvSet :: EnvSet -> [VV] -> EnvSet
 setValuesToEnvSet envSet [] = envSet
-setValuesToEnvSet (env, localEnv) ((vp,value):rest) = setValuesToEnvSet (newEnv,newLocalEnv) rest
+setValuesToEnvSet (env, localEnv) ((vp,rwMValue):rest) = setValuesToEnvSet (newEnv,newLocalEnv) rest
   where
     (newEnv,newLocalEnv) = case variablePlace vp of
-      AtLocal -> (env, alterOrDelete (variableID vp) value localEnv)
-      AtWorld -> (alterOrDelete (variableID vp) value env, localEnv)
+      AtLocal -> (env, alterOrDelete (variableID vp) rwMValue localEnv)
+      AtWorld -> (alterOrDelete (variableID vp) rwMValue env, localEnv)
 
-alterOrDelete :: ID -> Maybe Value -> Env -> Env
-alterOrDelete mID Nothing env = IM.delete mID env
-alterOrDelete mID (Just value) env = IM.insert mID value env
+alterOrDelete :: ID -> RW (Maybe Value) -> Env -> Env
+alterOrDelete mID (R Nothing) env = error "[ERROR]<alterOrDelet>: Trying to delete R value"
+alterOrDelete mID (W Nothing) env = IM.delete mID env
+alterOrDelete mID (RW Nothing) env = IM.delete mID env
+alterOrDelete mID (R (Just _)) env = error "[ERROR]<alterOrDelet>: Trying to set R value"
+alterOrDelete mID (W (Just value)) env = IM.insert mID value env
+alterOrDelete mID (RW (Just value)) env = IM.insert mID value env
 
 runOperator :: CERES -> VVMap -> IO VVMap
 runOperator anInstruction vvMap = return $
   case anInstruction of
-    (InitVariable vp value) -> M.insert vp (Just value) vvMap
-    (SetValue vp value) -> M.insert vp (Just value) vvMap
-    (DeleteVariable vp) -> M.insert vp Nothing vvMap
-    (ModifyValue vp operator) -> M.insert vp (Just newValue) vvMap
+    -- TODO: Need to check prior existence
+    (InitVariable vp value) -> M.insert vp (W (Just value)) vvMap
+    -- TODO: Need to check prior existence is R or RW
+    (SetValue vp value) -> M.insert vp (W (Just value)) vvMap
+    -- TODO: Need to check prior existence is R or RW
+    (DeleteVariable vp) -> M.insert vp (W Nothing) vvMap
+    -- TODO: Need to check prior existence is R or RW
+    (ModifyValue vp operator) -> M.insert vp (RW (Just newValue)) vvMap
       where
         newValue :: Value
         newValue = case operator of
           COAMul -> caoMul
-            (fromMaybe (errValueWith2 "runOperator" "RefersDeletedVariable" vp operator)
-              (fromMaybe (Just (errValueWith2 "runOperator" "NotFound" vp operator)) (vvMap M.!? vp)))
-            (fromMaybe (errValueWith2 "runOperator" "RefersDeletedVariable" vp operator)
-              (fromMaybe (Just (errValueWith2 "runOperator" "NotFound" vp operator)) (vvMap M.!? (VP 0 AtLocal))))
+            (takeOutFromVVMapLookup vvMap vp operator)
+            (takeOutFromVVMapLookup vvMap (VP 0 AtLocal) operator)
+          (COAMulWith value) -> caoMul (takeOutFromVVMapLookup vvMap vp operator) value
           _ -> error $ "[ERROR]<runOperator>: Not yet implemented operator: " ++ show operator
+
+takeOutFromVVMapLookup vvMap vp operator =
+  (fromMaybe (errValueWith2 "takeOutFromVVMapLookup" "RefersDeletedVariable" vp operator)
+    (runRW
+      (fromMaybe (W (Just (errValueWith2 "takeOutFromVVMapLookup" "NotFound" vp operator))) (vvMap M.!? vp))))
