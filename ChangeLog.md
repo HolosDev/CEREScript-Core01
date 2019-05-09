@@ -11,6 +11,8 @@ Change type of `CERES` and `Value` as parametric to allow to change type of Str,
 ## [0.2.0.0] - 2019-05-07
 ### Changed
 * Rename `ValueContainer` to `VariablePosition`
+* Rename some instructions name to distinguish Variable and Value
+* Redesign interpreter as RW-Set style for measuring concurrent event process
 ### Added
 * Implement `ValueContainer` newly
 

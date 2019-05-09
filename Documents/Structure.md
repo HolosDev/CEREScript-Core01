@@ -23,18 +23,36 @@ Function part of CERES.
 
 Script interpreter, data operators and some helper/integration functions will be placed here.
 
-* CERES.Inteprete
-  * (Reference) Intepreter code of CERES
+* CERES.Interpret
+  * (Reference) Interpreting code of CERES
 * CERES.Operate
-  * Data Operator of CERES
+  * (Data) Operating code of CERES
 
 ## Data Structure
+
+### Controller
+
+A controller is composed of the following.
+
+* Branch information
+* CEREScript
+* A set of Read/Write VariablePosition list
+  * One playout, one Read/Write VariablePosition list
+* Priority between 
 
 ### VariablePosition
 
 Just an variable position identifier, not variable itself.
 This indicates where the variables is stored.
 
-## ValueContainer
+* Variable Location
+  * Local - Controller
+  * 
+
+### ValueContainer
 
 A metadata bundling container for Value.
+
+## Instruction Structure
+
+AnInstruction VP VC
