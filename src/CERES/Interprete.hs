@@ -108,12 +108,12 @@ runOperator anInstruction vvMap = return $
         newValue :: Value
         newValue = case operator of
           COAMul -> caoMul
-            (takeOutFromVVMapLookup vvMap vp operator)
-            (takeOutFromVVMapLookup vvMap (VP 0 AtLocal) operator)
-          (COAMulWith value) -> caoMul (takeOutFromVVMapLookup vvMap vp operator) value
+            (lookupVVMap vvMap vp operator)
+            (lookupVVMap vvMap (VP 0 AtLocal) operator)
+          (COAMulWith value) -> caoMul (lookupVVMap vvMap vp operator) value
           _ -> error $ "[ERROR]<runOperator>: Not yet implemented operator: " ++ show operator
 
-takeOutFromVVMapLookup vvMap vp operator =
+lookupVVMap vvMap vp operator =
   (fromMaybe (errValueWith2 "takeOutFromVVMapLookup" "RefersDeletedVariable" vp operator)
     (runRW
       (fromMaybe (W (Just (errValueWith2 "takeOutFromVVMapLookup" "NotFound" vp operator))) (vvMap M.!? vp))))
