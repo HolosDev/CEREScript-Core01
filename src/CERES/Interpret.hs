@@ -1,4 +1,4 @@
-module CERES.Interprete where
+module CERES.Interpret where
 
 
 import qualified Data.Map     as M

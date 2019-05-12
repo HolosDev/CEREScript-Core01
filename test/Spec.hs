@@ -4,7 +4,7 @@ import qualified Test.Framework.Providers.QuickCheck2 as Test
 import Test.HUnit
 import Test.QuickCheck
 
-import Test.CERES.Interprete
+import Test.CERES.Interpret
 import Test.Data.CERES.Value
 
 
@@ -12,5 +12,5 @@ main :: IO ()
 main = do
   Test.defaultMain
     [ Test.Data.CERES.Value.tests
-    , Test.CERES.Interprete.tests
+    , Test.CERES.Interpret.tests
     ]
