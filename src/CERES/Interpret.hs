@@ -14,8 +14,8 @@ import Data.CERES.Value
 
 
 -- TODO: How to distinguish
---  * 1. Refered, Added, or Changed
---  * 2. Refered, but deleted
+--  * 1. Referred, Added, or Changed
+--  * 2. Referred, but deleted
 
 -- TODO: Value -> ValueContainer
 type Env = IM.IntMap Value
@@ -39,14 +39,14 @@ runCERES :: CEREScript -> EnvSet -> IO EnvSet
 runCERES [] (env, localEnv) = return (env, localEnv)
 runCERES (aCERES:ceresList) (env, localEnv) = do
   putStrLn "----------------------------------------------------------------"
-  (newEnv, newLocalEnv) <- interpreteCERES aCERES (env, localEnv)
+  (newEnv, newLocalEnv) <- interpretCERES aCERES (env, localEnv)
   viewEnv "GEnv" newEnv
   putStrLn "-----------------"
   viewEnv "LEnv" newLocalEnv
   runCERES ceresList (newEnv, newLocalEnv)
 
-interpreteCERES :: CERES -> EnvSet -> IO EnvSet
-interpreteCERES anInstruction envSet = do
+interpretCERES :: CERES -> EnvSet -> IO EnvSet
+interpretCERES anInstruction envSet = do
   let rvMap = readByInstruction envSet anInstruction M.empty
   vvMap <- runOperator anInstruction rvMap
   return $ setValuesToEnvSet envSet (filter (notR . snd) . M.toList $ vvMap)
@@ -58,7 +58,7 @@ readByInstruction envSet anInstruction rvMap =
     (InitVariable _ _) -> rvMap
     (SetValue _ _)  -> rvMap
     (DeleteVariable _) -> rvMap
-    -- TODO: Shoud be more complicate form
+    -- TODO: Should be more complicate form
     (ModifyValue vp _) -> readValueFromEnvSet envSet rvMap [vp,(VP 0 AtLocal)]
 
 readValueFromEnvSet :: EnvSet -> VVMap -> [VPosition] -> VVMap
@@ -86,10 +86,10 @@ setValuesToEnvSet (env, localEnv) ((vp,rwMValue):rest) = setValuesToEnvSet (newE
       AtWorld -> (alterOrDelete (variableID vp) rwMValue env, localEnv)
 
 alterOrDelete :: ID -> RW (Maybe Value) -> Env -> Env
-alterOrDelete mID (R Nothing) env = error "[ERROR]<alterOrDelet>: Trying to delete R value"
+alterOrDelete mID (R Nothing) env = error "[ERROR]<alterOrDelete>: Trying to delete R value"
 alterOrDelete mID (W Nothing) env = IM.delete mID env
 alterOrDelete mID (RW Nothing) env = IM.delete mID env
-alterOrDelete mID (R (Just _)) env = error "[ERROR]<alterOrDelet>: Trying to set R value"
+alterOrDelete mID (R (Just _)) env = error "[ERROR]<alterOrDelete>: Trying to set R value"
 alterOrDelete mID (W (Just value)) env = IM.insert mID value env
 alterOrDelete mID (RW (Just value)) env = IM.insert mID value env
 
