@@ -12,13 +12,13 @@ data ValueTyper = ValueTyper
   } deriving (Show, Eq)
 
 data ValueContainer = VC
-  { value :: Value
+  { value     :: Value
   , valueInfo :: ValueInfo
   } deriving (Show, Eq)
 
 -- TODO: Not yet Implemented
 data ValueInfo = ValueInfo
-  { valueEdited :: Bool
+  { valueEdited       :: Bool
   , valueDependencies :: [Branch]
   } deriving (Show, Eq)
 
@@ -32,11 +32,11 @@ data Value
   deriving (Eq, Ord)
 
 instance Show Value where
-  show (IntValue iV)  = "IV<| " ++ show iV ++ " |>"
-  show (DblValue dV)  = "DV<| " ++ show dV ++ " |>"
-  show (StrValue sV)  = "SV<\"" ++ T.unpack sV ++ "\">"
+  show (IntValue  iV) = "IV<| " ++ show iV ++ " |>"
+  show (DblValue  dV) = "DV<| " ++ show dV ++ " |>"
+  show (StrValue  sV) = "SV<\"" ++ T.unpack sV ++ "\">"
   show (BoolValue bV) = "BV<| " ++ show bV ++ " |>"
-  show (ErrValue bV) = "EV<| " ++ T.unpack bV ++ " |>"
+  show (ErrValue  bV) = "EV<| " ++ T.unpack bV ++ " |>"
 
 errValueWith2 :: (Show a, Show b) => Name -> Message -> a -> b -> Value
 errValueWith2 funcName errorType vA vB = ErrValue errorMessage
@@ -72,7 +72,7 @@ instance Show ValueType where
 
 -- Variable Position for abstract variable's real place
 data VariablePosition vp = VP
-  { variableID :: ID
+  { variableID    :: ID
   , variablePlace :: vp -- variablePlace
   } deriving (Eq, Ord)
 
