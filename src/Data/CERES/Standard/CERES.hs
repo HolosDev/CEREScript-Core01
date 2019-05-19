@@ -1,12 +1,18 @@
-module Data.CERES where
+module Data.CERES.Standard.CERES where
 
 
 import qualified Data.Text as T
 
 import Data.CERES.Type
-import Data.CERES.Typical
 import Data.CERES.Value
 
+data StandardVariablePlace
+  = AtLocal
+  | AtTime
+  | AtWorld
+  | AtDict
+  | AtVar
+  deriving (Eq, Ord, Enum,  Show)
 
 type VariablePlace = StandardVariablePlace
 type VPosition = VariablePosition VariablePlace

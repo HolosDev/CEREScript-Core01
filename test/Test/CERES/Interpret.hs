@@ -10,9 +10,9 @@ import Test.HUnit.Base
 import qualified Data.IntMap as IM
 import qualified Data.Text as T
 
-import CERES.Interpret
-import CERES.Operate
-import Data.CERES
+import CERES.Standard.Interpret
+import CERES.Standard.Operate
+import Data.CERES.Standard.CERES
 import Data.CERES.Type
 import Data.CERES.Value
 

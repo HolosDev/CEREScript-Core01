@@ -1,14 +1,15 @@
-module CERES.Interpret where
+module CERES.Standard.Interpret where
 
 
 import qualified Data.Map     as M
 import qualified Data.IntMap  as IM
 import qualified Data.Text    as T
 import qualified Data.Text.IO as T
+import qualified Data.Set     as S
 import Data.Maybe
 
-import CERES.Operate
-import Data.CERES
+import CERES.Standard.Operate
+import Data.CERES.Standard.CERES
 import Data.CERES.Type
 import Data.CERES.Value
 

@@ -1,10 +1,10 @@
-module CERES.Operate where
+module CERES.Standard.Operate where
 
 
 import qualified Data.IntMap as IM
 import qualified Data.Text as T
 
-import Data.CERES
+import Data.CERES.Standard.CERES
 import Data.CERES.Type
 import Data.CERES.Value
 

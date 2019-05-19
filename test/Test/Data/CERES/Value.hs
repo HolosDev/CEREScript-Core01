@@ -9,8 +9,6 @@ import Test.Framework.Providers.HUnit
 import Test.Framework.TH
 import Test.HUnit.Base
 
-import CERES.Operate
-import Data.CERES
 import Data.CERES.Type
 import Data.CERES.Value
 
