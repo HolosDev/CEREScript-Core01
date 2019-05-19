@@ -4,6 +4,7 @@ module Data.CERES where
 import qualified Data.Text as T
 
 import Data.CERES.Type
+import Data.CERES.Typical
 import Data.CERES.Value
 
 

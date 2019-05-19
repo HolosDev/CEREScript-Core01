@@ -78,11 +78,3 @@ data VariablePosition vp = VP
 
 instance Show vp => Show (VariablePosition vp) where
   show vc = "<[" ++ show (variableID vc) ++ "@" ++ show (variablePlace vc) ++ "]>"
-
-data StandardVariablePlace
-  = AtLocal
-  | AtTime
-  | AtWorld
-  | AtDict
-  | AtVar
-  deriving (Eq, Ord, Enum,  Show)
