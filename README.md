@@ -7,25 +7,26 @@ CEREScript only for control some state DB
 
 * Manipulate State DB
 
-## Unfixed Features
-
-* A controller couldn't manipulate any controller
-
 ## Limitation
 
-* Prepares RW flagger, but not use it for orchestrating concurrent controller
-* Runs controllers sequentially
-  * Controller dependency decides running order of the controllers
+### Current limitations
+
+* A spool couldn't manipulate any spool
 * No variable manager in interpreter
   * A programmer should manage variables by oneself
 
 ### Current limitations
 
+* Prepares RW flagger, but not use it for orchestrating concurrent spool
+* Runs spools sequentially
+  * Spool dependency decides running order of the spools
+
 ### Political/Strategical limitation
 
 * Could edit only for current data
   * Do not manipulating past/future value
-  * Historical manipulation against variables/controllers is only used for HistoryGrapher/StorioGrapher
+  * Also, no Historical Variable and DB
+  * Historical manipulation against variables/spools is only used for HistoryGrapher/StorioGrapher
 
 #### Unfixed limitation
 
@@ -35,7 +36,7 @@ CEREScript only for control some state DB
 
 ## Future of CEREScript-Minimal
 
-* CERES
+* CEREScript
   * For CERE
 * (H)SGript
   * For HistoryGrapher/StorioGrapher

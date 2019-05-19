@@ -1,6 +1,44 @@
 Structure
 ====
 
+## Definitions
+
+* Event
+  * Spool
+    * Manipulator
+    * Spool Metadata
+  * Script
+    * Instruction
+    * Operator
+* Environment
+  * Variable(Cell)
+    * Accumulative Cell
+* Value
+
+### Summary
+
+Usually, We gives descriptions for Event or Manipulator.
+Entity of event is spool or group of spool.
+
+### Event
+
+Conceptual/Abstract unit of event.
+
+### Spool
+
+Technical unit of event.
+A spool is consisted of Script and Metadata.
+
+### Manipulator
+
+Conceptual/Abstract unit of Control about an cell
+But is almost same as Spool/Event.
+
+### Script
+
+Real working part without metadata.
+
+
 ## Module Structure
 
 ### Data.CERES
@@ -30,15 +68,15 @@ Script interpreter, data operators and some helper/integration functions will be
 
 ## Data Structure
 
-### Controller
+### Spool
 
-A controller is composed of the following.
+A spool is composed of the following.
 
 * Branch information
 * CEREScript
 * A set of Read/Write VariablePosition list
   * One playout, one Read/Write VariablePosition list
-* Priority between 
+* Priority between spools on the same time-slot
 
 ### VariablePosition
 
@@ -46,8 +84,18 @@ Just an variable position identifier, not variable itself.
 This indicates where the variables is stored.
 
 * Variable Location
-  * Local - Controller
-  * 
+  * Here - Not in Variable, but in instruction
+  * Local - Spool
+  * Time - Shared within a time-slot
+  * World - Global Storage
+  * Dict - Dictionary
+  * Var - Variable
+
+#### Time DB
+
+Time DB is dedicated with an time-slot only.
+This is very temporal and volatile DB.
+A interpreter does not preserve this when interpreting at the time-slot is ended.
 
 ### ValueContainer
 
@@ -56,3 +104,18 @@ A metadata bundling container for Value.
 ## Instruction Structure
 
 AnInstruction VP VC
+
+## Words
+
+* Element
+* Atom
+* Part
+
+* Spool
+* Yarn
+* Grain
+* Parchment
+* Paper
+* Nut & Bolt
+
+* Chunk

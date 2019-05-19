@@ -1,0 +1,22 @@
+Limitations
+====
+
+## Policy about Limitation
+
+**CEREScript-Minimal**は**CEREScript**と**SGript**の共有できる機能を開発するのが目的である。
+そのため、片方しか使わない機能は**CEREScript-Minimal**には入れない。
+
+## 片方にしかいれない機能
+
+### CEREScript Only
+
+* IO Control Instruction
+* Loopable control flow
+  * Re-queueing Event/Manipulator
+  * Advanced Collision Resolver
+  * Canceling
+
+### SGRipt Only
+
+* Historical Variable and DB
+  * Time-based index (VariablePosition)
