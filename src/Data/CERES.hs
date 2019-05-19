@@ -11,6 +11,8 @@ import Data.CERES.Value
 type VariablePlace = StandardVariablePlace
 type VPosition = VariablePosition VariablePlace
 
+type CEREScript = [CERES]
+
 data CERES
   -- | Initialize Variable at VPosition A as Value B
   = InitVariable   VPosition Value
@@ -27,6 +29,7 @@ data CERES
   -- | Convert type of Value at VPosition A as like as Value at VPosition B
   | ConvertValue   VPosition VPosition
   -- TODO: ConvertValueTo
+  deriving (Eq,Ord,Show)
 
 data CERESOperator
   = COAMul
@@ -39,4 +42,19 @@ data CERESOperator
   | COASubWith Value
   | COADivWith Value
   | COAModWith Value
-  deriving Show
+  deriving (Eq,Ord,Show)
+
+data CERESSpool = CERESSpool
+  { csID       :: ID
+  , csName     :: Name
+  , csScript   :: CEREScript
+  , readVP     :: [VPosition]
+  , writeVP    :: [VPosition]
+  , csPriority :: Priority
+  , csControl  :: [SpoolController]
+  } deriving (Eq,Ord,Show)
+
+data SpoolController
+  = SCInherit ID
+  | SCEnd     ID
+  deriving (Eq,Ord,Show,Read)

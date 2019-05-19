@@ -26,7 +26,6 @@ viewEnv envName =
 type EnvSet = (Env,Env)
 type VV = (VPosition, RW (Maybe Value))
 type VVMap = M.Map VPosition (RW (Maybe Value))
-type CEREScript = [CERES]
 
 data RW a = R a | W a | RW a
 runRW (R a) = a

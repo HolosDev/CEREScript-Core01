@@ -9,3 +9,4 @@ type ID   = Int
 type Message = Text
 
 type Branch = Text
+type Priority = Int
