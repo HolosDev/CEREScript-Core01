@@ -28,7 +28,7 @@ type EnvSet = (Env,Env)
 type VV = (VPosition, RW (Maybe Value))
 type VVMap = M.Map VPosition (RW (Maybe Value))
 
-data RW a = R a | W a | RW a
+data RW a = R a | W a | RW a deriving (Eq, Ord)
 runRW (R a) = a
 runRW (W a) = a
 runRW (RW a) = a
@@ -117,3 +117,14 @@ lookupVVMap vvMap vp operator =
   (fromMaybe (errValueWith2 "takeOutFromVVMapLookup" "RefersDeletedVariable" vp operator)
     (runRW
       (fromMaybe (W (Just (errValueWith2 "takeOutFromVVMapLookup" "NotFound" vp operator))) (vvMap M.!? vp))))
+
+type RWVPSet = S.Set (RW VPosition)
+lookupRWVP :: CEREScript -> RWVPSet -> RWVPSet
+lookupRWVP [] aSet = aSet
+lookupRWVP (anInstruction:aScript) aSet =
+  case anInstruction of
+    (InitVariable vp _) -> S.insert (W vp) aSet
+    (SetValue vp _)  -> S.insert (W vp) aSet
+    (DeleteVariable vp) -> S.insert (W vp) aSet
+    -- TODO: Should be more complicate form
+    (ModifyValue vp _) -> S.insert (W vp) aSet
