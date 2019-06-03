@@ -1,4 +1,4 @@
-CEREScript-Minimal
+CEREScript-Core
 ====
 
 CEREScript only for control some state DB
@@ -34,7 +34,7 @@ CEREScript only for control some state DB
   * Currently, branching is designed clearly for StorioGrapher
   * But, branching is also mentioned for the rewinding feature of CERE. Therefore
 
-## Future of CEREScript-Minimal
+## Future of CEREScript-Core
 
 * CEREScript
   * For CERE

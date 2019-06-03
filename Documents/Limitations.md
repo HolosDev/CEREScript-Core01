@@ -3,8 +3,8 @@ Limitations
 
 ## Policy about Limitation
 
-**CEREScript-Minimal**は**CEREScript**と**SGript**の共有できる機能を開発するのが目的である。
-そのため、片方しか使わない機能は**CEREScript-Minimal**には入れない。
+**CEREScript-Core**は**CEREScript**と**SGript**の共有できる機能を開発するのが目的である。
+そのため、片方しか使わない機能は**CEREScript-Core**には入れない。
 
 ## 片方にしかいれない機能
 

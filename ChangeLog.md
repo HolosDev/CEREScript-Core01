@@ -1,4 +1,4 @@
-# Changelog for CEREScript-Minimal
+Changelog for CEREScript-Core
 
 ## [Unreleased]
 

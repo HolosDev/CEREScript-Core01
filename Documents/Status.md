@@ -3,4 +3,4 @@ Status
 
 ## Almost assembly script
 
-Yes, CEREScript-Minimal is almost like assembly language
+Yes, CEREScript-Core is almost like assembly language
