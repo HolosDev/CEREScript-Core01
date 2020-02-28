@@ -1,7 +1,8 @@
 CEREScript-Core
 ====
 
-CEREScript only for control some state DB
+CEREScript-Core only for control some state DB
+Also, we provide a basic reference interpreter.
 
 ## Features
 
@@ -12,31 +13,35 @@ CEREScript only for control some state DB
 ### Current limitations
 
 * A spool couldn't manipulate any spool
-* No variable manager in interpreter
-  * A programmer should manage variables by oneself
 
-### Current limitations
+#### Interpreter's limitations
 
-* Prepares RW flagger, but not use it for orchestrating concurrent spool
 * Runs spools sequentially
   * Spool dependency decides running order of the spools
+* The language provides RW flagger, but the interpreter do not use it for orchestrating concurrent spool
 
 ### Political/Strategical limitation
 
-* Could edit only for current data
+* Could edit only for *current* value
   * Do not manipulating past/future value
   * Also, no Historical Variable and DB
-  * Historical manipulation against variables/spools is only used for HistoryGrapher/StorioGrapher
-
-#### Unfixed limitation
-
+    * Historical manipulation against variables/spools is only used for HistoryGrapher/StorioGrapher
 * No branching
-  * Currently, branching is designed clearly for StorioGrapher
-  * But, branching is also mentioned for the rewinding feature of CERE. Therefore
+  * Currently, branching is designed clearly for StorioGrapher. But, branching is also mentioned for the interpreter's rewinding feature of Project Chloe/Holos.
+
+### Unsolved limitation
 
 ## Future of CEREScript-Core
 
+* CEREScript-Core
+  * For MaterialBalancer
+* SGript
+  * For HistoryGrapher / StorioGrapher
+  * + Branching feature
+  * + Historical instruction set
 * CEREScript
-  * For CERE
-* (H)SGript
-  * For HistoryGrapher/StorioGrapher
+  * For CoMPleT Engine / Project Holos
+  * + Turing-Complete instruction set
+* CERES / Demeter
+  * For CERE / Project Chloe
+  * + Integrate TEOE Model to instruction set

@@ -38,7 +38,6 @@ But is almost same as Spool/Event.
 
 Real working part without metadata.
 
-
 ## Module Structure
 
 ### Data.CERES
@@ -84,8 +83,9 @@ Just an variable position identifier, not variable itself.
 This indicates where the variables is stored.
 
 * Variable Location
-  * Here - Not in Variable, but in instruction
-  * Local - Spool
+  * Here - Not stored in Variable, but presented in instruction itself
+  * Cache - Shared within a Spool at a time-slot
+  * Local - Shared within a Spool, can inherit to its successor
   * Time - Shared within a time-slot
   * World - Global Storage
   * Dict - Dictionary
@@ -104,18 +104,3 @@ A metadata bundling container for Value.
 ## Instruction Structure
 
 AnInstruction VP VC
-
-## Words
-
-* Element
-* Atom
-* Part
-
-* Spool
-* Yarn
-* Grain
-* Parchment
-* Paper
-* Nut & Bolt
-
-* Chunk
