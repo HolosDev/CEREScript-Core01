@@ -38,22 +38,6 @@ instance Show Value where
   show (BoolValue bV) = "BV<| " ++ show bV ++ " |>"
   show (ErrValue  bV) = "EV<| " ++ T.unpack bV ++ " |>"
 
-errValueWith2 :: (Show a, Show b) => Name -> Message -> a -> b -> Value
-errValueWith2 funcName errorType vA vB = ErrValue errorMessage
- where
-  errorMessage = T.concat
-    [ "[Error]<"
-    , funcName
-    , " :=: "
-    , errorType
-    , "> "
-    , T.pack . show $ vA
-    , " and "
-    , T.pack . show $ vB
-    ]
-
-errValueTEWith2 :: (Show a, Show b) => Name -> a -> b -> Value
-errValueTEWith2 funcName = errValueWith2 funcName "TypeError"
 
 data ValueType
   = VTInt
@@ -75,7 +59,7 @@ data VariablePosition vp = VP
   { variableID    :: ID
   , variablePlace :: vp -- VariablePlace
   -- TODO: Need to think that the type of `hereValue` should be `Maybe Value` or just `Value`
-  -- TODO: Or introduce a new Data Costructor `VPH` for `VariablePosition`
+  -- TODO: Or introduce a new Data Constructor `VPH` for `VariablePosition`
   , hereValue     :: Value -- Not ValueContainer or etc.
   } deriving (Eq, Ord, Read)
 

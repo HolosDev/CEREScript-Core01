@@ -7,6 +7,7 @@ import qualified Data.Text as T
 import Data.CERES.Standard.CERES
 import Data.CERES.Type
 import Data.CERES.Value
+import Data.CERES.Value.Error
 
 
 caoMul (IntValue vA) (IntValue vB) = IntValue $ vA * vB

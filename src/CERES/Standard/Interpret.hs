@@ -12,6 +12,7 @@ import CERES.Standard.Operate
 import Data.CERES.Standard.CERES
 import Data.CERES.Type
 import Data.CERES.Value
+import Data.CERES.Value.Error
 
 
 -- TODO: How to distinguish
