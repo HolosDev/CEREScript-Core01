@@ -26,16 +26,18 @@ import           Data.CERES.Value.Error
 -- TODO: Value -> ValueContainer
 type Env = IM.IntMap Value
 viewEnv :: Name -> Env -> IO ()
-viewEnv envName = mapM_ (\x -> TL.putStrLn . TL.append envName $ showtl x)
+viewEnv envName = mapM_ (TL.putStrLn . TL.append envName . showtl)
 
 type EnvSet = (Env, Env)
 type VV = (VPosition, RW (Maybe Value))
 type VVMap = M.Map VPosition (RW (Maybe Value))
 
 data RW a = R a | W a | RW a deriving (Eq, Ord)
+runRW :: RW a -> a
 runRW (R  a) = a
 runRW (W  a) = a
 runRW (RW a) = a
+notR :: RW a -> Bool
 notR (R _) = False
 notR _     = True
 
@@ -63,7 +65,13 @@ readByInstruction envSet anInstruction rvMap = case anInstruction of
   (DeleteVariable _) -> rvMap
   -- TODO: Should be more complicate form
   (ModifyValue vp _) ->
-    readValueFromEnvSet envSet rvMap [vp, (VP 0 AtLocal voidHere)]
+    readValueFromEnvSet envSet rvMap [vp, VP 0 AtLocal voidHere]
+  -- FIXME: Implement rest
+  (CopyValue _ _) ->
+    error "[FIXME]<readByInstruction :=: CopyValue> Not yet implemented"
+  (ConvertValue _ _) ->
+    error "[FIXME]<readByInstruction :=: ConvertValue> Not yet implemented"
+
 
 readValueFromEnvSet :: EnvSet -> VVMap -> [VPosition] -> VVMap
 readValueFromEnvSet _ vvMap [] = vvMap
@@ -71,8 +79,13 @@ readValueFromEnvSet envSet@(env, localEnv) vvMap (vp : rest) =
   readValueFromEnvSet envSet (M.insert vp (R (Just theValue)) vvMap) rest
  where
   mValue = case variablePlace vp of
-    AtLocal -> IM.lookup (variableID vp) localEnv
     AtWorld -> IM.lookup (variableID vp) env
+    AtDict ->
+      error "[FIXME]<readValueFromEnvSet :=: AtDict> Not yet implemented"
+    AtTime ->
+      error "[FIXME]<readValueFromEnvSet :=: AtTime> Not yet implemented"
+    AtLocal -> IM.lookup (variableID vp) localEnv
+    AtVar -> error "[FIXME]<readValueFromEnvSet :=: AtVar> Not yet implemented"
   theValue = fromMaybe
     (ErrValue $ TL.append "readValueFromEnvSet - NotFound at " $ showtl vp)
     mValue
@@ -84,15 +97,18 @@ setValuesToEnvSet (env, localEnv) ((vp, rwMValue) : rest) = setValuesToEnvSet
   rest
  where
   (newEnv, newLocalEnv) = case variablePlace vp of
-    AtLocal -> (env, alterOrDelete (variableID vp) rwMValue localEnv)
     AtWorld -> (alterOrDelete (variableID vp) rwMValue env, localEnv)
+    AtDict  -> error "[FIXME]<setValueToEnvSet :=: AtDict> Not yet implemented"
+    AtTime  -> error "[FIXME]<setValueToEnvSet :=: AtTime> Not yet implemented"
+    AtLocal -> (env, alterOrDelete (variableID vp) rwMValue localEnv)
+    AtVar   -> error "[FIXME]<setValueToEnvSet :=: AtVar> Not yet implemented"
 
 alterOrDelete :: ID -> RW (Maybe Value) -> Env -> Env
-alterOrDelete mID (R Nothing) env =
+alterOrDelete _ (R Nothing) _ =
   error "[ERROR]<alterOrDelete>: Trying to delete R value"
 alterOrDelete mID (W  Nothing) env = IM.delete mID env
 alterOrDelete mID (RW Nothing) env = IM.delete mID env
-alterOrDelete mID (R (Just _)) env =
+alterOrDelete _ (R (Just _)) _ =
   error "[ERROR]<alterOrDelete>: Trying to set R value"
 alterOrDelete mID (W  (Just value)) env = IM.insert mID value env
 alterOrDelete mID (RW (Just value)) env = IM.insert mID value env
@@ -115,28 +131,34 @@ runOperator anInstruction vvMap = return $ case anInstruction of
       (COAMulWith value) -> coaMul (lookupVVMap vvMap vp operator) value
       _ ->
         error
-          $  "[ERROR]<runOperator>: Not yet implemented operator: "
+          $  "[FIXME]<runOperator>: Not yet implemented operator: "
           ++ show operator
+  (CopyValue _ _) ->
+    error "[FIXME]<runOperator :=: CopyValue> Not yet implemented"
+  (ConvertValue _ _) ->
+    error "[FIXME]<runOperator :=: ConvertValue> Not yet implemented"
 
-lookupVVMap vvMap vp operator =
-  (fromMaybe
-    (errValueWith2 "takeOutFromVVMapLookup" "RefersDeletedVariable" vp operator)
-    (runRW
-      (fromMaybe
-        (W
-          (Just (errValueWith2 "takeOutFromVVMapLookup" "NotFound" vp operator))
-        )
-        (vvMap M.!? vp)
-      )
+lookupVVMap vvMap vp operator = fromMaybe
+  (errValueWith2 "takeOutFromVVMapLookup" "RefersDeletedVariable" vp operator)
+  (runRW
+    (fromMaybe
+      (W (Just (errValueWith2 "takeOutFromVVMapLookup" "NotFound" vp operator)))
+      (vvMap M.!? vp)
     )
   )
+
 
 type RWVPSet = S.Set (RW VPosition)
 lookupRWVP :: CEREScript -> RWVPSet -> RWVPSet
 lookupRWVP []                        aSet = aSet
+-- TODO: Use `aScript`
 lookupRWVP (anInstruction : aScript) aSet = case anInstruction of
   (InitVariable vp _) -> S.insert (W vp) aSet
   (SetValue     vp _) -> S.insert (W vp) aSet
   (DeleteVariable vp) -> S.insert (W vp) aSet
   -- TODO: Should be more complicate form
   (ModifyValue vp _ ) -> S.insert (W vp) aSet
+  (CopyValue _ _) ->
+    error "[FIXME]<lookupRWVP :=: CopyValue> Not yet implemented"
+  (ConvertValue _ _) ->
+    error "[FIXME]<lookupRWVP :=: ConvertValue> Not yet implemented"

@@ -48,6 +48,7 @@ instance TextShow Value where
   showb (BoolValue bV) = "BV<| " <> showb bV <> " |>"
   showb (ErrValue  bV) = "EV<| " <> fromLazyText bV <> " |>"
 
+
 data ValueType
   = VTInt
   | VTDbl
