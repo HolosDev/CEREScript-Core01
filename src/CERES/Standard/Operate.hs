@@ -21,6 +21,7 @@ coaDiv Value
 coaMod Value
 -}
 
+convertValue vA (StrValue _) = StrValue . showRawTL $ vA
 convertValue (   IntValue rvA) (DblValue _) = DblValue . fromIntegral $ rvA
 convertValue vA@(DblValue _  ) (DblValue _) = vA
 convertValue vA (DblValue _) =
