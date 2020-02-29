@@ -1,10 +1,14 @@
 module Data.CERES.Standard.CERES where
 
 
-import qualified Data.Text as T
+import qualified Data.Text                     as T
 
-import Data.CERES.Type
-import Data.CERES.Value
+import           Data.CERES.Type
+import           Data.CERES.Value
+
+
+type VariablePlace = StandardVariablePlace
+type VPosition = VariablePosition VariablePlace
 
 data StandardVariablePlace
   = AtLocal
@@ -13,9 +17,6 @@ data StandardVariablePlace
   | AtDict
   | AtVar
   deriving (Eq, Ord, Enum,  Show)
-
-type VariablePlace = StandardVariablePlace
-type VPosition = VariablePosition VariablePlace
 
 type CEREScript = [CERES]
 
@@ -30,7 +31,7 @@ data CERES
   -- | Modify Value at VPosition A by CERESOperator with Value at VPosition B
   | ModifyValue    VPosition CERESOperator
   -- TODO: ModifyValueWith
-  -- | Copy Value at VPosition B to Variable at VPosition B
+  -- | Copy Value at VPosition B to Variable at VPosition A
   | CopyValue      VPosition VPosition
   -- | Convert type of Value at VPosition A as like as Value at VPosition B
   | ConvertValue   VPosition VPosition

@@ -31,21 +31,21 @@ env_set03 = IM.fromList [(1, s1), (3, s1)]
 
 env_modify01 = IM.fromList
   [ (1, i1)
-  , (2, errValueTEWith2 "caoMul" (ErrValue $ T.concat [ "readValueFromEnvSet - NotFound at ", T.pack (show (VP 2 AtWorld))]) (IntValue 4))
+  , (2, errValueTEWith2 "caoMul" (ErrValue $ T.concat [ "readValueFromEnvSet - NotFound at ", T.pack (show (VP 2 AtWorld voidHere))]) (IntValue 4))
   , (3, s1)]
 
 c_set01 = do
-  result <- interpretCERES (SetValue (VP 1 AtWorld) i2) (initialEnv, emptyEnv)
+  result <- interpretCERES (SetValue (VP 1 AtWorld voidHere) i2) (initialEnv, emptyEnv)
   result @?= (env_set01,emptyEnv)
 c_set02 = do
-  result <- interpretCERES (SetValue (VP 1 AtWorld) d1) (initialEnv, emptyEnv)
+  result <- interpretCERES (SetValue (VP 1 AtWorld voidHere) d1) (initialEnv, emptyEnv)
   result @?= (env_set02,emptyEnv)
 c_set03 = do
-  result <- interpretCERES (SetValue (VP 1 AtWorld) s1) (initialEnv, emptyEnv)
+  result <- interpretCERES (SetValue (VP 1 AtWorld voidHere) s1) (initialEnv, emptyEnv)
   result @?= (env_set03,emptyEnv)
 
 c_modify01 = do
-  result <- interpretCERES (ModifyValue (VP 2 AtWorld) (COAMulWith (IntValue 4))) (initialEnv, emptyEnv)
+  result <- interpretCERES (ModifyValue (VP 2 AtWorld voidHere) (COAMulWith (IntValue 4))) (initialEnv, emptyEnv)
   result @?= (env_modify01,emptyEnv)
 
 test_BasicInterpret =

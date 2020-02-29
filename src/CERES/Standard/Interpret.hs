@@ -59,7 +59,7 @@ readByInstruction envSet anInstruction rvMap =
     (SetValue _ _)  -> rvMap
     (DeleteVariable _) -> rvMap
     -- TODO: Should be more complicate form
-    (ModifyValue vp _) -> readValueFromEnvSet envSet rvMap [vp,(VP 0 AtLocal)]
+    (ModifyValue vp _) -> readValueFromEnvSet envSet rvMap [vp,(VP 0 AtLocal voidHere)]
 
 readValueFromEnvSet :: EnvSet -> VVMap -> [VPosition] -> VVMap
 readValueFromEnvSet _ vvMap [] = vvMap
@@ -109,7 +109,7 @@ runOperator anInstruction vvMap = return $
         newValue = case operator of
           COAMul -> caoMul
             (lookupVVMap vvMap vp operator)
-            (lookupVVMap vvMap (VP 0 AtLocal) operator)
+            (lookupVVMap vvMap (VP 0 AtLocal voidHere) operator)
           (COAMulWith value) -> caoMul (lookupVVMap vvMap vp operator) value
           _ -> error $ "[ERROR]<runOperator>: Not yet implemented operator: " ++ show operator
 

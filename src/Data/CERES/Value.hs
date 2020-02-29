@@ -1,9 +1,9 @@
 module Data.CERES.Value where
 
-import           Data.Text (Text)
-import qualified Data.Text as T
+import           Data.Text                      ( Text )
+import qualified Data.Text                     as T
 
-import Data.CERES.Type
+import           Data.CERES.Type
 
 
 data ValueTyper = ValueTyper
@@ -29,7 +29,7 @@ data Value
   | StrValue { sV :: Text }
   | BoolValue { bV :: Bool }
   | ErrValue { errMessage :: Message }
-  deriving (Eq, Ord)
+  deriving (Eq, Ord, Read)
 
 instance Show Value where
   show (IntValue  iV) = "IV<| " ++ show iV ++ " |>"
@@ -40,17 +40,17 @@ instance Show Value where
 
 errValueWith2 :: (Show a, Show b) => Name -> Message -> a -> b -> Value
 errValueWith2 funcName errorType vA vB = ErrValue errorMessage
-  where
-    errorMessage = T.concat
-      [ "[Error]<"
-      , funcName
-      , " :=: "
-      , errorType
-      , "> "
-      , T.pack . show $ vA
-      , " and "
-      , T.pack . show $ vB
-      ]
+ where
+  errorMessage = T.concat
+    [ "[Error]<"
+    , funcName
+    , " :=: "
+    , errorType
+    , "> "
+    , T.pack . show $ vA
+    , " and "
+    , T.pack . show $ vB
+    ]
 
 errValueTEWith2 :: (Show a, Show b) => Name -> a -> b -> Value
 errValueTEWith2 funcName = errValueWith2 funcName "TypeError"
@@ -61,7 +61,7 @@ data ValueType
   | VTStr
   | VTBool
   | VTErr
-  deriving (Eq, Ord, Enum)
+  deriving (Eq, Ord, Enum, Read)
 
 instance Show ValueType where
   show VTInt  = "C-Int"
@@ -73,8 +73,15 @@ instance Show ValueType where
 -- Variable Position for abstract variable's real place
 data VariablePosition vp = VP
   { variableID    :: ID
-  , variablePlace :: vp -- variablePlace
-  } deriving (Eq, Ord)
+  , variablePlace :: vp -- VariablePlace
+  -- TODO: Need to think that the type of `hereValue` should be `Maybe Value` or just `Value`
+  -- TODO: Or introduce a new Data Costructor `VPH` for `VariablePosition`
+  , hereValue     :: Value -- Not ValueContainer or etc.
+  } deriving (Eq, Ord, Read)
+
+voidHere :: Value
+voidHere = ErrValue "Void AtHere"
 
 instance Show vp => Show (VariablePosition vp) where
-  show vc = "<[" ++ show (variableID vc) ++ "@" ++ show (variablePlace vc) ++ "]>"
+  show vc =
+    "<[" ++ show (variableID vc) ++ "@" ++ show (variablePlace vc) ++ "]>"
