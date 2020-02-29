@@ -35,18 +35,32 @@ data Value
   deriving (Eq, Ord, Read)
 
 instance Show Value where
-  show (IntValue  iV) = "IV<| " ++ show iV ++ " |>"
-  show (DblValue  dV) = "DV<| " ++ show dV ++ " |>"
-  show (StrValue  sV) = "SV<\"" ++ TL.unpack sV ++ "\">"
-  show (BoolValue bV) = "BV<| " ++ show bV ++ " |>"
-  show (ErrValue  bV) = "EV<| " ++ TL.unpack bV ++ " |>"
+  show i@(IntValue  _) = "IV<| " ++ showRaw i ++ " |>"
+  show d@(DblValue  _) = "DV<| " ++ showRaw d ++ " |>"
+  show s@(StrValue  _) = "SV<\"" ++ showRaw s ++ "\">"
+  show b@(BoolValue _) = "BV<| " ++ showRaw b ++ " |>"
+  show e@(ErrValue  _) = "EV<| " ++ showRaw e ++ " |>"
+
+showRaw :: Value -> String
+showRaw (IntValue  i) = show i
+showRaw (DblValue  d) = show d
+showRaw (StrValue  s) = TL.unpack s
+showRaw (BoolValue b) = show b
+showRaw (ErrValue  e) = TL.unpack e
 
 instance TextShow Value where
-  showb (IntValue  iV) = "IV<| " <> showb iV <> " |>"
-  showb (DblValue  dV) = "DV<| " <> showb dV <> " |>"
-  showb (StrValue  sV) = "SV<\"" <> fromLazyText sV <> "\">"
-  showb (BoolValue bV) = "BV<| " <> showb bV <> " |>"
-  showb (ErrValue  bV) = "EV<| " <> fromLazyText bV <> " |>"
+  showb (IntValue  i) = "IV<| " <> showb i <> " |>"
+  showb (DblValue  d) = "DV<| " <> showb d <> " |>"
+  showb (StrValue  s) = "SV<\"" <> fromLazyText s <> "\">"
+  showb (BoolValue b) = "BV<| " <> showb b <> " |>"
+  showb (ErrValue  e) = "EV<| " <> fromLazyText e <> " |>"
+
+showRawTL :: Value -> Text
+showRawTL (IntValue  i) = showtl i
+showRawTL (DblValue  d) = showtl d
+showRawTL (StrValue  s) = s
+showRawTL (BoolValue b) = showtl b
+showRawTL (ErrValue  e) = e
 
 
 data ValueType
