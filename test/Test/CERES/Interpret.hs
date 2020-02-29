@@ -31,8 +31,18 @@ env_set03 = IM.fromList [(1, s1), (3, s1)]
 
 env_modify01 = IM.fromList
   [ (1, i1)
-  , (2, errValueTEWith2 "caoMul" (ErrValue $ T.concat [ "readValueFromEnvSet - NotFound at ", T.pack (show (VP 2 AtWorld voidHere))]) (IntValue 4))
-  , (3, s1)]
+  , ( 2
+    , errValueTEWith2
+      "coaMul"
+      (ErrValue $ T.concat
+        [ "readValueFromEnvSet - NotFound at "
+        , T.pack (show (VP 2 AtWorld voidHere))
+        ]
+      )
+      (IntValue 4)
+    )
+  , (3, s1)
+  ]
 
 c_set01 = do
   result <- interpretCERES (SetValue (VP 1 AtWorld voidHere) i2) (initialEnv, emptyEnv)

@@ -10,14 +10,14 @@ import Data.CERES.Value
 import Data.CERES.Value.Error
 
 
-caoMul (IntValue vA) (IntValue vB) = IntValue $ vA * vB
-caoMul (DblValue vA) (DblValue vB) = DblValue $ vA * vB
-caoMul vA vB = errValueTEWith2 "caoMul" vA vB
+coaMul (IntValue vA) (IntValue vB) = IntValue $ vA * vB
+coaMul (DblValue vA) (DblValue vB) = DblValue $ vA * vB
+coaMul vA vB = errValueTEWith2 "coaMul" vA vB
 {-
-caoAdd Value
-caoSub Value
-caoDiv Value
-caoMod Value
+coaAdd Value
+coaSub Value
+coaDiv Value
+coaMod Value
 -}
 
 convertValue (IntValue rvA) (DblValue _) = DblValue . fromIntegral $ rvA
@@ -37,7 +37,7 @@ modifyValue operator localEnv value = newValue
 
 operatorSelector operator
   = case operator of
-      COAMul -> caoMul
+      COAMul -> coaMul
       _      -> error "No such operator"
 
 modifyValueStack [] localEnv value = (localEnv, value)

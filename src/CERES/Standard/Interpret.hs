@@ -95,24 +95,25 @@ alterOrDelete mID (W (Just value)) env = IM.insert mID value env
 alterOrDelete mID (RW (Just value)) env = IM.insert mID value env
 
 runOperator :: CERES -> VVMap -> IO VVMap
-runOperator anInstruction vvMap = return $
-  case anInstruction of
+runOperator anInstruction vvMap = return $ case anInstruction of
     -- TODO: Need to check prior existence
-    (InitVariable vp value) -> M.insert vp (W (Just value)) vvMap
-    -- TODO: Need to check prior existence is R or RW
-    (SetValue vp value) -> M.insert vp (W (Just value)) vvMap
-    -- TODO: Need to check prior existence is R or RW
-    (DeleteVariable vp) -> M.insert vp (W Nothing) vvMap
-    -- TODO: Need to check prior existence is R or RW
-    (ModifyValue vp operator) -> M.insert vp (RW (Just newValue)) vvMap
-      where
-        newValue :: Value
-        newValue = case operator of
-          COAMul -> caoMul
-            (lookupVVMap vvMap vp operator)
-            (lookupVVMap vvMap (VP 0 AtLocal voidHere) operator)
-          (COAMulWith value) -> caoMul (lookupVVMap vvMap vp operator) value
-          _ -> error $ "[ERROR]<runOperator>: Not yet implemented operator: " ++ show operator
+  (InitVariable vp value  ) -> M.insert vp (W (Just value)) vvMap
+  -- TODO: Need to check prior existence is R or RW
+  (SetValue     vp value  ) -> M.insert vp (W (Just value)) vvMap
+  -- TODO: Need to check prior existence is R or RW
+  (DeleteVariable vp      ) -> M.insert vp (W Nothing) vvMap
+  -- TODO: Need to check prior existence is R or RW
+  (ModifyValue vp operator) -> M.insert vp (RW (Just newValue)) vvMap
+   where
+    newValue :: Value
+    newValue = case operator of
+      COAMul -> coaMul (lookupVVMap vvMap vp operator)
+                       (lookupVVMap vvMap (VP 0 AtLocal voidHere) operator)
+      (COAMulWith value) -> coaMul (lookupVVMap vvMap vp operator) value
+      _ ->
+        error
+          $  "[ERROR]<runOperator>: Not yet implemented operator: "
+          ++ show operator
 
 lookupVVMap vvMap vp operator =
   (fromMaybe (errValueWith2 "takeOutFromVVMapLookup" "RefersDeletedVariable" vp operator)
