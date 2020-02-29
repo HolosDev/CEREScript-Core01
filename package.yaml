@@ -25,16 +25,26 @@ library:
   source-dirs: src
 
 executables:
-  CEREScript-Core-exe:
+  CEREScript-Core-Basic-Interpreter-exe:
     main:                Main.hs
-    source-dirs:         app
+    source-dirs:         apps/BasicInterpreter
     ghc-options:
     - -threaded
     - -rtsopts
     - -with-rtsopts=-N
     dependencies:
     - CEREScript-Core
-    - containers
+    - splitmix
+  Example-Tx-exe:
+    main:                Main.hs
+    source-dirs:         examples/Tx
+    ghc-options:
+    - -threaded
+    - -rtsopts
+    - -with-rtsopts=-N
+    dependencies:
+    - CEREScript-Core
+    - splitmix
 
 tests:
   CEREScript-Core-test:
