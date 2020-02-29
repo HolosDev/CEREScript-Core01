@@ -1,7 +1,10 @@
 module Data.CERES.Value where
 
-import           Data.Text                      ( Text )
 import qualified Data.Text                     as T
+import           Data.Text.Lazy                 ( Text )
+import qualified Data.Text.Lazy                as TL
+
+import           TextShow
 
 import           Data.CERES.Type
 
@@ -34,10 +37,16 @@ data Value
 instance Show Value where
   show (IntValue  iV) = "IV<| " ++ show iV ++ " |>"
   show (DblValue  dV) = "DV<| " ++ show dV ++ " |>"
-  show (StrValue  sV) = "SV<\"" ++ T.unpack sV ++ "\">"
+  show (StrValue  sV) = "SV<\"" ++ TL.unpack sV ++ "\">"
   show (BoolValue bV) = "BV<| " ++ show bV ++ " |>"
-  show (ErrValue  bV) = "EV<| " ++ T.unpack bV ++ " |>"
+  show (ErrValue  bV) = "EV<| " ++ TL.unpack bV ++ " |>"
 
+instance TextShow Value where
+  showb (IntValue  iV) = "IV<| " <> showb iV <> " |>"
+  showb (DblValue  dV) = "DV<| " <> showb dV <> " |>"
+  showb (StrValue  sV) = "SV<\"" <> fromLazyText sV <> "\">"
+  showb (BoolValue bV) = "BV<| " <> showb bV <> " |>"
+  showb (ErrValue  bV) = "EV<| " <> fromLazyText bV <> " |>"
 
 data ValueType
   = VTInt
@@ -54,6 +63,13 @@ instance Show ValueType where
   show VTBool = "CBool"
   show VTErr  = "C-Err"
 
+instance TextShow ValueType where
+  showb VTInt  = "C-Int"
+  showb VTDbl  = "C-Dbl"
+  showb VTStr  = "C-Str"
+  showb VTBool = "CBool"
+  showb VTErr  = "C-Err"
+
 -- Variable Position for abstract variable's real place
 data VariablePosition vp = VP
   { variableID    :: ID
@@ -69,3 +85,11 @@ voidHere = ErrValue "Void AtHere"
 instance Show vp => Show (VariablePosition vp) where
   show vc =
     "<[" ++ show (variableID vc) ++ "@" ++ show (variablePlace vc) ++ "]>"
+
+instance TextShow vp => TextShow (VariablePosition vp) where
+  showb vc =
+    fromLazyText "<["
+      <> showb (variableID vc)
+      <> fromLazyText "@"
+      <> showb (variablePlace vc)
+      <> "]>"

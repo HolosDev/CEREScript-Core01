@@ -2,6 +2,7 @@ module Data.CERES.Standard.CERES where
 
 
 import qualified Data.Text                     as T
+import           TextShow
 
 import           Data.CERES.Type
 import           Data.CERES.Value
@@ -11,12 +12,19 @@ type VariablePlace = StandardVariablePlace
 type VPosition = VariablePosition VariablePlace
 
 data StandardVariablePlace
-  = AtLocal
-  | AtTime
-  | AtWorld
+  = AtWorld
   | AtDict
+  | AtTime
+  | AtLocal
   | AtVar
-  deriving (Eq, Ord, Enum,  Show)
+  deriving (Eq, Ord, Enum, Show)
+
+instance TextShow StandardVariablePlace where
+  showb AtWorld = "AtWorld"
+  showb AtDict  = "AtDict"
+  showb AtTime  = "AtTime"
+  showb AtLocal = "AtLocal"
+  showb AtVar   = "AtVar"
 
 type CEREScript = [CERES]
 
@@ -36,12 +44,12 @@ data CERES
   -- | Convert type of Value at VPosition A as like as Value at VPosition B
   | ConvertValue   VPosition VPosition
   -- TODO: ConvertValueTo
-  deriving (Eq,Ord,Show)
+  deriving (Eq, Ord, Show)
 
 data CERESOperator
-  = COAMul
-  | COAAdd
+  = COAAdd
   | COASub
+  | COAMul
   | COADiv
   | COAMod
   | COAMulWith Value
@@ -49,7 +57,19 @@ data CERESOperator
   | COASubWith Value
   | COADivWith Value
   | COAModWith Value
-  deriving (Eq,Ord,Show)
+  deriving (Eq, Ord, Show)
+
+instance TextShow CERESOperator where
+  showb COAAdd         = fromLazyText "COAAdd"
+  showb COASub         = fromLazyText "COASub"
+  showb COAMul         = fromLazyText "COAMul"
+  showb COADiv         = fromLazyText "COADiv"
+  showb COAMod         = fromLazyText "COAMod"
+  showb (COAAddWith v) = fromLazyText "COAAddWith " <> showb v
+  showb (COASubWith v) = fromLazyText "COASubWith " <> showb v
+  showb (COAMulWith v) = fromLazyText "COAMulWith " <> showb v
+  showb (COADivWith v) = fromLazyText "COADivWith " <> showb v
+  showb (COAModWith v) = fromLazyText "COAModWith " <> showb v
 
 data CERESSpool = CERESSpool
   { csID       :: ID
@@ -59,9 +79,9 @@ data CERESSpool = CERESSpool
   , writeVP    :: [VPosition]
   , csPriority :: Priority
   , csControl  :: [SpoolController]
-  } deriving (Eq,Ord,Show)
+  } deriving (Eq, Ord, Show)
 
 data SpoolController
   = SCInherit ID
   | SCEnd     ID
-  deriving (Eq,Ord,Show,Read)
+  deriving (Eq, Ord, Show, Read)

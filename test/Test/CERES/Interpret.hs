@@ -7,15 +7,19 @@ import Test.Framework.Providers.HUnit
 import Test.Framework.TH
 import Test.HUnit.Base
 
-import qualified Data.IntMap as IM
-import qualified Data.Text as T
+import qualified Data.IntMap                   as IM
+import qualified Data.Text                     as T
 
-import CERES.Standard.Interpret
-import CERES.Standard.Operate
-import Data.CERES.Standard.CERES
-import Data.CERES.Type
-import Data.CERES.Value
+import           TextShow
 
+import           CERES.Standard.Interpret
+import           CERES.Standard.Operate
+import           Data.CERES.Standard.CERES
+import           Data.CERES.Type
+import           Data.CERES.Value
+import           Data.CERES.Value.Error
+
+  
 tests = $(testGroupGenerator)
 
 i1 = IntValue 1
@@ -34,10 +38,10 @@ env_modify01 = IM.fromList
   , ( 2
     , errValueTEWith2
       "coaMul"
-      (ErrValue $ T.concat
-        [ "readValueFromEnvSet - NotFound at "
-        , T.pack (show (VP 2 AtWorld voidHere))
-        ]
+      (  ErrValue
+      .  toLazyText
+      $  fromLazyText "readValueFromEnvSet - NotFound at "
+      <> showb (VP 2 AtWorld voidHere)
       )
       (IntValue 4)
     )
