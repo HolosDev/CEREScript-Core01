@@ -1,10 +1,10 @@
 name:                CEREScript-Core
-version:             0.2.0.0
-github:              "MiRiS-Project/CEREScript-Core"
+version:             0.3.0.0
+github:              "MiRiS-Project/CEREScript-Core01"
 license:             OtherLicense
 author:              "MiRiS Project"
 maintainer:          "YongJoon Joe <developer@miris-project.net>"
-copyright:           "2019 MiRiS Project"
+copyright:           "2019-2020 MiRiS Project"
 
 extra-source-files:
 - README.md
