@@ -1,5 +1,5 @@
-name:                CEREScript-Core
-version:             0.3.0.0
+name:                CEREScript-Core01
+version:             0.4.0.0
 github:              "MiRiS-Project/CEREScript-Core01"
 license:             OtherLicense
 author:              "MiRiS Project"
@@ -10,7 +10,7 @@ extra-source-files:
 - README.md
 - ChangeLog.md
 
-description:         Please see the README on GitHub at <https://github.com/MiRiS-Project/CEREScript-Core#readme>
+description:         Please see the README on GitHub at <https://github.com/MiRiS-Project/CEREScript-Core01#readme>
 
 dependencies:
 - base >= 4.7 && < 5
@@ -37,7 +37,7 @@ tests:
     - -rtsopts
     - -with-rtsopts=-N
     dependencies:
-    - CEREScript-Core
+    - CEREScript-Core01
     - HUnit
     - QuickCheck
     - silently

@@ -10,6 +10,16 @@ Changelog for CEREScript-Core
 Change type of `CERES` and `Value` as parametric to allow to change type of Str, etc.
 
 
+## 0.4.0.0 -- 2020-03-03
+
+### Changed
+* Remove executable generation code from package.yaml
+* Refactoring test generation code
+
+### Removed
+* Remove `CERESpool` for Interpreter implementation
+
+
 ## 0.3.0.0 -- 2020-03-01
 
 ### Added
@@ -18,6 +28,7 @@ Change type of `CERES` and `Value` as parametric to allow to change type of Str,
 
 ### Changed
 * Make compatible with `TextShow` and `AtHere`
+
 
 ## 0.2.0.0 -- 2019-05-07
 
