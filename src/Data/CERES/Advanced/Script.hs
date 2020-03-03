@@ -60,24 +60,9 @@ data CERESOperator
   | COAMod
   deriving (Eq, Ord, Show, Read)
 
-data CERESSpool = CERESSpool
-  { csID       :: ID
-  , csName     :: Name
-  , csScript   :: CEREScript
-  , readVP     :: [VPosition]
-  , writeVP    :: [VPosition]
-  , csPriority :: Priority
-  , csControl  :: [SpoolController]
-  } deriving (Eq, Ord, Show, Read)
-
 instance TextShow CERESOperator where
   showb COAAdd = fromLazyText "COAAdd"
   showb COASub = fromLazyText "COASub"
   showb COAMul = fromLazyText "COAMul"
   showb COADiv = fromLazyText "COADiv"
   showb COAMod = fromLazyText "COAMod"
-
-data SpoolController
-  = SCInherit ID
-  | SCEnd     ID
-  deriving (Eq, Ord, Show, Read)
