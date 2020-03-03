@@ -25,9 +25,11 @@ library:
   source-dirs: src
 
 tests:
-  CEREScript-Core-test:
+  Test-Spec:
     main:                Spec.hs
-    source-dirs:         test
+    source-dirs:
+    - test
+    - tests/Spec
     default-extensions:
     - TemplateHaskell
     ghc-options:
