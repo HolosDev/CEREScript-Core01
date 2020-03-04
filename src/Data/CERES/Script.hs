@@ -1,4 +1,4 @@
-module Data.CERES.Advanced.Script where
+module Data.CERES.Script where
 
 
 import qualified Data.Text                     as T

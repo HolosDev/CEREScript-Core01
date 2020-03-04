@@ -1,4 +1,4 @@
-module CERES.Advanced.Operate where
+module CERES.Operate where
 
 
 import qualified Data.IntMap                   as IM
@@ -9,8 +9,8 @@ import qualified Data.Text.Lazy.Read           as TL
 
 import           TextShow
 
-import           Data.CERES.Advanced.Script
-import           Data.CERES.Advanced.Operator
+import           Data.CERES.Script
+import           Data.CERES.Operator
 import           Data.CERES.Type
 import           Data.CERES.Value
 import           Data.CERES.Value.Error
