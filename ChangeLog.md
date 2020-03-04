@@ -10,6 +10,16 @@ Changelog for CEREScript-Core
 Change type of `CERES` and `Value` as parametric to allow to change type of Str, etc.
 
 
+## 0.5.0.0 -- 2020-03-04
+
+### Changed
+* Remove `Advanced` layer
+* Add timeIndex for `AtWord` and `AtTime` VariablePlace
+
+## Removed
+* Remove Interpreter code
+
+
 ## 0.4.0.0 -- 2020-03-03
 
 ### Changed
