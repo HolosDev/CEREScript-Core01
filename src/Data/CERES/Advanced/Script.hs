@@ -13,23 +13,23 @@ type VariablePlace = AdvancedVariablePlace
 type VPosition = VariablePosition VariablePlace
 
 data AdvancedVariablePlace
-  = AtWorld
+  = AtWorld Int
   | AtDict
   | AtVar
-  | AtTime
+  | AtTime Int
   | AtLocal
   | AtCache
   | AtHere
-  deriving (Eq, Ord, Enum, Show, Read)
+  deriving (Eq, Ord, Show, Read)
 
 instance TextShow AdvancedVariablePlace where
-  showb AtWorld = "AtWorld"
-  showb AtDict  = "AtDict"
-  showb AtVar   = "AtVar"
-  showb AtTime  = "AtTime"
-  showb AtLocal = "AtLocal"
-  showb AtCache = "AtCache"
-  showb AtHere  = "AtHere"
+  showb (AtWorld tIdx) = fromLazyText "AtWorld[" <> showb tIdx <> fromLazyText "]"
+  showb AtDict  = fromLazyText "AtDict"
+  showb AtVar   = fromLazyText "AtVar"
+  showb (AtTime tIdx) = fromLazyText "AtTime[" <> showb tIdx <> fromLazyText "]"
+  showb AtLocal = fromLazyText "AtLocal"
+  showb AtCache = fromLazyText "AtCache"
+  showb AtHere  = fromLazyText "AtHere"
 
 -- TODO: Would be Pseudo-Tree form
 type CEREScript = [CERES]
