@@ -18,5 +18,5 @@ Limitations
 
 ### SGRipt Only
 
-* Historical Variable and DB
+* Historic Variable and DB
   * Time-based index (VariablePosition)

@@ -24,8 +24,8 @@ Also, we provide a basic reference interpreter.
 
 * Could edit only for *current* value
   * Do not manipulating past/future value
-  * Also, no Historical Variable and DB
-    * Historical manipulation against variables/spools is only used for HistoryGrapher/StorioGrapher
+  * Also, no Historic Variable and DB
+    * Historic manipulation against variables/spools is only used for HistoryGrapher/StorioGrapher
 * No branching
   * Currently, branching is designed clearly for StorioGrapher. But, branching is also mentioned for the interpreter's rewinding feature of Project Chloe/Holos.
 
@@ -38,7 +38,7 @@ Also, we provide a basic reference interpreter.
 * SGript
   * For HistoryGrapher / StorioGrapher
   * + Branching feature
-  * + Historical instruction set
+  * + Historic instruction set
 * CEREScript
   * For CoMPleT Engine / Project Holos
   * + Turing-Complete instruction set
