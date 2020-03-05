@@ -9,10 +9,9 @@ import           Data.CERES.Type
 import           Data.CERES.Value
 
 
-type VariablePlace = AdvancedVariablePlace
 type VPosition = VariablePosition VariablePlace
 
-data AdvancedVariablePlace
+data VariablePlace
   = AtWorld Int
   | AtDict
   | AtVar
@@ -22,7 +21,7 @@ data AdvancedVariablePlace
   | AtHere
   deriving (Eq, Ord, Show, Read)
 
-instance TextShow AdvancedVariablePlace where
+instance TextShow VariablePlace where
   showb (AtWorld tIdx) = fromLazyText "AtWorld[" <> showb tIdx <> fromLazyText "]"
   showb AtDict  = fromLazyText "AtDict"
   showb AtVar   = fromLazyText "AtVar"
