@@ -1,5 +1,6 @@
 module Data.CERES.Value where
 
+import           Data.IntMap                    ( IntMap )
 import qualified Data.Text                     as T
 import           Data.Text.Lazy                 ( Text )
 import qualified Data.Text.Lazy                as TL
@@ -8,6 +9,8 @@ import           TextShow
 
 import           Data.CERES.Type
 
+
+type ValueMap = IntMap Value
 
 data ValueTyper = ValueTyper
   { valueTyperName :: Name
