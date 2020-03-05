@@ -22,10 +22,12 @@ data VariablePlace
   deriving (Eq, Ord, Show, Read)
 
 instance TextShow VariablePlace where
-  showb (AtWorld tIdx) = fromLazyText "AtWorld[" <> showb tIdx <> fromLazyText "]"
-  showb AtDict  = fromLazyText "AtDict"
-  showb AtVar   = fromLazyText "AtVar"
-  showb (AtTime tIdx) = fromLazyText "AtTime[" <> showb tIdx <> fromLazyText "]"
+  showb (AtWorld tIdx) =
+    fromLazyText "AtWorld[" <> showb tIdx <> fromLazyText "]"
+  showb AtDict = fromLazyText "AtDict"
+  showb AtVar  = fromLazyText "AtVar"
+  showb (AtTime tIdx) =
+    fromLazyText "AtTime[" <> showb tIdx <> fromLazyText "]"
   showb AtLocal = fromLazyText "AtLocal"
   showb AtCache = fromLazyText "AtCache"
   showb AtHere  = fromLazyText "AtHere"

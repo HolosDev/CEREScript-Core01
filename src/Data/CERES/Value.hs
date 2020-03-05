@@ -35,11 +35,7 @@ data Value
   deriving (Eq, Ord, Read)
 
 instance Show Value where
-  show i@(IntValue  _) = "IV<| " ++ showRaw i ++ " |>"
-  show d@(DblValue  _) = "DV<| " ++ showRaw d ++ " |>"
-  show s@(StrValue  _) = "SV<\"" ++ showRaw s ++ "\">"
-  show b@(BoolValue _) = "BV<| " ++ showRaw b ++ " |>"
-  show e@(ErrValue  _) = "EV<| " ++ showRaw e ++ " |>"
+  show = TL.unpack . showtl
 
 showRaw :: Value -> String
 showRaw (IntValue  i) = show i
@@ -49,11 +45,13 @@ showRaw (BoolValue b) = show b
 showRaw (ErrValue  e) = TL.unpack e
 
 instance TextShow Value where
-  showb (IntValue  i) = "IV<| " <> showb i <> " |>"
-  showb (DblValue  d) = "DV<| " <> showb d <> " |>"
-  showb (StrValue  s) = "SV<\"" <> fromLazyText s <> "\">"
-  showb (BoolValue b) = "BV<| " <> showb b <> " |>"
-  showb (ErrValue  e) = "EV<| " <> fromLazyText e <> " |>"
+  showb (IntValue i) = fromLazyText "IV<| " <> showb i <> fromLazyText " |>"
+  showb (DblValue d) = fromLazyText "DV<| " <> showb d <> fromLazyText " |>"
+  showb (StrValue s) =
+    fromLazyText "SV<\"" <> fromLazyText s <> fromLazyText "\">"
+  showb (BoolValue b) = fromLazyText "BV<| " <> showb b <> fromLazyText " |>"
+  showb (ErrValue e) =
+    fromLazyText "EV<| " <> fromLazyText e <> fromLazyText " |>"
 
 showRawTL :: Value -> Text
 showRawTL (IntValue  i) = showtl i
@@ -79,11 +77,11 @@ instance Show ValueType where
   show VTErr  = "C-Err"
 
 instance TextShow ValueType where
-  showb VTInt  = "C-Int"
-  showb VTDbl  = "C-Dbl"
-  showb VTStr  = "C-Str"
-  showb VTBool = "CBool"
-  showb VTErr  = "C-Err"
+  showb VTInt  = fromLazyText "C-Int"
+  showb VTDbl  = fromLazyText "C-Dbl"
+  showb VTStr  = fromLazyText "C-Str"
+  showb VTBool = fromLazyText "CBool"
+  showb VTErr  = fromLazyText "C-Err"
 
 -- Variable Position for abstract variable's real place
 data VariablePosition vp = VP
@@ -97,9 +95,8 @@ data VariablePosition vp = VP
 voidHere :: Value
 voidHere = ErrValue "Void AtHere"
 
-instance Show vp => Show (VariablePosition vp) where
-  show vc =
-    "<[" ++ show (variableID vc) ++ "@" ++ show (variablePlace vc) ++ "]>"
+instance (Show vp, TextShow vp) => Show (VariablePosition vp) where
+  show = TL.unpack . showtl
 
 instance TextShow vp => TextShow (VariablePosition vp) where
   showb vc =
@@ -107,4 +104,4 @@ instance TextShow vp => TextShow (VariablePosition vp) where
       <> showb (variableID vc)
       <> fromLazyText "@"
       <> showb (variablePlace vc)
-      <> "]>"
+      <> fromLazyText "]>"
