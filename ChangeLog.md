@@ -10,6 +10,13 @@ Changelog for CEREScript-Core
 Change type of `CERES` and `Value` as parametric to allow to change type of Str, etc.
 
 
+## 0.5.1.0 -- 2020-03-05
+
+### Changed
+* Simplify type VariablePlace
+* Refactoring `Show` method with `TextShow`
+
+
 ## 0.5.0.0 -- 2020-03-04
 
 ### Changed
