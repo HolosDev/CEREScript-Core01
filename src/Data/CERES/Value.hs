@@ -93,7 +93,12 @@ data VariablePosition vp = VP
   -- TODO: Need to think that the type of `hereValue` should be `Maybe Value` or just `Value`
   -- TODO: Or introduce a new Data Constructor `VPH` for `VariablePosition`
   , hereValue     :: Value -- Not ValueContainer or etc.
-  } deriving (Eq, Ord, Read)
+  } deriving (Eq, Read)
+
+instance Ord vp => Ord (VariablePosition vp) where
+  compare (VP idxA vpA hvA) (VP idxB vpB hvB) = if vpA == vpB
+    then if idxA == idxB then compare hvA hvB else compare idxA idxB
+    else compare vpA vpB
 
 voidHere :: Value
 voidHere = ErrValue "Void AtHere"

@@ -13,9 +13,9 @@ type VPosition = VariablePosition VariablePlace
 
 data VariablePlace
   = AtWorld Int
+  | AtTime Int
   | AtDict
   | AtVar
-  | AtTime Int
   | AtLocal
   | AtCache
   | AtHere
