@@ -37,19 +37,19 @@ type CEREScript = [CERES]
 
 data CERES
   -- | Initialize Variable at VPosition A as VPosition B
-  = InitVariable   VPosition VPosition
+  = CRSInitVariable     VPosition VPosition
   -- | Set Value at VPosition A as VPosition B
-  | SetValue       VPosition VPosition
+  | CRSSetValue         VPosition VPosition
   -- | Delete Variable at VPosition A
-  | DeleteVariable VPosition
+  | CRSDeleteVariable   VPosition
   -- | Modify Value at VPosition A by CERESOperator with Value at VPosition B
-  | ModifyValue    VPosition VPosition CERESOperator
+  | CRSModifyValue      VPosition VPosition CERESOperator
   -- | Copy Value at VPosition B to Variable at VPosition A
-  | CopyValue      VPosition VPosition
+  | CRSCopyValue        VPosition VPosition
   -- | Convert type of Value at VPosition A as like as Value at VPosition B
-  | ConvertValue   VPosition ValueType
+  | CRSConvertValue     VPosition ValueType
   -- | Convert type of Value at VPosition A as like as Value at VPosition B
-  | ConvertValueBy VPosition VPosition
+  | CRSConvertValueBy VPosition VPosition
   -- TODO: ConvertValueTo
   deriving (Eq, Ord, Show, Read)
 
