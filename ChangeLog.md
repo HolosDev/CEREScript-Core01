@@ -3,6 +3,11 @@ Changelog for CEREScript-Core01
 
 ## Unreleased
 
+### Add
+* Add binary instructions and ternary instructions
+  * Binary instruction: f(A,B) -> A
+  * Ternary instruction: f(A,B) -> C
+
 ### Change
 
 #### Parametric Data Type

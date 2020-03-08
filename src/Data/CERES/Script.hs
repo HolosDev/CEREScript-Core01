@@ -49,8 +49,19 @@ data CERES
   -- | Convert type of Value at VPosition A as like as Value at VPosition B
   | CRSConvertValue     VPosition ValueType
   -- | Convert type of Value at VPosition A as like as Value at VPosition B
-  | CRSConvertValueBy VPosition VPosition
-  -- TODO: ConvertValueTo
+  | CRSConvertValueBy   VPosition VPosition
+  -- | Convert value at VPosition A with a given rule VPosition B
+  | CRSConvertValueWith VPosition VPosition
+  -- | Generate Random Value at VPosition A as a type VPosition B
+  | CRSRandom           VPosition VPosition
+  -- | ElapseTime <{Absolute,Scale}> <ScaleSize>
+  | CRSElapseTime       VPosition VPosition
+  -- | SPControl <{Stop,Pause}>
+  | CRSSPControl        VPosition
+  -- | SIControl <{Retain,Forget,Init,Abolish}> <JumpOffset>
+  | CRSSIControl        VPosition VPosition
+  -- | SIInit <SpoolID> <Given SIName> <where initiated SI ID store>
+  | CRSSIInit           VPosition VPosition VPosition
   deriving (Eq, Ord, Show, Read)
 
 data CERESOperator
