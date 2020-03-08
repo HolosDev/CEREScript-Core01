@@ -18,6 +18,15 @@ Change type of `CERES` and `Value` as parametric to allow to change type of Str,
 ## 0.5.3.0 -- 2020-03-08
 
 ### Added
+* Add more instructions
+
+### Changed
+* Add CRS prefix to existing instructions
+
+
+## 0.5.3.0 -- 2020-03-08
+
+### Added
 * Add constant `blankVM`
 * Add `get*` method for `Value`
 
