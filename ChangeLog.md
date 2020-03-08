@@ -10,6 +10,22 @@ Changelog for CEREScript-Core01
 Change type of `CERES` and `Value` as parametric to allow to change type of Str, etc.
 
 
+## 0.5.3.0 -- 2020-03-08
+
+### Added
+* Add constant `blankVM`
+* Add `get*` method for `Value`
+
+
+## 0.5.2.0 -- 2020-03-08
+
+### Added
+* Add constant `blankVM`
+
+### Changed
+* Reorder `VariablePlace` and `VariablePosition` data constructors
+
+
 ## 0.5.1.0 -- 2020-03-05
 
 ### Changed
