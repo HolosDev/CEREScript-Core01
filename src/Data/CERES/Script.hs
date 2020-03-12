@@ -19,6 +19,7 @@ data VariablePlace
   | AtLocal
   | AtCache
   | AtHere
+  | AtNull
   deriving (Eq, Ord, Show, Read)
 
 instance TextShow VariablePlace where
@@ -31,6 +32,7 @@ instance TextShow VariablePlace where
   showb AtLocal = fromLazyText "AtLocal"
   showb AtCache = fromLazyText "AtCache"
   showb AtHere  = fromLazyText "AtHere"
+  showb AtNull  = fromLazyText "AtNull"
 
 -- TODO: Would be Pseudo-Tree form
 type CEREScript = [CERES]
