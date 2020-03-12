@@ -36,8 +36,10 @@ instance TextShow VariablePlace where
 type CEREScript = [CERES]
 
 data CERES
-  -- | Initialize Variable at VPosition A as VPosition B
+  -- | Initialize Variable VPosition A with Value at VPosition B
   = CRSInitVariable     VPosition VPosition
+  -- | Initialize Variable at position which stored in VPosition A with Value at VPosition B
+  | CRSInitVariableAt   VPosition VPosition
   -- | Set Value at VPosition A as VPosition B
   | CRSSetValue         VPosition VPosition
   -- | Delete Variable at VPosition A
