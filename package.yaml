@@ -1,16 +1,16 @@
 name:                CEREScript-Core01
-version:             0.6.0.0
-github:              "MiRiS-Project/CEREScript-Core01"
+version:             0.7.0.0
+github:              "HolosDev/CEREScript-Core01"
 license:             OtherLicense
-author:              "MiRiS Project"
-maintainer:          "YongJoon Joe <developer@miris-project.net>"
-copyright:           "2019-2020 MiRiS Project"
+author:              "YongJoon Joe"
+maintainer:          "YongJoon Joe <developer@quietjoon.net>"
+copyright:           "2019-2020 Holos Works/MiRiS Project"
 
 extra-source-files:
 - README.md
 - ChangeLog.md
 
-description:         Please see the README on GitHub at <https://github.com/MiRiS-Project/CEREScript-Core01#readme>
+description:         Please see the README on GitHub at <https://github.com/HolosDev/CEREScript-Core01#readme>
 
 dependencies:
 - base >= 4.7 && < 5
