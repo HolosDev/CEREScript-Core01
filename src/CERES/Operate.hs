@@ -76,5 +76,9 @@ convertValue vA vB = errValueTEWith2 "convertValue" vA vB
 
 operatorSelector :: CERESOperator -> (Value -> Value -> Value)
 operatorSelector operator = case operator of
+  COAAdd -> coaAdd
+  COASub -> coaSub
   COAMul -> coaMul
+  COADiv -> coaDiv
+  COAMod -> coaMod
   _      -> error "No such operator"
