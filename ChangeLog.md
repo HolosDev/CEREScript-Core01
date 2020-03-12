@@ -15,10 +15,16 @@ Changelog for CEREScript-Core01
 Change type of `CERES` and `Value` as parametric to allow to change type of Str, etc.
 
 
+## 0.9.0.0 -- 2020-03-12
+
+### Added
+* Add a VariablePlace data constructor `AtNull`
+* Add a ValueType, Value, and data type `Atom`
+
 ## 0.8.1.0 -- 2020-03-12
 
 ### Added
-* Add `getType`
+* Add `getValueType`
 
 
 ## 0.8.0.0 -- 2020-03-12
