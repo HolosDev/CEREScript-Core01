@@ -34,6 +34,7 @@ coaMod (IntValue rVA) (IntValue rVB) = IntValue $ mod rVA rVB
 coaMod vA             vB             = errValueTEWith2 "coaMod" vA vB
 
 convertValue :: Value -> Value -> Value
+convertValue vA             AtomValue = AtomValue
 convertValue vA             (StrValue _) = StrValue . showRawTL $ vA
 convertValue (StrValue rVA) (IntValue _) = read
  where
