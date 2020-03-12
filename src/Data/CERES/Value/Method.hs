@@ -22,3 +22,12 @@ getBool v = error $ "[ERROR]<getBool> Given wrong type: " ++ show v
 getErr :: Value -> Message
 getErr (ErrValue  e) = e
 getErr v = error $ "[ERROR]<getErr> Given wrong type: " ++ show v
+
+
+getValueType :: Value -> ValueType
+getValueType v = case v of
+  (IntValue  _) -> VTInt
+  (DblValue  _) -> VTDbl
+  (StrValue  _) -> VTStr
+  (BoolValue _) -> VTBool
+  (ErrValue  _) -> VTErr

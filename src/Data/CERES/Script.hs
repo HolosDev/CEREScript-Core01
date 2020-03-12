@@ -58,7 +58,7 @@ data CERES
   | CRSRandom           VPosition ValueType
   -- | Generate Random Value at VPosition A as a type VPosition B
   | CRSRandomBy         VPosition VPosition
-  -- | Generate Random Value at VPosition A as a type VPosition B, And parameters vpC, vpD, and vpE
+  -- | Generate Random Value at VPosition A as a ValueType, And parameters vpC, vpD, and vpE
   | CRSRandomWith       VPosition ValueType VPosition VPosition VPosition
   -- | Generate Random Value at VPosition A as a type VPosition B, And parameters vpC, vpD, and vpE
   | CRSRandomWithBy     VPosition VPosition VPosition VPosition VPosition
