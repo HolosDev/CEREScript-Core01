@@ -60,10 +60,18 @@ convertValue (StrValue rVA) (BoolValue _) = case rVA of
   "0"     -> BoolValue False
   _       -> errValueWith2 "convertValue" "Str -> Bool" rVA VTBool
 convertValue (   StrValue rVA) (ErrValue _) = ErrValue rVA
+convertValue vA@(IntValue _  ) (IntValue _) = vA
+convertValue vA (IntValue _) =
+  errValueWith2 "convertValue" "Not-Num -> Int" vA VTInt
 convertValue (   IntValue rVA) (DblValue _) = DblValue . fromIntegral $ rVA
 convertValue vA@(DblValue _  ) (DblValue _) = vA
 convertValue vA (DblValue _) =
-  errValueWith2 "convertValue" "Not-Num -> Dbl" vA VTDbl
+  errValueWith2 "convertValue" "Not-Num -> Dbl" vA VTInt
+convertValue vA@(BoolValue _ ) (BoolValue _) = vA
+convertValue vA (BoolValue _) =
+  errValueWith2 "convertValue" "Not-Num -> Int" vA VTInt
+convertValue vA@(ErrValue _  ) (ErrValue _) = vA
+convertValue vA (ErrValue _) = ErrValue . showRawTL $ vA
 convertValue vA vB = errValueTEWith2 "convertValue" vA vB
 
 modifyValue :: CERESOperator -> IM.IntMap Value -> Value -> Value
