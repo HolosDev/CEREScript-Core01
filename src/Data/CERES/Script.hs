@@ -54,8 +54,14 @@ data CERES
   | CRSConvertValueBy   VPosition VPosition
   -- | Convert value at VPosition A with a given rule VPosition B
   | CRSConvertValueWith VPosition VPosition
+  -- | Generate Random Value at VPosition A as a ValueType
+  | CRSRandom           VPosition ValueType
   -- | Generate Random Value at VPosition A as a type VPosition B
-  | CRSRandom           VPosition VPosition
+  | CRSRandomBy         VPosition VPosition
+  -- | Generate Random Value at VPosition A as a type VPosition B, And parameters vpC, vpD, and vpE
+  | CRSRandomWith       VPosition ValueType VPosition VPosition VPosition
+  -- | Generate Random Value at VPosition A as a type VPosition B, And parameters vpC, vpD, and vpE
+  | CRSRandomWithBy     VPosition VPosition VPosition VPosition VPosition
   -- | ElapseTime <{Absolute,Scale}> <ScaleSize>
   | CRSElapseTime       VPosition VPosition
   -- | SPControl <{Stop,Pause}>
