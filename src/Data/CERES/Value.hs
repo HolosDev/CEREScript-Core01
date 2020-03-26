@@ -95,31 +95,3 @@ instance TextShow ValueType where
   showb VTBool = fromLazyText "CBool"
   showb VTAtom = fromLazyText "CAtom"
   showb VTErr  = fromLazyText "C-Err"
-
--- Variable Position for abstract variable's real place
-data VariablePosition vp = VP
-  { variableID    :: ID
-  , variablePlace :: vp -- VariablePlace
-  -- TODO: Need to think that the type of `hereValue` should be `Maybe Value` or just `Value`
-  -- TODO: Or introduce a new Data Constructor `VPH` for `VariablePosition`
-  , hereValue     :: Value -- Not ValueContainer or etc.
-  } deriving (Eq, Read)
-
-instance Ord vp => Ord (VariablePosition vp) where
-  compare (VP idxA vpA hvA) (VP idxB vpB hvB) = if vpA == vpB
-    then if idxA == idxB then compare hvA hvB else compare idxA idxB
-    else compare vpA vpB
-
-voidHere :: Value
-voidHere = ErrValue "Void AtHere"
-
-instance (Show vp, TextShow vp) => Show (VariablePosition vp) where
-  show = TL.unpack . showtl
-
-instance TextShow vp => TextShow (VariablePosition vp) where
-  showb vc =
-    fromLazyText "<["
-      <> showb (variableID vc)
-      <> fromLazyText "@"
-      <> showb (variablePlace vc)
-      <> fromLazyText "]>"

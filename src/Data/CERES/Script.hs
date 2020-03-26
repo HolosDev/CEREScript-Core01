@@ -7,32 +7,10 @@ import           TextShow
 
 import           Data.CERES.Type
 import           Data.CERES.Value
+import           Data.CERES.VariablePosition
 
 
-type VPosition = VariablePosition VariablePlace
-
-data VariablePlace
-  = AtWorld Int
-  | AtTime Int
-  | AtDict
-  | AtVar
-  | AtLocal
-  | AtCache
-  | AtHere
-  | AtNull
-  deriving (Eq, Ord, Show, Read)
-
-instance TextShow VariablePlace where
-  showb (AtWorld tIdx) =
-    fromLazyText "AtWorld[" <> showb tIdx <> fromLazyText "]"
-  showb AtDict = fromLazyText "AtDict"
-  showb AtVar  = fromLazyText "AtVar"
-  showb (AtTime tIdx) =
-    fromLazyText "AtTime[" <> showb tIdx <> fromLazyText "]"
-  showb AtLocal = fromLazyText "AtLocal"
-  showb AtCache = fromLazyText "AtCache"
-  showb AtHere  = fromLazyText "AtHere"
-  showb AtNull  = fromLazyText "AtNull"
+type VPosition = VariablePosition
 
 -- TODO: Would be Pseudo-Tree form
 type CEREScript = [CERES]
