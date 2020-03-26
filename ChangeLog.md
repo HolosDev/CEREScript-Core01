@@ -15,6 +15,17 @@ Changelog for CEREScript-Core01
 Change type of `CERES` and `Value` as parametric to allow to change type of Str, etc.
 
 
+## 0.10.0.0 -- 2020-03-26
+
+### Changed
+* Simplify `VariablePosition`
+* Add new Constructor `AtNDict`
+* `VariablePosition` handles idx by itself
+
+### Removed
+* Remove `VariablePlace`
+
+
 ## 0.9.0.0 -- 2020-03-12
 
 ### Added
