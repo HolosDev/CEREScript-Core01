@@ -35,7 +35,7 @@ data ValueInfo = ValueInfo
 data Value
   = IntValue { iV :: Int }
   | DblValue { dV :: Double }
-  | StrValue { sV :: Text }
+  | StrValue { sV :: Str }
   | BoolValue { bV :: Bool }
   | AtomValue
   | ErrValue { errMessage :: Message }

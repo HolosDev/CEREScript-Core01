@@ -14,13 +14,13 @@ import           Data.CERES.Value
 
 -- Variable Position for abstract variable's real place
 data VariablePosition
-  = AtWrld Time ID
-  | AtTime Time ID
-  | AtDict ID
-  | AtNDic Name
-  | AtVars ID
-  | AtLocl ID
-  | AtCach ID
+  = AtWrld Time Idx
+  | AtTime Time Idx
+  | AtDict Idx
+  | AtNDic NKey
+  | AtVars Idx
+  | AtLocl Idx
+  | AtCach Idx
   | AtHere Value
   | AtNull
   deriving (Eq, Ord, Read)

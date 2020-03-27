@@ -8,8 +8,11 @@ import           TextShow
 
 
 type Name = Text
+type NKey = Text
+type Str = Text
 type Time = Int
 type ID = Int
+type Idx = Int
 type Message = Text
 
 type Branch = T.Text
