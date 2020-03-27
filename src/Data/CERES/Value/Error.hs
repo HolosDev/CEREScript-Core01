@@ -12,15 +12,16 @@ import           Data.CERES.Value
 errValueWith2 :: (TextShow a, TextShow b) => Name -> Message -> a -> b -> Value
 errValueWith2 funcName errorType vA vB = ErrValue errorMessage
  where
-  errorMessage = toLazyText $
-    fromLazyText "[Error]<"
-    <> fromLazyText funcName
-    <> fromLazyText " :=: "
-    <> fromLazyText errorType
-    <> fromLazyText "> "
-    <> showb vA
-    <> fromLazyText " and "
-    <> showb vB
+  errorMessage =
+    toLazyText
+      $  fromLazyText "[Error]<"
+      <> fromLazyText funcName
+      <> fromLazyText " :=: "
+      <> fromLazyText errorType
+      <> fromLazyText "> "
+      <> showb vA
+      <> fromLazyText " and "
+      <> showb vB
 
 errValueTEWith2 :: (TextShow a, TextShow b) => Name -> a -> b -> Value
 errValueTEWith2 funcName = errValueWith2 funcName "TypeError"

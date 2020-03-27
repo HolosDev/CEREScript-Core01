@@ -34,7 +34,7 @@ coaMod (IntValue rVA) (IntValue rVB) = IntValue $ mod rVA rVB
 coaMod vA             vB             = errValueTEWith2 "coaMod" vA vB
 
 convertValue :: Value -> Value -> Value
-convertValue vA             AtomValue = AtomValue
+convertValue vA             AtomValue    = AtomValue
 convertValue vA             (StrValue _) = StrValue . showRawTL $ vA
 convertValue (StrValue rVA) (IntValue _) = read
  where
@@ -68,12 +68,12 @@ convertValue (   IntValue rVA) (DblValue _) = DblValue . fromIntegral $ rVA
 convertValue vA@(DblValue _  ) (DblValue _) = vA
 convertValue vA (DblValue _) =
   errValueWith2 "convertValue" "Not-Num -> Dbl" vA VTInt
-convertValue vA@(BoolValue _ ) (BoolValue _) = vA
+convertValue vA@(BoolValue _) (BoolValue _) = vA
 convertValue vA (BoolValue _) =
   errValueWith2 "convertValue" "Not-Num -> Int" vA VTInt
-convertValue vA@(ErrValue _  ) (ErrValue _) = vA
-convertValue vA (ErrValue _) = ErrValue . showRawTL $ vA
-convertValue vA vB = errValueTEWith2 "convertValue" vA vB
+convertValue vA@(ErrValue _) (ErrValue _) = vA
+convertValue vA              (ErrValue _) = ErrValue . showRawTL $ vA
+convertValue vA              vB           = errValueTEWith2 "convertValue" vA vB
 
 operatorSelector :: CERESOperator -> (Value -> Value -> Value)
 operatorSelector operator = case operator of
