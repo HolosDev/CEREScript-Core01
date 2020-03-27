@@ -15,6 +15,15 @@ Changelog for CEREScript-Core01
 Change type of `CERES` and `Value` as parametric to allow to change type of Str, etc.
 
 
+## 0.11.0.0 -- 2020-03-28
+
+### Added
+* Add more type aliases like `NKey`, `Str`, and `Idx`
+
+### Changed
+* Change `VariablePosition` name for unify length
+
+
 ## 0.10.0.0 -- 2020-03-26
 
 ### Changed
