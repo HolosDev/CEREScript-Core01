@@ -14,13 +14,13 @@ import           Data.CERES.Value
 
 -- Variable Position for abstract variable's real place
 data VariablePosition
-  = AtWorld Time ID
+  = AtWrld Time ID
   | AtTime Time ID
   | AtDict ID
-  | AtNDict Name
-  | AtVar ID
-  | AtLocal ID
-  | AtCache ID
+  | AtNDic Name
+  | AtVars ID
+  | AtLocl ID
+  | AtCach ID
   | AtHere Value
   | AtNull
   deriving (Eq, Ord, Read)
@@ -29,17 +29,26 @@ instance Show VariablePosition where
   show = TL.unpack . showtl
 
 instance TextShow VariablePosition where
-  showb (AtWorld tIdx idx) =
-    fromLazyText "AtWorld[" <> showb tIdx <> fromLazyText ":" <> showb idx <> fromLazyText "]"
+  showb (AtWrld tIdx idx) =
+    fromLazyText "AtWrld["
+      <> showb tIdx
+      <> fromLazyText ":"
+      <> showb idx
+      <> fromLazyText "]"
   showb (AtTime tIdx idx) =
-    fromLazyText "AtTime[" <> showb tIdx <> fromLazyText ":" <> showb idx <> fromLazyText "]"
+    fromLazyText "AtTime["
+      <> showb tIdx
+      <> fromLazyText ":"
+      <> showb idx
+      <> fromLazyText "]"
   showb (AtDict idx) = fromLazyText "AtDict[" <> showb idx <> fromLazyText "]"
-  showb (AtNDict name) = fromLazyText "AtNDict[" <> fromLazyText name <> fromLazyText "]"
-  showb (AtVar idx)  = fromLazyText "AtVar[" <> showb idx <> fromLazyText "]"
-  showb (AtLocal idx) = fromLazyText "AtLocal[" <> showb idx <> fromLazyText "]"
-  showb (AtCache idx) = fromLazyText "AtCache[" <> showb idx <> fromLazyText "]"
-  showb (AtHere v)  = fromLazyText "AtHere[" <> showb v <> fromLazyText "]"
-  showb AtNull  = fromLazyText "AtNull"
+  showb (AtNDic name) =
+    fromLazyText "AtNDic[" <> fromLazyText name <> fromLazyText "]"
+  showb (AtVars idx) = fromLazyText "AtVars[" <> showb idx <> fromLazyText "]"
+  showb (AtLocl idx) = fromLazyText "AtLocl[" <> showb idx <> fromLazyText "]"
+  showb (AtCach idx) = fromLazyText "AtCach[" <> showb idx <> fromLazyText "]"
+  showb (AtHere v  ) = fromLazyText "AtHere[" <> showb v <> fromLazyText "]"
+  showb AtNull       = fromLazyText "AtNull"
 
 -- TODO: Need to implement Eq/Ord for AtWorld and AtTime based on worldTime
 -- instance Eq VariablePosition
