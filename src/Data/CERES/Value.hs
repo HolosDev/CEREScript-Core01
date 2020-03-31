@@ -2,9 +2,9 @@ module Data.CERES.Value where
 
 import           Data.IntMap                    ( IntMap )
 import qualified Data.IntMap                   as IM
-import qualified Data.Text                     as T
 import           Data.Text.Lazy                 ( Text )
 import qualified Data.Text.Lazy                as TL
+import           Data.Trie.Text                 ( Trie )
 
 import           TextShow
 
@@ -12,6 +12,7 @@ import           Data.CERES.Type
 
 
 type ValueMap = IntMap Value
+type ValueNMap = Trie Value
 
 blankVM = IM.empty
 
