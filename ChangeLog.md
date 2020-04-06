@@ -15,6 +15,11 @@ Changelog for CEREScript-Core01
 Change type of `CERES` and `Value` as parametric to allow to change type of Str, etc.
 
 
+## 0.12.0.0 -- 2020-04-06
+
+### Changed
+* Change type of `NKey` from `Data.Text.Lazy.Text` to `Data.Text.Text`
+
 ## 0.11.1.0 -- 2020-03-31
 
 ### Added

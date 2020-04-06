@@ -7,7 +7,7 @@ import           TextShow
 
 
 type Name = Text
-type NKey = Text
+type NKey = T.Text
 type Str = Text
 type Time = Int
 type ID = Int
