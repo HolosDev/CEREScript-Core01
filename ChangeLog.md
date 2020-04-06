@@ -19,6 +19,7 @@ Change type of `CERES` and `Value` as parametric to allow to change type of Str,
 
 ### Changed
 * Change type of `NKey` from `Data.Text.Lazy.Text` to `Data.Text.Text`
+* Split `VariablePosition` to `VariablePlace` and `VariableIndex`
 
 ## 0.11.1.0 -- 2020-03-31
 
