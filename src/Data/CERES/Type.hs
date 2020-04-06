@@ -1,7 +1,6 @@
 module Data.CERES.Type where
 
 import qualified Data.Text                     as T
-                                                ( Text )
 import           Data.Text.Lazy                 ( Text )
 
 import           TextShow
