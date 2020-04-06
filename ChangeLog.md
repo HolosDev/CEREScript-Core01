@@ -7,6 +7,8 @@ Changelog for CEREScript-Core01
 * Add binary instructions and ternary instructions
   * Binary instruction: f(A,B) -> A
   * Ternary instruction: f(A,B) -> C
+* Add structured data type
+* Add array type
 
 ### Change
 
