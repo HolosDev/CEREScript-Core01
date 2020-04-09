@@ -19,6 +19,9 @@ Change type of `CERES` and `Value` as parametric to allow to change type of Str,
 
 ## 0.13.0.0 -- 2020-04-09
 
+### Added
+* Add new Array type `Value`
+
 ### Changed
 * Add more `VariablePlace` and rename of `Local*`
 

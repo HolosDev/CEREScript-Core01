@@ -52,7 +52,7 @@ instance TextShow VariablePlace where
   showb AtNull   = fromLazyText "AtNull"
 
 
-data VariableIndex = VII Idx | VIN NKey | VIIT Idx Time | VINT NKey Time | VIV Value | VIAtom | VINull | PVII Idx | PVIN NKey | PVIT Time deriving (Eq, Ord, Read)
+data VariableIndex = VII Idx | VIN NKey | VIIT Idx Time | VINT NKey Time | VIIRI Idx [Idx] | VINRI NKey [Idx] | VIIRIT Idx [Idx] Time | VINRIT NKey [Idx] Time | VIV Value | VIAtom | VINull | PVII Idx | PVIN NKey | PVIT Time deriving (Eq, Ord, Read)
 
 instance Show VariableIndex where
   show = TL.unpack . showtl
@@ -64,6 +64,12 @@ instance TextShow VariableIndex where
     fromLazyText "VIIT=" <> showb idx <> singleton ':' <> showb time
   showb (VINT nKey time) =
     fromLazyText "VINT=" <> fromText nKey <> singleton ':' <> showb time
+  showb (VIIRI idx indices) = fromLazyText "VIIRI=" <> showb idx <> singleton ':' <> showb indices
+  showb (VINRI nKey indices) = fromLazyText "VINRI=" <> fromText nKey <> singleton ':' <> showb indices
+  showb (VIIRIT idx indices time) =
+    fromLazyText "VIIRIT=" <> showb idx <> singleton ':' <> showb indices <> singleton ':' <> showb time
+  showb (VINRIT nKey indices time) =
+    fromLazyText "VINRIT=" <> fromText nKey <> singleton ':' <> showb indices <> singleton ':' <> showb time
   showb (VIV value) = fromLazyText "VIV=" <> showb value
   showb VIAtom      = fromLazyText "VIAtom"
   showb VINull      = fromLazyText "VINull"

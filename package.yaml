@@ -17,7 +17,9 @@ dependencies:
 - text
 - containers
 - text-show
+- text-show-instances
 - text-trie
+- vector
 
 default-extensions:
 - OverloadedStrings

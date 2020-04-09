@@ -41,6 +41,7 @@ data Value
   | StrValue { sV :: Str }
   | BoolValue { bV :: Bool }
   | AtomValue
+  | ArrValue { aV :: Array Value}
   | ErrValue { errMessage :: Message }
   deriving (Eq, Ord, Read)
 
@@ -53,6 +54,7 @@ showRaw (DblValue  d) = show d
 showRaw (StrValue  s) = TL.unpack s
 showRaw (BoolValue b) = show b
 showRaw AtomValue     = "Atom"
+showRaw (ArrValue a)  = show a
 showRaw (ErrValue e)  = TL.unpack e
 
 instance TextShow Value where
@@ -61,7 +63,8 @@ instance TextShow Value where
   showb (StrValue s) =
     fromLazyText "SV<\"" <> fromLazyText s <> fromLazyText "\">"
   showb (BoolValue b) = fromLazyText "BV<| " <> showb b <> fromLazyText " |>"
-  showb AtomValue     = fromLazyText "AV<|  |>"
+  showb AtomValue     = fromLazyText "AV<| - |>"
+  showb (ArrValue a)  = fromLazyText "A[| " <> showb a <> " |]"
   showb (ErrValue e) =
     fromLazyText "EV<| " <> fromLazyText e <> fromLazyText " |>"
 
@@ -71,6 +74,7 @@ showRawTL (DblValue  d) = showtl d
 showRawTL (StrValue  s) = s
 showRawTL (BoolValue b) = showtl b
 showRawTL AtomValue     = "Atom"
+showRawTL (ArrValue a)  = showtl a
 showRawTL (ErrValue e)  = e
 
 
@@ -80,6 +84,7 @@ data ValueType
   | VTStr
   | VTBool
   | VTAtom
+  | VTArr
   | VTErr
   deriving (Eq, Ord, Enum, Read)
 
@@ -89,6 +94,7 @@ instance Show ValueType where
   show VTStr  = "C-Str"
   show VTBool = "CBool"
   show VTAtom = "CAtom"
+  show VTArr  = "CArr"
   show VTErr  = "C-Err"
 
 instance TextShow ValueType where
@@ -97,4 +103,5 @@ instance TextShow ValueType where
   showb VTStr  = fromLazyText "C-Str"
   showb VTBool = fromLazyText "CBool"
   showb VTAtom = fromLazyText "CAtom"
+  showb VTArr  = fromLazyText "C-Arr"
   showb VTErr  = fromLazyText "C-Err"
