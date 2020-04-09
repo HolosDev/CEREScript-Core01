@@ -30,7 +30,7 @@ instance TextShow VariablePosition where
 -- instance Ord VariablePosition
 
 
-data VariablePlace = AtWorld | AtTime | AtNWorld | AtNTime | AtDict | AtNDict | AtVars | AtNVars | AtLocal | AtNLocal | AtCache | AtNCache | AtHere | AtNull deriving (Eq, Ord, Enum, Bounded, Read)
+data VariablePlace = AtWorld | AtTime | AtNWorld | AtNTime | AtDict | AtNDict | AtVars | AtNVars | AtLVars | AtLNVars | AtLTemp | AtLNTemp | AtHere | AtNull deriving (Eq, Ord, Enum, Bounded, Read)
 
 instance Show VariablePlace where
   show = TL.unpack . showtl
@@ -44,10 +44,10 @@ instance TextShow VariablePlace where
   showb AtNDict  = fromLazyText "AtNDict"
   showb AtVars   = fromLazyText "AtVars"
   showb AtNVars  = fromLazyText "AtNVars"
-  showb AtLocal  = fromLazyText "AtLocal"
-  showb AtNLocal = fromLazyText "AtNLocal"
-  showb AtCache  = fromLazyText "AtCache"
-  showb AtNCache = fromLazyText "AtNCache"
+  showb AtLVars  = fromLazyText "AtLVars"
+  showb AtLNVars = fromLazyText "AtLNVars"
+  showb AtLTemp  = fromLazyText "AtLTemp"
+  showb AtLNTemp = fromLazyText "AtLNTemp"
   showb AtHere   = fromLazyText "AtHere"
   showb AtNull   = fromLazyText "AtNull"
 
