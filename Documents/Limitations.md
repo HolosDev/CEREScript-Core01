@@ -18,5 +18,7 @@ Limitations
 
 ### SGRipt Only
 
-* Historic Variable and DB
+* Historical Variable and DB
+  * partially covered in CEREScript-Core, because of MaterialBalancer
   * Time-based index (VariablePosition)
+* Branching

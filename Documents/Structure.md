@@ -84,8 +84,8 @@ This indicates where the variables is stored.
 
 * Variable Location
   * Here - Not stored in Variable, but presented in instruction itself
-  * Cache - Shared within a Spool at a time-slot
-  * Local - Shared within a Spool, can inherit to its successor
+  * LocalTemp - Shared within a Spool at a time-slot
+  * LocalVars - Shared within a Spool, can inherit to its successor
   * Time - Shared within a time-slot
   * World - Global Storage
   * Dict - Dictionary
