@@ -9,6 +9,7 @@ Changelog for CEREScript-Core01
   * Ternary instruction: f(A,B) -> C
 * Add structured data type
 * Add array type
+* Add functions converting between `VI*` <=> `PVI*`
 
 ### Change
 
@@ -25,6 +26,9 @@ Change type of `CERES` and `Value` as parametric to allow to change type of Str,
 
 ### Changed
 * Add more `VariablePlace` and rename of `Local*`
+
+### Removed
+* Remove useless Read deriving
 
 
 ## 0.12.0.0 -- 2020-04-06

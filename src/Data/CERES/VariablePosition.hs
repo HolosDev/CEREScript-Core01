@@ -16,7 +16,7 @@ import           Data.CERES.Value
 -- Variable Position for abstract variable's real place
 data VariablePosition
   = VP VariablePlace VariableIndex
-  deriving (Eq, Ord, Read)
+  deriving (Eq, Ord)
 
 instance Show VariablePosition where
   show = TL.unpack . showtl
@@ -53,7 +53,7 @@ instance TextShow VariablePlace where
   showb AtNull   = fromLazyText "AtNull"
 
 
-data VariableIndex = VII Idx | VIN NKey | VIIT Idx Time | VINT NKey Time | VIIRI Idx [Idx] | VINRI NKey [Idx] | VIIRIT Idx [Idx] Time | VINRIT NKey [Idx] Time | VIV Value | VIAtom | VINull | PVII Idx | PVIN NKey | PVIT Time deriving (Eq, Ord, Read)
+data VariableIndex = VII Idx | VIN NKey | VIIT Idx Time | VINT NKey Time | VIIRI Idx [Idx] | VINRI NKey [Idx] | VIIRIT Idx [Idx] Time | VINRIT NKey [Idx] Time | VIV Value | VIAtom | VINull | PVII Idx | PVIN NKey | PVIT Time deriving (Eq, Ord)
 
 instance Show VariableIndex where
   show = TL.unpack . showtl

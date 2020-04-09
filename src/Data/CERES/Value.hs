@@ -43,7 +43,7 @@ data Value
   | AtomValue
   | ArrValue { aV :: Array Value}
   | ErrValue { errMessage :: Message }
-  deriving (Eq, Ord, Read)
+  deriving (Eq, Ord)
 
 instance Show Value where
   show = TL.unpack . showtl

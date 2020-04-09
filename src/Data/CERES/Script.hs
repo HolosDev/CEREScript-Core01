@@ -50,7 +50,7 @@ data CERES
   | CRSSIControl        VPosition VPosition
   -- | SIInit <SpoolID> <Given SIName> <where initiated SI ID store>
   | CRSSIInit           VPosition VPosition VPosition
-  deriving (Eq, Ord, Show, Read)
+  deriving (Eq, Ord, Show)
 
 data CERESOperator
   = COAAdd
