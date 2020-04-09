@@ -5,6 +5,7 @@ import qualified Data.IntMap                   as IM
 import           Data.Text.Lazy                 ( Text )
 import qualified Data.Text.Lazy                as TL
 import           Data.Trie.Text                 ( Trie )
+import           Data.Trie.Text                as Trie
 
 import           TextShow
 
@@ -15,6 +16,7 @@ type ValueMap = IntMap Value
 type ValueNMap = Trie Value
 
 blankVM = IM.empty
+blankVNM = Trie.empty
 
 data ValueTyper = ValueTyper
   { valueTyperName :: Name
