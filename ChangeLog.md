@@ -18,6 +18,14 @@ Changelog for CEREScript-Core01
 Change type of `CERES` and `Value` as parametric to allow to change type of Str, etc.
 
 
+## 0.14.0.0 -- 2020-04-10
+
+### Added
+* Add new `VariablePlace` `AtTricky` for special variable such as `WorldTime`, `siID`, etc.
+* Add new Array type `Value`
+* Add new partial `VariableIndex` for Array type
+
+
 ## 0.13.0.0 -- 2020-04-09
 
 ### Added

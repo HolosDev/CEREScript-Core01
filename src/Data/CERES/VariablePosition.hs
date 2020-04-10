@@ -53,27 +53,49 @@ instance TextShow VariablePlace where
   showb AtNull   = fromLazyText "AtNull"
 
 
-data VariableIndex = VII Idx | VIN NKey | VIIT Idx Time | VINT NKey Time | VIIRI Idx [Idx] | VINRI NKey [Idx] | VIIRIT Idx [Idx] Time | VINRIT NKey [Idx] Time | VIV Value | VIAtom | VINull | PVII Idx | PVIN NKey | PVIT Time deriving (Eq, Ord)
+data VariableIndex
+  = VII Idx | VIN NKey | VIIT Idx Time | VINT NKey Time
+  | VIIRI Idx [Idx] | VINRI NKey [Idx] | VIIRIT Idx [Idx] Time | VINRIT NKey [Idx] Time
+  | VIV Value | VIAtom | VINull
+  | PVII Idx | PVIN NKey | PVIT Time
+  | PVIIRI Idx [Idx] | PVINRI NKey [Idx] | PVIIRIT Idx [Idx] Time | PVINRIT NKey [Idx] Time
+  deriving (Eq, Ord)
 
 instance Show VariableIndex where
   show = TL.unpack . showtl
 
 instance TextShow VariableIndex where
-  showb (VII idx ) = fromLazyText "VII=" <> showb idx
-  showb (VIN nKey) = fromLazyText "VIN=" <> fromText nKey
-  showb (VIIT idx time) =
-    fromLazyText "VIIT=" <> showb idx <> singleton ':' <> showb time
-  showb (VINT nKey time) =
-    fromLazyText "VINT=" <> fromText nKey <> singleton ':' <> showb time
-  showb (VIIRI idx indices) = fromLazyText "VIIRI=" <> showb idx <> singleton ':' <> showb indices
-  showb (VINRI nKey indices) = fromLazyText "VINRI=" <> fromText nKey <> singleton ':' <> showb indices
-  showb (VIIRIT idx indices time) =
-    fromLazyText "VIIRIT=" <> showb idx <> singleton ':' <> showb indices <> singleton ':' <> showb time
-  showb (VINRIT nKey indices time) =
-    fromLazyText "VINRIT=" <> fromText nKey <> singleton ':' <> showb indices <> singleton ':' <> showb time
-  showb (VIV value) = fromLazyText "VIV=" <> showb value
-  showb VIAtom      = fromLazyText "VIAtom"
-  showb VINull      = fromLazyText "VINull"
-  showb (PVII idx ) = fromLazyText "PVII=" <> showb idx
-  showb (PVIN nKey) = fromLazyText "PVIN=" <> fromText nKey
-  showb (PVIT time) = fromLazyText "PVIT=" <> showb time
+  showb (VII idx                 )  = showb1 "VII" idx
+  showb (VIN nKey                )  = showb1 "VIN" nKey
+  showb (VIIT  idx  time         )  = showb2 "VIIT" idx time
+  showb (VINT  nKey time         )  = showb2 "VINT" nKey time
+  showb (VIIRI idx  indices      )  = showb2 "VIIRI" idx indices
+  showb (VINRI nKey indices      )  = showb2 "VINRI" nKey indices
+  showb (VIIRIT idx  indices time)  = showb3 "VIIRIT" idx indices time
+  showb (VINRIT nKey indices time)  = showb3 "VINRIT" nKey indices time
+  showb (VIV value               )  = showb1 "VIV" value
+  showb VIAtom                      = fromLazyText "VIAtom"
+  showb VINull                      = fromLazyText "VINull"
+  showb (PVII idx                 ) = showb1 "PVII" idx
+  showb (PVIN nKey                ) = showb1 "PVIN" nKey
+  showb (PVIT time                ) = showb1 "PVIT" time
+  showb (PVIIRI idx  indices      ) = showb2 "PVIIRI" idx indices
+  showb (PVINRI nKey indices      ) = showb2 "PVINRI" nKey indices
+  showb (PVIIRIT idx  indices time) = showb3 "PVIIRIT" idx indices time
+  showb (PVINRIT nKey indices time) = showb3 "PVINRIT" nKey indices time
+
+
+showb1 :: TextShow a => Text -> a -> Builder
+showb1 n a = fromLazyText n <> singleton '=' <> showb a
+showb2 :: (TextShow a, TextShow b) => Text -> a -> b -> Builder
+showb2 n a b =
+  fromLazyText n <> singleton '=' <> showb a <> singleton ':' <> showb b
+showb3 :: (TextShow a, TextShow b, TextShow c) => Text -> a -> b -> c -> Builder
+showb3 n a b c =
+  fromLazyText n
+    <> singleton '='
+    <> showb a
+    <> singleton ':'
+    <> showb b
+    <> singleton ':'
+    <> showb c
