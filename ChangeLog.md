@@ -8,14 +8,26 @@ Changelog for CEREScript-Core01
   * Binary instruction: f(A,B) -> A
   * Ternary instruction: f(A,B) -> C
 * Add structured data type
-* Add array type
 * Add functions converting between `VI*` <=> `PVI*`
+* Add Compatible Instructions for `ArrValue`
+* Add string management/manipulation instructions
+  * Add string replacing instruction
+* Add accessory functions for `VariablePlace` and `VariableIndex` in `VariablePosition`
+* Add Loop Control Instructions
+* Add If & Case Control Instructions
+* Add `Register` VariablePlace
+
 
 ### Change
+* Unify VariablePosition and Value modules to resolve mutual reference for implementing `PtrValue`
+* Change VariableContainer more useful
 
 #### Parametric Data Type
 
-Change type of `CERES` and `Value` as parametric to allow to change type of Str, etc.
+Change the type of `CERES` and `Value` as parametric to allow to change the type of Str, etc.
+
+### Remove
+* Remove unnecessary instructions because of `AtHere`
 
 
 ## 0.14.0.0 -- 2020-04-10
