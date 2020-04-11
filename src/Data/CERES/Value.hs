@@ -7,7 +7,7 @@ import qualified Data.Text.Lazy                as TL
 import           Data.Trie.Text                 ( Trie )
 import           Data.Trie.Text                as Trie
 
-import           TextShow
+import           TextShow                      as TS
 
 import           Data.CERES.Type
 
@@ -61,10 +61,18 @@ instance TextShow Value where
   showb (IntValue i) = fromLazyText "IV<| " <> showb i <> fromLazyText " |>"
   showb (DblValue d) = fromLazyText "DV<| " <> showb d <> fromLazyText " |>"
   showb (StrValue s) =
-    fromLazyText "SV<\"" <> fromLazyText s <> fromLazyText "\">"
+    fromLazyText "SV<| " <> fromLazyText s <> fromLazyText " |>"
   showb (BoolValue b) = fromLazyText "BV<| " <> showb b <> fromLazyText " |>"
   showb AtomValue     = fromLazyText "AV<| - |>"
-  showb (ArrValue a)  = fromLazyText "A[| " <> showb a <> " |]"
+  showb (ArrValue a)  = fromLazyText "A[" <> showbArray a <> "]"
+   where
+    showbArray :: Array Value -> Builder
+    showbArray a =
+      if IM.null a
+        then fromLazyText "||  ||"
+        else IM.foldrWithKey (\i v -> (<> TS.singleton ' ' <> showbElem i v <> TS.fromLazyText " ||")) (TS.fromLazyText "||") a
+    showbElem :: Idx -> Value -> Builder
+    showbElem i v = showb i <> TS.singleton ':' <> showb v
   showb (ErrValue e) =
     fromLazyText "EV<| " <> fromLazyText e <> fromLazyText " |>"
 
@@ -74,7 +82,7 @@ showRawTL (DblValue  d) = showtl d
 showRawTL (StrValue  s) = s
 showRawTL (BoolValue b) = showtl b
 showRawTL AtomValue     = "Atom"
-showRawTL (ArrValue a)  = showtl a
+showRawTL (ArrValue a)  = showtl . IM.toList $ a
 showRawTL (ErrValue e)  = e
 
 

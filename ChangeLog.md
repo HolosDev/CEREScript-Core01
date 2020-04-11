@@ -16,6 +16,7 @@ Changelog for CEREScript-Core01
 * Add Loop Control Instructions
 * Add If & Case Control Instructions
 * Add `Register` VariablePlace
+* Add `LstValue` and `SetValue`
 
 
 ### Change
@@ -28,6 +29,13 @@ Change the type of `CERES` and `Value` as parametric to allow to change the type
 
 ### Remove
 * Remove unnecessary instructions because of `AtHere`
+
+
+## 0.15.0.0 -- 2020-04-12
+
+### Changed
+* Change representation of `ArrValue`
+* Change container type of `ArrValue`
 
 
 ## 0.14.0.0 -- 2020-04-10
