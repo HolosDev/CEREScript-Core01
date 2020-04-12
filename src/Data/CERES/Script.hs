@@ -36,6 +36,10 @@ data CERES
   | CRSConvertValueBy   VPosition VPosition
   -- | Convert value at VPosition A with a given rule VPosition B
   | CRSConvertValueWith VPosition VPosition
+  -- | Replace StrValue at VPosition A with indicated Value in the StrValue
+  | CRSReplaceText      VPosition
+  -- | Replace StrValue at VPosition A with indicated Value in the StrValue to VPosition B
+  | CRSReplaceTextTo    VPosition VPosition
   -- | Generate Random Value at VPosition A as a ValueType
   | CRSRandom           VPosition ValueType
   -- | Generate Random Value at VPosition A as a type VPosition B
@@ -67,6 +71,8 @@ instance TextShow CERES where
   showb (CRSConvertValue     vp  vType) = showbCS2 "ConvertValue" vp vType
   showb (CRSConvertValueBy   vpA vpB  ) = showbCS2 "ConvertValueBy" vpA vpB
   showb (CRSConvertValueWith vpA vpB  ) = showbCS2 "ConvertValueWith" vpA vpB
+  showb (CRSReplaceText vp            ) = showbCS1 "ReplaceText" vp
+  showb (CRSReplaceTextTo vpA vpB     ) = showbCS2 "ReplaceTextTo" vpA vpB
   showb (CRSRandom        vp  vType   ) = showbCS2 "Random" vp vType
   showb (CRSRandomBy      vpA vpB     ) = showbCS2 "RandomBy" vpA vpB
   showb (CRSRandomWith vpA vtB vpC vpD vpE) =

@@ -33,6 +33,9 @@ Change the type of `CERES` and `Value` as parametric to allow to change the type
 
 ## 0.15.1.0 -- 2020-04-13
 
+### Added
+* Add `ReplaceText` and `ReplaceTextTo` instructions
+
 ### Changed
 * Change & Add `Show` and `TextShow` instance for `CERES`
 
