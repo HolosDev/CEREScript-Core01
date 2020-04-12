@@ -102,7 +102,7 @@ instance Show ValueType where
   show VTStr  = "C-Str"
   show VTBool = "CBool"
   show VTAtom = "CAtom"
-  show VTArr  = "CArr"
+  show VTArr  = "C-Arr"
   show VTErr  = "C-Err"
 
 instance TextShow ValueType where
