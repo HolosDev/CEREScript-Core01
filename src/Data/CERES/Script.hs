@@ -2,10 +2,12 @@ module Data.CERES.Script where
 
 
 import qualified Data.Text                     as T
+import qualified Data.Text.Lazy                as TL
 
 import           TextShow
 
 import           Data.CERES.Type
+import           Data.CERES.Util
 import           Data.CERES.Value
 import           Data.CERES.VariablePosition
 
@@ -50,7 +52,32 @@ data CERES
   | CRSSIControl        VPosition VPosition
   -- | SIInit <SpoolID> <Given SIName> <where initiated SI ID store>
   | CRSSIInit           VPosition VPosition VPosition
-  deriving (Eq, Ord, Show)
+  deriving (Eq, Ord)
+
+instance Show CERES where
+  show = TL.unpack . showtl
+
+instance TextShow CERES where
+  showb (CRSInitVariable   vpA vpB    ) = showbCS2 "InitVariable" vpA vpB
+  showb (CRSInitVariableAt vpA vpB    ) = showbCS2 "InitVariableAt" vpA vpB
+  showb (CRSSetValue       vpA vpB    ) = showbCS2 "SetValue" vpA vpB
+  showb (CRSDeleteVariable vp         ) = showbCS1 "DeleteVariable" vp
+  showb (CRSModifyValue vpA vpB cOper ) = showbCS3 "ModifyValue" vpA vpB cOper
+  showb (CRSCopyValue        vpA vpB  ) = showbCS2 "CopyValue" vpA vpB
+  showb (CRSConvertValue     vp  vType) = showbCS2 "ConvertValue" vp vType
+  showb (CRSConvertValueBy   vpA vpB  ) = showbCS2 "ConvertValueBy" vpA vpB
+  showb (CRSConvertValueWith vpA vpB  ) = showbCS2 "ConvertValueWith" vpA vpB
+  showb (CRSRandom        vp  vType   ) = showbCS2 "Random" vp vType
+  showb (CRSRandomBy      vpA vpB     ) = showbCS2 "RandomBy" vpA vpB
+  showb (CRSRandomWith vpA vtB vpC vpD vpE) =
+    showbCS5 "RandomWith" vpA vtB vpC vpD vpE
+  showb (CRSRandomWithBy vpA vpB vpC vpD vpE) =
+    showbCS5 "RandomWithBy" vpA vpB vpC vpD vpE
+  showb (CRSElapseTime vpA vpB) = showbCS2 "ElapseTime" vpA vpB
+  showb (CRSSPControl vp      ) = showbCS1 "SPControl" vp
+  showb (CRSSIControl vpA vpB ) = showbCS2 "SIControl" vpA vpB
+  showb (CRSSIInit vpA vpB vpC) = showbCS3 "SIInit" vpA vpB vpC
+
 
 data CERESOperator
   = COAAdd
@@ -58,11 +85,14 @@ data CERESOperator
   | COASub
   | COADiv
   | COAMod
-  deriving (Eq, Ord, Show, Read)
+  deriving (Eq, Ord, Enum)
+
+instance Show CERESOperator where
+  show = TL.unpack . showtl
 
 instance TextShow CERESOperator where
-  showb COAAdd = fromLazyText "COAAdd"
-  showb COASub = fromLazyText "COASub"
-  showb COAMul = fromLazyText "COAMul"
-  showb COADiv = fromLazyText "COADiv"
-  showb COAMod = fromLazyText "COAMod"
+  showb COAAdd = fromLazyText "Add"
+  showb COASub = fromLazyText "Sub"
+  showb COAMul = fromLazyText "Mul"
+  showb COADiv = fromLazyText "Div"
+  showb COAMod = fromLazyText "Mod"

@@ -31,6 +31,12 @@ Change the type of `CERES` and `Value` as parametric to allow to change the type
 * Remove unnecessary instructions because of `AtHere`
 
 
+## 0.15.1.0 -- 2020-04-13
+
+### Changed
+* Change & Add `Show` and `TextShow` instance for `CERES`
+
+
 ## 0.15.0.0 -- 2020-04-12
 
 ### Changed
