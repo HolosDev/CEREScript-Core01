@@ -10,6 +10,7 @@ import qualified Data.Text.Lazy                as TL
 import           TextShow
 
 import           Data.CERES.Type
+import           Data.CERES.Util
 import           Data.CERES.Value
 
 
@@ -83,19 +84,3 @@ instance TextShow VariableIndex where
   showb (PVINRI nKey indices      ) = showb2 "PVINRI" nKey indices
   showb (PVIIRIT idx  indices time) = showb3 "PVIIRIT" idx indices time
   showb (PVINRIT nKey indices time) = showb3 "PVINRIT" nKey indices time
-
-
-showb1 :: TextShow a => Text -> a -> Builder
-showb1 n a = fromLazyText n <> singleton '=' <> showb a
-showb2 :: (TextShow a, TextShow b) => Text -> a -> b -> Builder
-showb2 n a b =
-  fromLazyText n <> singleton '=' <> showb a <> singleton ':' <> showb b
-showb3 :: (TextShow a, TextShow b, TextShow c) => Text -> a -> b -> c -> Builder
-showb3 n a b c =
-  fromLazyText n
-    <> singleton '='
-    <> showb a
-    <> singleton ':'
-    <> showb b
-    <> singleton ':'
-    <> showb c
