@@ -260,15 +260,6 @@ data Value
 instance Show Value where
   show = toString . showb
 
-showRaw :: Value -> String
-showRaw (IntValue  i) = show i
-showRaw (DblValue  d) = show d
-showRaw (StrValue  s) = TL.unpack s
-showRaw (BoolValue b) = show b
-showRaw AtomValue     = "Atom"
-showRaw (ArrValue a)  = show a
-showRaw (ErrValue e)  = TL.unpack e
-
 instance TextShow Value where
   showb (IntValue i) = fromLazyText "IV<| " <> showb i <> fromLazyText " |>"
   showb (DblValue d) = fromLazyText "DV<| " <> showb d <> fromLazyText " |>"
@@ -289,6 +280,9 @@ instance TextShow Value where
     showbElem i v = showb i <> TS.singleton ':' <> showb v
   showb (ErrValue e) =
     fromLazyText "EV<| " <> fromLazyText e <> fromLazyText " |>"
+
+showRaw :: Value -> String
+showRaw = TL.unpack . showRawTL
 
 showRawTL :: Value -> Text
 showRawTL (IntValue  i) = showtl i
