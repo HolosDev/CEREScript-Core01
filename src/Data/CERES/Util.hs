@@ -98,3 +98,75 @@ showbCS6 n a b c d e f =
     <> showb e
     <> singleton ' '
     <> showb f
+showbCS7
+  :: ( TextShow a
+     , TextShow b
+     , TextShow c
+     , TextShow d
+     , TextShow e
+     , TextShow f
+     , TextShow g
+     )
+  => Text
+  -> a
+  -> b
+  -> c
+  -> d
+  -> e
+  -> f
+  -> g
+  -> Builder
+showbCS7 n a b c d e f g =
+  fromLazyText n
+    <> singleton ' '
+    <> showb a
+    <> singleton ' '
+    <> showb b
+    <> singleton ' '
+    <> showb c
+    <> singleton ' '
+    <> showb d
+    <> singleton ' '
+    <> showb e
+    <> singleton ' '
+    <> showb f
+    <> singleton ' '
+    <> showb g
+showbCS8
+  :: ( TextShow a
+     , TextShow b
+     , TextShow c
+     , TextShow d
+     , TextShow e
+     , TextShow f
+     , TextShow g
+     , TextShow h
+     )
+  => Text
+  -> a
+  -> b
+  -> c
+  -> d
+  -> e
+  -> f
+  -> g
+  -> h
+  -> Builder
+showbCS8 n a b c d e f g h =
+  fromLazyText n
+    <> singleton ' '
+    <> showb a
+    <> singleton ' '
+    <> showb b
+    <> singleton ' '
+    <> showb c
+    <> singleton ' '
+    <> showb d
+    <> singleton ' '
+    <> showb e
+    <> singleton ' '
+    <> showb f
+    <> singleton ' '
+    <> showb g
+    <> singleton ' '
+    <> showb h
