@@ -9,11 +9,10 @@ import qualified Data.Text.Lazy.Read           as TL
 
 import           TextShow
 
-import           Data.CERES.Script
 import           Data.CERES.Operator
 import           Data.CERES.Type
-import           Data.CERES.Value
-import           Data.CERES.Value.Error
+import           Data.CERES.Data
+import           Data.CERES.Data.Error
 
 
 -- TODO: Retry with https://phab.quietjoon.net/T178

@@ -1,4 +1,4 @@
-module Data.CERES.Value.Error where
+module Data.CERES.Data.Error where
 
 import           Data.Text.Lazy                 ( Text )
 import qualified Data.Text.Lazy                as TL
@@ -6,7 +6,7 @@ import qualified Data.Text.Lazy                as TL
 import           TextShow
 
 import           Data.CERES.Type
-import           Data.CERES.Value
+import           Data.CERES.Data
 
 
 errValueWith2 :: (TextShow a, TextShow b) => Name -> Message -> a -> b -> Value

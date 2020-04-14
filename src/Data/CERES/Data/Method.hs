@@ -1,10 +1,10 @@
-module Data.CERES.Value.Method where
+module Data.CERES.Data.Method where
 
 import           Data.Text.Lazy                 ( Text )
 import qualified Data.Text.Lazy                as TL
 
 import           Data.CERES.Type
-import           Data.CERES.Value
+import           Data.CERES.Data
 
 
 getInt :: Value -> Int
@@ -22,6 +22,9 @@ getBool v             = error $ "[ERROR]<getBool> Given wrong type: " ++ show v
 getAtom :: Value -> Atom
 getAtom AtomValue = Atom
 getAtom v         = error $ "[ERROR]<getAtom> Given wrong type: " ++ show v
+getArr :: Value -> Array Value
+getArr (ArrValue a) = a
+getArr v            = error $ "[ERROR]<getArr> Given wrong type: " ++ show v
 getErr :: Value -> Message
 getErr (ErrValue e) = e
 getErr v            = error $ "[ERROR]<getErr> Given wrong type: " ++ show v
@@ -34,4 +37,5 @@ getValueType v = case v of
   (StrValue  _) -> VTStr
   (BoolValue _) -> VTBool
   AtomValue     -> VTAtom
+  (ArrValue _)  -> VTArr
   (ErrValue _)  -> VTErr
