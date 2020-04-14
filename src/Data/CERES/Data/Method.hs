@@ -22,6 +22,9 @@ getBool v             = error $ "[ERROR]<getBool> Given wrong type: " ++ show v
 getAtom :: Value -> Atom
 getAtom AtomValue = Atom
 getAtom v         = error $ "[ERROR]<getAtom> Given wrong type: " ++ show v
+getPtr :: Value -> VariablePosition
+getPtr (PtrValue vp) = vp
+getPtr v             = error $ "[ERROR]<getPtr> Given wrong type: " ++ show v
 getArr :: Value -> Array Value
 getArr (ArrValue a) = a
 getArr v            = error $ "[ERROR]<getArr> Given wrong type: " ++ show v
@@ -37,5 +40,6 @@ getValueType v = case v of
   (StrValue  _) -> VTStr
   (BoolValue _) -> VTBool
   AtomValue     -> VTAtom
+  (PtrValue _)  -> VTPtr
   (ArrValue _)  -> VTArr
   (ErrValue _)  -> VTErr

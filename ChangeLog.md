@@ -31,6 +31,12 @@ Change the type of `CERES` and `Value` as parametric to allow to change the type
 * Remove unnecessary instructions because of `AtHere`
 
 
+## 0.16.1.0 -- 2020-04-14
+
+### Added
+* Implement type and functions for Pointer `Value` type `PtrValue`
+
+
 ## 0.16.0.0 -- 2020-04-14
 
 ### Changed

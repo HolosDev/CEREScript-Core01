@@ -172,7 +172,7 @@ instance TextShow VariablePosition where
 -------------------------------- VariablePlace --------------------------------
 
 data VariablePlace
-  = AtTricky
+  = AtTricky | AtPtr
   | AtWorld | AtTime | AtNWorld | AtNTime
   | AtDict | AtNDict | AtVars | AtNVars
   | AtLVars | AtLNVars | AtLTemp | AtLNTemp
@@ -184,6 +184,7 @@ instance Show VariablePlace where
 
 instance TextShow VariablePlace where
   showb AtTricky = fromLazyText "AtTricky"
+  showb AtPtr    = fromLazyText "AtPtr"
   showb AtWorld  = fromLazyText "AtWorld"
   showb AtTime   = fromLazyText "AtTime"
   showb AtNWorld = fromLazyText "AtNWorld"
@@ -207,7 +208,7 @@ data VariableIndex
   = VII Idx | VIN NKey | VIpN NKey | VIIT Idx Time | VINT NKey Time | VIpNT NKey Time
   | VIIRI Idx [Idx] | VINRI NKey [Idx] | VIpNRI NKey [Idx]
   | VIIRIT Idx [Idx] Time | VINRIT NKey [Idx] Time | VIpNRIT NKey [Idx] Time
-  | VIV Value | VIAtom | VINull
+  | VIV Value | VIAtom | VINull | VIPtr VariablePosition
   | PVII Idx | PVIN NKey | PVIpN NKey | PVIT Time
   | PVIIRI Idx [Idx] | PVINRI NKey [Idx] | PVIpNRI NKey [Idx]
   | PVIIRIT Idx [Idx] Time | PVINRIT NKey [Idx] Time | PVIpNRIT NKey [Idx] Time
@@ -232,6 +233,7 @@ instance TextShow VariableIndex where
   showb (VIV value                )  = showb1 "VIV" value
   showb VIAtom                       = fromLazyText "VIAtom"
   showb VINull                       = fromLazyText "VINull"
+  showb (VIPtr vp                  ) = showb1 "VIPtr" vp
   showb (PVII  idx                 ) = showb1 "PVII" idx
   showb (PVIN  nKey                ) = showb1 "PVIN" nKey
   showb (PVIpN nKey                ) = showb1 "PVIpN" nKey
@@ -254,6 +256,7 @@ data Value
   | BoolValue { bV :: Bool }
   | AtomValue
   | ArrValue { aV :: Array Value}
+  | PtrValue { pV :: VariablePosition }
   | ErrValue { errMessage :: Message }
   deriving (Eq, Ord)
 
@@ -267,6 +270,7 @@ instance TextShow Value where
     fromLazyText "SV<| " <> fromLazyText s <> fromLazyText " |>"
   showb (BoolValue b) = fromLazyText "BV<| " <> showb b <> fromLazyText " |>"
   showb AtomValue     = fromLazyText "AV<| - |>"
+  showb (PtrValue vp) = fromLazyText "PV<| " <> showb vp <> " |>"
   showb (ArrValue a)  = fromLazyText "A[" <> showbArray a <> "]"
    where
     showbArray :: Array Value -> Builder
@@ -290,6 +294,7 @@ showRawTL (DblValue  d) = showtl d
 showRawTL (StrValue  s) = s
 showRawTL (BoolValue b) = showtl b
 showRawTL AtomValue     = "Atom"
+showRawTL (PtrValue vp) = showtl vp
 showRawTL (ArrValue a)  = showtl . IM.toList $ a
 showRawTL (ErrValue e)  = e
 
@@ -303,6 +308,7 @@ data ValueType
   | VTBool
   | VTAtom
   | VTArr
+  | VTPtr
   | VTErr
   deriving (Eq, Ord, Enum, Read)
 
@@ -316,6 +322,7 @@ instance TextShow ValueType where
   showb VTBool = fromLazyText "CBool"
   showb VTAtom = fromLazyText "CAtom"
   showb VTArr  = fromLazyText "C-Arr"
+  showb VTPtr  = fromLazyText "C-Ptr"
   showb VTErr  = fromLazyText "C-Err"
 
 
