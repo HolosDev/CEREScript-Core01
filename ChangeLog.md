@@ -31,6 +31,17 @@ Change the type of `CERES` and `Value` as parametric to allow to change the type
 * Remove unnecessary instructions because of `AtHere`
 
 
+## 0.15.2.0 -- 2020-04-14
+
+### Added
+* Add `CERESOperator` for handling registers
+* Add a instruction `Noop`
+* Addd Extensibility instructions for CEREScript
+  * Messages for to an Interpreter
+  * Reserved for extensibility
+* Add a `VariableIndex` series for partial `NKey` matching
+
+
 ## 0.15.1.0 -- 2020-04-13
 
 ### Added
