@@ -56,6 +56,8 @@ data CERES
   | CRSSIControl        VPosition VPosition
   -- | SIInit <SpoolID> <Given SIName> <where initiated SI ID store>
   | CRSSIInit           VPosition VPosition VPosition
+  -- | No-Op
+  | CRSNoop
   deriving (Eq, Ord)
 
 instance Show CERES where
@@ -83,6 +85,7 @@ instance TextShow CERES where
   showb (CRSSPControl vp      ) = showbCS1 "SPControl" vp
   showb (CRSSIControl vpA vpB ) = showbCS2 "SIControl" vpA vpB
   showb (CRSSIInit vpA vpB vpC) = showbCS3 "SIInit" vpA vpB vpC
+  showb CRSNoop = fromLazyText "Noop"
 
 
 data CERESOperator
