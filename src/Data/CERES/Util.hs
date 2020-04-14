@@ -19,6 +19,141 @@ showb3 n a b c =
     <> showb b
     <> singleton ':'
     <> showb c
+showb4
+  :: (TextShow a, TextShow b, TextShow c, TextShow d)
+  => Text
+  -> a
+  -> b
+  -> c
+  -> d
+  -> Builder
+showb4 n a b c d =
+  fromLazyText n
+    <> singleton '='
+    <> showb a
+    <> singleton ':'
+    <> showb b
+    <> singleton ':'
+    <> showb c
+    <> singleton ':'
+    <> showb d
+showb5
+  :: (TextShow a, TextShow b, TextShow c, TextShow d, TextShow e)
+  => Text
+  -> a
+  -> b
+  -> c
+  -> d
+  -> e
+  -> Builder
+showb5 n a b c d e =
+  fromLazyText n
+    <> singleton '='
+    <> showb a
+    <> singleton ':'
+    <> showb b
+    <> singleton ':'
+    <> showb c
+    <> singleton ':'
+    <> showb d
+    <> singleton ':'
+    <> showb e
+showb6
+  :: (TextShow a, TextShow b, TextShow c, TextShow d, TextShow e, TextShow f)
+  => Text
+  -> a
+  -> b
+  -> c
+  -> d
+  -> e
+  -> f
+  -> Builder
+showb6 n a b c d e f =
+  fromLazyText n
+    <> singleton '='
+    <> showb a
+    <> singleton ':'
+    <> showb b
+    <> singleton ':'
+    <> showb c
+    <> singleton ':'
+    <> showb d
+    <> singleton ':'
+    <> showb e
+    <> singleton ':'
+    <> showb f
+showb7
+  :: ( TextShow a
+     , TextShow b
+     , TextShow c
+     , TextShow d
+     , TextShow e
+     , TextShow f
+     , TextShow g
+     )
+  => Text
+  -> a
+  -> b
+  -> c
+  -> d
+  -> e
+  -> f
+  -> g
+  -> Builder
+showb7 n a b c d e f g =
+  fromLazyText n
+    <> singleton '='
+    <> showb a
+    <> singleton ':'
+    <> showb b
+    <> singleton ':'
+    <> showb c
+    <> singleton ':'
+    <> showb d
+    <> singleton ':'
+    <> showb e
+    <> singleton ':'
+    <> showb f
+    <> singleton ':'
+    <> showb g
+showb8
+  :: ( TextShow a
+     , TextShow b
+     , TextShow c
+     , TextShow d
+     , TextShow e
+     , TextShow f
+     , TextShow g
+     , TextShow h
+     )
+  => Text
+  -> a
+  -> b
+  -> c
+  -> d
+  -> e
+  -> f
+  -> g
+  -> h
+  -> Builder
+showb8 n a b c d e f g h =
+  fromLazyText n
+    <> singleton '='
+    <> showb a
+    <> singleton ':'
+    <> showb b
+    <> singleton ':'
+    <> showb c
+    <> singleton ':'
+    <> showb d
+    <> singleton ':'
+    <> showb e
+    <> singleton ':'
+    <> showb f
+    <> singleton ':'
+    <> showb g
+    <> singleton ':'
+    <> showb h
 
 showbCS1 :: TextShow a => Text -> a -> Builder
 showbCS1 n a = fromLazyText n <> singleton ' ' <> showb a
