@@ -31,7 +31,13 @@ Change the type of `CERES` and `Value` as parametric to allow to change the type
 * Remove unnecessary instructions because of `AtHere`
 
 
-## 0.17.0 -- 2020-04-15
+## 0.17.1.0 -- 2020-04-16
+
+### Added
+* Add missing Text Operator
+
+
+## 0.17.0.0 -- 2020-04-15
 
 ### Added
 * Add instructions `Log` and `ParseScript`

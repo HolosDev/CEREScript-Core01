@@ -29,6 +29,11 @@ data CERESOperator
   | COTReplace
   | COTReverse
   | COTJustify
+  | COTLength
+  | COTIsNull
+  | COTIsPrefix
+  | COTIsInfix
+  | COTIsSuffix
   | COT Operator -- Custom Register Operator
   deriving (Eq, Ord)
 
@@ -55,4 +60,9 @@ instance TextShow CERESOperator where
   showb COTReplace = fromLazyText "Replace"
   showb COTReverse = fromLazyText "Reverse"
   showb COTJustify = fromLazyText "Justify"
+  showb COTLength = fromLazyText "Length"
+  showb COTIsNull = fromLazyText "IsNull"
+  showb COTIsPrefix = fromLazyText "IsPrefix"
+  showb COTIsInfix = fromLazyText "IsInfix"
+  showb COTIsSuffix = fromLazyText "IsSuffix"
   showb (COT o)    = fromText o
