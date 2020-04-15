@@ -31,6 +31,16 @@ Change the type of `CERES` and `Value` as parametric to allow to change the type
 * Remove unnecessary instructions because of `AtHere`
 
 
+## 0.17.0 -- 2020-04-15
+
+### Added
+* Add instructions `Log` and `ParseScript`
+* Add `showbCSC*` for `ToInterpreter` and `Extend`
+
+### Changed
+* Redesign `ToInterpreter` and `Extend`
+
+
 ## 0.16.1.0 -- 2020-04-14
 
 ### Added

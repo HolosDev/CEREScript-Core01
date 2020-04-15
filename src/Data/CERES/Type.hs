@@ -10,11 +10,17 @@ import           TextShow.Data.Vector
 
 type Name = Text
 type NKey = T.Text
+type Operator = T.Text
+type Category = T.Text
+type IHeader = T.Text
+type IContent = T.Text
+
 type Str = Text
 type Time = Int
 type ID = Int
 type Idx = Int
 type Message = Text
+
 type Array a = IntMap a
 
 type Branch = T.Text

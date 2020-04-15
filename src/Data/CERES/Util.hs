@@ -5,6 +5,9 @@ import           Data.Text.Lazy                 ( Text )
 import           TextShow
 
 
+import           Data.CERES.Type
+
+
 showb1 :: TextShow a => Text -> a -> Builder
 showb1 n a = fromLazyText n <> singleton '=' <> showb a
 showb2 :: (TextShow a, TextShow b) => Text -> a -> b -> Builder
@@ -305,3 +308,190 @@ showbCS8 n a b c d e f g h =
     <> showb g
     <> singleton ' '
     <> showb h
+
+
+
+showbCSC0 :: IHeader -> IContent -> Builder
+showbCSC0 ih ic = fromText ih <> singleton ' ' <> fromText ic
+showbCSC1 :: TextShow a => IHeader -> IContent -> a -> Builder
+showbCSC1 ih ic a =
+  fromText ih <> singleton ' ' <> fromText ic <> singleton ' ' <> showb a
+showbCSC2
+  :: (TextShow a, TextShow b) => IHeader -> IContent -> a -> b -> Builder
+showbCSC2 ih ic a b =
+  fromText ih
+    <> singleton ' '
+    <> fromText ic
+    <> singleton ' '
+    <> showb a
+    <> singleton ' '
+    <> showb b
+showbCSC3
+  :: (TextShow a, TextShow b, TextShow c)
+  => IHeader
+  -> IContent
+  -> a
+  -> b
+  -> c
+  -> Builder
+showbCSC3 ih ic a b c =
+  fromText ih
+    <> singleton ' '
+    <> fromText ic
+    <> singleton ' '
+    <> showb a
+    <> singleton ' '
+    <> showb b
+    <> singleton ' '
+    <> showb c
+showbCSC4
+  :: (TextShow a, TextShow b, TextShow c, TextShow d)
+  => IHeader
+  -> IContent
+  -> a
+  -> b
+  -> c
+  -> d
+  -> Builder
+showbCSC4 ih ic a b c d =
+  fromText ih
+    <> singleton ' '
+    <> fromText ic
+    <> singleton ' '
+    <> showb a
+    <> singleton ' '
+    <> showb b
+    <> singleton ' '
+    <> showb c
+    <> singleton ' '
+    <> showb d
+showbCSC5
+  :: (TextShow a, TextShow b, TextShow c, TextShow d, TextShow e)
+  => IHeader
+  -> IContent
+  -> a
+  -> b
+  -> c
+  -> d
+  -> e
+  -> Builder
+showbCSC5 ih ic a b c d e =
+  fromText ih
+    <> singleton ' '
+    <> fromText ic
+    <> singleton ' '
+    <> showb a
+    <> singleton ' '
+    <> showb b
+    <> singleton ' '
+    <> showb c
+    <> singleton ' '
+    <> showb d
+    <> singleton ' '
+    <> showb e
+showbCSC6
+  :: (TextShow a, TextShow b, TextShow c, TextShow d, TextShow e, TextShow f)
+  => IHeader
+  -> IContent
+  -> a
+  -> b
+  -> c
+  -> d
+  -> e
+  -> f
+  -> Builder
+showbCSC6 ih ic a b c d e f =
+  fromText ih
+    <> singleton ' '
+    <> fromText ic
+    <> singleton ' '
+    <> showb a
+    <> singleton ' '
+    <> showb b
+    <> singleton ' '
+    <> showb c
+    <> singleton ' '
+    <> showb d
+    <> singleton ' '
+    <> showb e
+    <> singleton ' '
+    <> showb f
+showbCSC7
+  :: ( TextShow a
+     , TextShow b
+     , TextShow c
+     , TextShow d
+     , TextShow e
+     , TextShow f
+     , TextShow g
+     )
+  => IHeader
+  -> IContent
+  -> a
+  -> b
+  -> c
+  -> d
+  -> e
+  -> f
+  -> g
+  -> Builder
+showbCSC7 ih ic a b c d e f g =
+  fromText ih
+    <> singleton ' '
+    <> fromText ic
+    <> singleton ' '
+    <> showb a
+    <> singleton ' '
+    <> showb b
+    <> singleton ' '
+    <> showb c
+    <> singleton ' '
+    <> showb d
+    <> singleton ' '
+    <> showb e
+    <> singleton ' '
+    <> showb f
+    <> singleton ' '
+    <> showb g
+showbCSC8
+  :: ( TextShow a
+     , TextShow b
+     , TextShow c
+     , TextShow d
+     , TextShow e
+     , TextShow f
+     , TextShow g
+     , TextShow h
+     )
+  => IHeader
+  -> IContent
+  -> a
+  -> b
+  -> c
+  -> d
+  -> e
+  -> f
+  -> g
+  -> h
+  -> Builder
+showbCSC8 ih ic a b c d e f g h =
+  fromText ih
+    <> singleton ' '
+    <> fromText ic
+    <> singleton ' '
+    <> showb a
+    <> singleton ' '
+    <> showb b
+    <> singleton ' '
+    <> showb c
+    <> singleton ' '
+    <> showb d
+    <> singleton ' '
+    <> showb e
+    <> singleton ' '
+    <> showb f
+    <> singleton ' '
+    <> showb g
+    <> singleton ' '
+    <> showb h
+

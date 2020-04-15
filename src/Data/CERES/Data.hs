@@ -62,40 +62,48 @@ data CERES
   | CRSSIControl        VPosition VPosition
   -- | SIInit <SpoolID> <Given SIName> <where initiated SI ID store>
   | CRSSIInit           VPosition VPosition VPosition
-  -- | ToInterpreter1 passes one Value at VPosition A
-  | CRSToInterpreter1   VPosition
-  -- | ToInterpreter2 passes one Value at VPosition A and VPosition B
-  | CRSToInterpreter2   VPosition VPosition
-  -- | ToInterpreter3 passes one Value at VPosition A, VPosition B and VPosition C
-  | CRSToInterpreter3   VPosition VPosition VPosition
-  -- | ToInterpreter4 passes one Value at VPosition A, VPosition B, VPosition C and VPosition D
-  | CRSToInterpreter4   VPosition VPosition VPosition VPosition
-  -- | ToInterpreter5 passes one Value at VPosition A, VPosition B, VPosition C, VPosition D and VPosition E
-  | CRSToInterpreter5   VPosition VPosition VPosition VPosition VPosition
-  -- | ToInterpreter6 passes one Value at VPosition A, VPosition B, VPosition C and VPosition D, VPosition E and VPosition F
-  | CRSToInterpreter6   VPosition VPosition VPosition VPosition VPosition VPosition
-  -- | ToInterpreter7 passes one Value at VPosition A, VPosition B, VPosition C and VPosition D, VPosition E, VPosition F and VPosition G
-  | CRSToInterpreter7   VPosition VPosition VPosition VPosition VPosition VPosition VPosition
-  -- | ToInterpreter8 passes one Value at VPosition A, VPosition B, VPosition C and VPosition D, VPosition E, VPosition F, VPosition G and VPosition H
-  | CRSToInterpreter8   VPosition VPosition VPosition VPosition VPosition VPosition VPosition VPosition
-  -- | Extend1 passes one Value at VPosition A
-  | CRSExtend1   VPosition
-  -- | Extend2 passes one Value at VPosition A and VPosition B
-  | CRSExtend2   VPosition VPosition
-  -- | Extend3 passes one Value at VPosition A, VPosition B and VPosition C
-  | CRSExtend3   VPosition VPosition VPosition
-  -- | Extend4 passes one Value at VPosition A, VPosition B, VPosition C and VPosition D
-  | CRSExtend4   VPosition VPosition VPosition VPosition
-  -- | Extend5 passes one Value at VPosition A, VPosition B, VPosition C, VPosition D and VPosition E
-  | CRSExtend5   VPosition VPosition VPosition VPosition VPosition
-  -- | Extend6 passes one Value at VPosition A, VPosition B, VPosition C and VPosition D, VPosition E and VPosition F
-  | CRSExtend6   VPosition VPosition VPosition VPosition VPosition VPosition
-  -- | Extend7 passes one Value at VPosition A, VPosition B, VPosition C and VPosition D, VPosition E, VPosition F and VPosition G
-  | CRSExtend7   VPosition VPosition VPosition VPosition VPosition VPosition VPosition
-  -- | Extend8 passes one Value at VPosition A, VPosition B, VPosition C and VPosition D, VPosition E, VPosition F, VPosition G and VPosition H
-  | CRSExtend8   VPosition VPosition VPosition VPosition VPosition VPosition VPosition VPosition
   -- | No-Op
   | CRSNoop
+  -- | Log a content of VPosition A to VPosition B
+  | CRSLog VPosition VPosition
+  -- | Parse a script text of VPosition A and store the script to VPosition B
+  | CRSParseScript VPosition VPosition
+  -- | ToInterpreter0
+  | CRSToInterpreter0 IHeader IContent
+  -- | ToInterpreter1 passes one Value at VPosition A
+  | CRSToInterpreter1 IHeader IContent VPosition
+  -- | ToInterpreter2 passes one Value at VPosition A and VPosition B
+  | CRSToInterpreter2 IHeader IContent VPosition VPosition
+  -- | ToInterpreter3 passes one Value at VPosition A, VPosition B and VPosition C
+  | CRSToInterpreter3 IHeader IContent VPosition VPosition VPosition
+  -- | ToInterpreter4 passes one Value at VPosition A, VPosition B, VPosition C and VPosition D
+  | CRSToInterpreter4 IHeader IContent VPosition VPosition VPosition VPosition
+  -- | ToInterpreter5 passes one Value at VPosition A, VPosition B, VPosition C, VPosition D and VPosition E
+  | CRSToInterpreter5 IHeader IContent VPosition VPosition VPosition VPosition VPosition
+  -- | ToInterpreter6 passes one Value at VPosition A, VPosition B, VPosition C and VPosition D, VPosition E and VPosition F
+  | CRSToInterpreter6 IHeader IContent VPosition VPosition VPosition VPosition VPosition VPosition
+  -- | ToInterpreter7 passes one Value at VPosition A, VPosition B, VPosition C and VPosition D, VPosition E, VPosition F and VPosition G
+  | CRSToInterpreter7 IHeader IContent VPosition VPosition VPosition VPosition VPosition VPosition VPosition
+  -- | ToInterpreter8 passes one Value at VPosition A, VPosition B, VPosition C and VPosition D, VPosition E, VPosition F, VPosition G and VPosition H
+  | CRSToInterpreter8 IHeader IContent VPosition VPosition VPosition VPosition VPosition VPosition VPosition VPosition
+  -- | Extend0
+  | CRSExtend0 IHeader IContent
+  -- | Extend1 passes one Value at VPosition A
+  | CRSExtend1 IHeader IContent VPosition
+  -- | Extend2 passes one Value at VPosition A and VPosition B
+  | CRSExtend2 IHeader IContent VPosition VPosition
+  -- | Extend3 passes one Value at VPosition A, VPosition B and VPosition C
+  | CRSExtend3 IHeader IContent VPosition VPosition VPosition
+  -- | Extend4 passes one Value at VPosition A, VPosition B, VPosition C and VPosition D
+  | CRSExtend4 IHeader IContent VPosition VPosition VPosition VPosition
+  -- | Extend5 passes one Value at VPosition A, VPosition B, VPosition C, VPosition D and VPosition E
+  | CRSExtend5 IHeader IContent VPosition VPosition VPosition VPosition VPosition
+  -- | Extend6 passes one Value at VPosition A, VPosition B, VPosition C and VPosition D, VPosition E and VPosition F
+  | CRSExtend6 IHeader IContent VPosition VPosition VPosition VPosition VPosition VPosition
+  -- | Extend7 passes one Value at VPosition A, VPosition B, VPosition C and VPosition D, VPosition E, VPosition F and VPosition G
+  | CRSExtend7 IHeader IContent VPosition VPosition VPosition VPosition VPosition VPosition VPosition
+  -- | Extend8 passes one Value at VPosition A, VPosition B, VPosition C and VPosition D, VPosition E, VPosition F, VPosition G and VPosition H
+  | CRSExtend8 IHeader IContent VPosition VPosition VPosition VPosition VPosition VPosition VPosition VPosition
   deriving (Eq, Ord)
 
 instance Show CERES where
@@ -119,36 +127,40 @@ instance TextShow CERES where
     showbCS5 "RandomWith" vpA vtB vpC vpD vpE
   showb (CRSRandomWithBy vpA vpB vpC vpD vpE) =
     showbCS5 "RandomWithBy" vpA vpB vpC vpD vpE
-  showb (CRSElapseTime vpA vpB        ) = showbCS2 "ElapseTime" vpA vpB
-  showb (CRSSPControl vp              ) = showbCS1 "SPControl" vp
-  showb (CRSSIControl vpA vpB         ) = showbCS2 "SIControl" vpA vpB
-  showb (CRSSIInit vpA vpB vpC        ) = showbCS3 "SIInit" vpA vpB vpC
-  showb (CRSToInterpreter1 vpA        ) = showbCS1 "ToInterpreter1" vpA
-  showb (CRSToInterpreter2 vpA vpB    ) = showbCS2 "ToInterpreter2" vpA vpB
-  showb (CRSToInterpreter3 vpA vpB vpC) = showbCS3 "ToInterpreter3" vpA vpB vpC
-  showb (CRSToInterpreter4 vpA vpB vpC vpD) =
-    showbCS4 "ToInterpreter4" vpA vpB vpC vpD
-  showb (CRSToInterpreter5 vpA vpB vpC vpD vpE) =
-    showbCS5 "ToInterpreter5" vpA vpB vpC vpD vpE
-  showb (CRSToInterpreter6 vpA vpB vpC vpD vpE vpF) =
-    showbCS6 "ToInterpreter6" vpA vpB vpC vpD vpE vpF
-  showb (CRSToInterpreter7 vpA vpB vpC vpD vpE vpF vpG) =
-    showbCS7 "ToInterpreter7" vpA vpB vpC vpD vpE vpF vpG
-  showb (CRSToInterpreter8 vpA vpB vpC vpD vpE vpF vpG vpH) =
-    showbCS8 "ToInterpreter8" vpA vpB vpC vpD vpE vpF vpG vpH
-  showb (CRSExtend1 vpA            ) = showbCS1 "Extend1" vpA
-  showb (CRSExtend2 vpA vpB        ) = showbCS2 "Extend2" vpA vpB
-  showb (CRSExtend3 vpA vpB vpC    ) = showbCS3 "Extend3" vpA vpB vpC
-  showb (CRSExtend4 vpA vpB vpC vpD) = showbCS4 "Extend4" vpA vpB vpC vpD
-  showb (CRSExtend5 vpA vpB vpC vpD vpE) =
-    showbCS5 "Extend5" vpA vpB vpC vpD vpE
-  showb (CRSExtend6 vpA vpB vpC vpD vpE vpF) =
-    showbCS6 "Extend6" vpA vpB vpC vpD vpE vpF
-  showb (CRSExtend7 vpA vpB vpC vpD vpE vpF vpG) =
-    showbCS7 "Extend7" vpA vpB vpC vpD vpE vpF vpG
-  showb (CRSExtend8 vpA vpB vpC vpD vpE vpF vpG vpH) =
-    showbCS8 "Extend8" vpA vpB vpC vpD vpE vpF vpG vpH
-  showb CRSNoop = fromLazyText "Noop"
+  showb (CRSElapseTime vpA vpB)               = showbCS2 "ElapseTime" vpA vpB
+  showb (CRSSPControl vp      )               = showbCS1 "SPControl" vp
+  showb (CRSSIControl vpA vpB )               = showbCS2 "SIControl" vpA vpB
+  showb (CRSSIInit vpA vpB vpC)               = showbCS3 "SIInit" vpA vpB vpC
+  showb CRSNoop                               = fromLazyText "Noop"
+  showb (CRSLog            vpA vpB          ) = showbCS2 "Log" vpA vpB
+  showb (CRSParseScript    vpA vpB          ) = showbCS2 "ParseScript" vpA vpB
+  showb (CRSToInterpreter0 iH  iC           ) = showbCSC0 iH iC
+  showb (CRSToInterpreter1 iH iC vpA        ) = showbCSC1 iH iC vpA
+  showb (CRSToInterpreter2 iH iC vpA vpB    ) = showbCSC2 iH iC vpA vpB
+  showb (CRSToInterpreter3 iH iC vpA vpB vpC) = showbCSC3 iH iC vpA vpB vpC
+  showb (CRSToInterpreter4 iH iC vpA vpB vpC vpD) =
+    showbCSC4 iH iC vpA vpB vpC vpD
+  showb (CRSToInterpreter5 iH iC vpA vpB vpC vpD vpE) =
+    showbCSC5 iH iC vpA vpB vpC vpD vpE
+  showb (CRSToInterpreter6 iH iC vpA vpB vpC vpD vpE vpF) =
+    showbCSC6 iH iC vpA vpB vpC vpD vpE vpF
+  showb (CRSToInterpreter7 iH iC vpA vpB vpC vpD vpE vpF vpG) =
+    showbCSC7 iH iC vpA vpB vpC vpD vpE vpF vpG
+  showb (CRSToInterpreter8 iH iC vpA vpB vpC vpD vpE vpF vpG vpH) =
+    showbCSC8 iH iC vpA vpB vpC vpD vpE vpF vpG vpH
+  showb (CRSExtend0 iH iC                ) = showbCSC0 iH iC
+  showb (CRSExtend1 iH iC vpA            ) = showbCSC1 iH iC vpA
+  showb (CRSExtend2 iH iC vpA vpB        ) = showbCSC2 iH iC vpA vpB
+  showb (CRSExtend3 iH iC vpA vpB vpC    ) = showbCSC3 iH iC vpA vpB vpC
+  showb (CRSExtend4 iH iC vpA vpB vpC vpD) = showbCSC4 iH iC vpA vpB vpC vpD
+  showb (CRSExtend5 iH iC vpA vpB vpC vpD vpE) =
+    showbCSC5 iH iC vpA vpB vpC vpD vpE
+  showb (CRSExtend6 iH iC vpA vpB vpC vpD vpE vpF) =
+    showbCSC6 iH iC vpA vpB vpC vpD vpE vpF
+  showb (CRSExtend7 iH iC vpA vpB vpC vpD vpE vpF vpG) =
+    showbCSC7 iH iC vpA vpB vpC vpD vpE vpF vpG
+  showb (CRSExtend8 iH iC vpA vpB vpC vpD vpE vpF vpG vpH) =
+    showbCSC8 iH iC vpA vpB vpC vpD vpE vpF vpG vpH
 
 
 -------------------------------- VariablePosition --------------------------------
