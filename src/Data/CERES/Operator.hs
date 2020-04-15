@@ -15,6 +15,8 @@ data CERESOperator
   | COASub
   | COADiv
   | COAMod
+  | COAEql
+  | COACmp
   | COA Operator -- Custom Arithmetic Operator
   | CORSwp
   | CORMov
@@ -46,6 +48,8 @@ instance TextShow CERESOperator where
   showb COAMul     = fromLazyText "Mul"
   showb COADiv     = fromLazyText "Div"
   showb COAMod     = fromLazyText "Mod"
+  showb COAEql     = fromLazyText "Eql"
+  showb COACmp     = fromLazyText "Cmp"
   showb (COA o)    = fromText o
   showb CORSwp     = fromLazyText "Swp"
   showb CORMov     = fromLazyText "Mov"
