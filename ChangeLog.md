@@ -36,6 +36,8 @@ Change the type of `CERES` and `Value` as parametric to allow to change the type
 ### Added
 * Add instructions `Log` and `ParseScript`
 * Add `showbCSC*` for `ToInterpreter` and `Extend`
+* Add Text Operator
+* Add customizable Operator
 
 ### Changed
 * Redesign `ToInterpreter` and `Extend`
