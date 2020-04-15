@@ -269,6 +269,7 @@ data Value
   | AtomValue
   | ArrValue { aV :: Array Value}
   | PtrValue { pV :: VariablePosition }
+  | ScrValue { cV :: CEREScript }
   | ErrValue { errMessage :: Message }
   deriving (Eq, Ord)
 
@@ -283,7 +284,8 @@ instance TextShow Value where
   showb (BoolValue b) = fromLazyText "BV<| " <> showb b <> fromLazyText " |>"
   showb AtomValue     = fromLazyText "AV<| - |>"
   showb (PtrValue vp) = fromLazyText "PV<| " <> showb vp <> " |>"
-  showb (ArrValue a)  = fromLazyText "A[" <> showbArray a <> "]"
+  showb (ScrValue c ) = fromLazyText "CV<| " <> showb c <> " |>"
+  showb (ArrValue a ) = fromLazyText "A[" <> showbArray a <> "]"
    where
     showbArray :: Array Value -> Builder
     showbArray a = if IM.null a
@@ -307,8 +309,9 @@ showRawTL (StrValue  s) = s
 showRawTL (BoolValue b) = showtl b
 showRawTL AtomValue     = "Atom"
 showRawTL (PtrValue vp) = showtl vp
-showRawTL (ArrValue a)  = showtl . IM.toList $ a
-showRawTL (ErrValue e)  = e
+showRawTL (ArrValue a ) = showtl . IM.toList $ a
+showRawTL (ScrValue c ) = showtl c
+showRawTL (ErrValue e ) = e
 
 
 -------------------------------- ValueType --------------------------------

@@ -28,6 +28,9 @@ getPtr v             = error $ "[ERROR]<getPtr> Given wrong type: " ++ show v
 getArr :: Value -> Array Value
 getArr (ArrValue a) = a
 getArr v            = error $ "[ERROR]<getArr> Given wrong type: " ++ show v
+getScr :: Value -> CEREScript
+getScr (ScrValue c) = c
+getScr v            = error $ "[ERROR]<getScr> Given wrong type: " ++ show v
 getErr :: Value -> Message
 getErr (ErrValue e) = e
 getErr v            = error $ "[ERROR]<getErr> Given wrong type: " ++ show v
