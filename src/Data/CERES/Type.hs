@@ -13,7 +13,7 @@ type NKey = T.Text
 type Operator = T.Text
 type Category = T.Text
 type IHeader = T.Text
-type IContent = T.Text
+type CHeader = T.Text
 
 type Str = Text
 type Time = Int

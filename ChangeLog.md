@@ -34,10 +34,13 @@ This structure should be reflected to Parser.
 * Remove unnecessary instructions because of `AtHere`
 
 
-## 0.17.4.0 -- 2020-04-18
+## 0.18.0.0 -- 2020-04-18
 
 ### Added
 * Implement temporal CEREScript showing functions
+
+### Fixed
+* Fixed `ToInterpreter` and `Extend` instruction structure based on original design
 
 
 ## 0.17.3.0 -- 2020-04-16

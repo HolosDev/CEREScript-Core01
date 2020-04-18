@@ -311,13 +311,12 @@ showbCS8 n a b c d e f g h =
 
 
 
-showbCSC0 :: IHeader -> IContent -> Builder
+showbCSC0 :: IHeader -> CHeader -> Builder
 showbCSC0 ih ic = fromText ih <> singleton ' ' <> fromText ic
-showbCSC1 :: TextShow a => IHeader -> IContent -> a -> Builder
+showbCSC1 :: TextShow a => IHeader -> CHeader -> a -> Builder
 showbCSC1 ih ic a =
   fromText ih <> singleton ' ' <> fromText ic <> singleton ' ' <> showb a
-showbCSC2
-  :: (TextShow a, TextShow b) => IHeader -> IContent -> a -> b -> Builder
+showbCSC2 :: (TextShow a, TextShow b) => IHeader -> CHeader -> a -> b -> Builder
 showbCSC2 ih ic a b =
   fromText ih
     <> singleton ' '
@@ -329,7 +328,7 @@ showbCSC2 ih ic a b =
 showbCSC3
   :: (TextShow a, TextShow b, TextShow c)
   => IHeader
-  -> IContent
+  -> CHeader
   -> a
   -> b
   -> c
@@ -347,7 +346,7 @@ showbCSC3 ih ic a b c =
 showbCSC4
   :: (TextShow a, TextShow b, TextShow c, TextShow d)
   => IHeader
-  -> IContent
+  -> CHeader
   -> a
   -> b
   -> c
@@ -368,7 +367,7 @@ showbCSC4 ih ic a b c d =
 showbCSC5
   :: (TextShow a, TextShow b, TextShow c, TextShow d, TextShow e)
   => IHeader
-  -> IContent
+  -> CHeader
   -> a
   -> b
   -> c
@@ -392,7 +391,7 @@ showbCSC5 ih ic a b c d e =
 showbCSC6
   :: (TextShow a, TextShow b, TextShow c, TextShow d, TextShow e, TextShow f)
   => IHeader
-  -> IContent
+  -> CHeader
   -> a
   -> b
   -> c
@@ -426,7 +425,7 @@ showbCSC7
      , TextShow g
      )
   => IHeader
-  -> IContent
+  -> CHeader
   -> a
   -> b
   -> c
@@ -464,7 +463,7 @@ showbCSC8
      , TextShow h
      )
   => IHeader
-  -> IContent
+  -> CHeader
   -> a
   -> b
   -> c
