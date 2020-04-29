@@ -26,7 +26,7 @@ Also, we provide a basic reference interpreter.
   * + Branching feature
   * + Historic instruction set
 * CEREScript
-  * For CoMPleT Engine / Project Holos
+  * For CoMPleT Engine / Holos Works / PPUZZL Group
   * + Turing-Complete instruction set
 * CERES / Demeter
   * For CERE / Project Chloe
