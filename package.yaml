@@ -1,6 +1,6 @@
-name:                CEREScript-Core01
+name:                CEREScript-SS
 version:             0.18.0.0
-github:              "HolosDev/CEREScript-Core01"
+github:              "HolosDev/CEREScript-SS"
 license:             OtherLicense
 author:              "YongJoon Joe"
 maintainer:          "Holos Works <developer@holos.dev>"
@@ -10,7 +10,7 @@ extra-source-files:
 - README.md
 - ChangeLog.md
 
-description:         Please see the README on GitHub at <https://github.com/HolosDev/CEREScript-Core01#readme>
+description:         Please see the README on GitHub at <https://github.com/HolosDev/CEREScript-SS#readme>
 
 dependencies:
 - base >= 4.7 && < 5
@@ -40,7 +40,7 @@ tests:
     - -rtsopts
     - -with-rtsopts=-N
     dependencies:
-    - CEREScript-Core01
+    - CEREScript-SS
     - HUnit
     - QuickCheck
     - silently

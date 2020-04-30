@@ -1,4 +1,4 @@
-Changelog for CEREScript-Core01
+Changelog for CEREScript-SuperSet
 ====
 
 ## Unreleased
@@ -12,26 +12,16 @@ Changelog for CEREScript-Core01
 * Add If & Case Control Instructions
 * Add `LstValue` and `SetValue`
 
-
 ### Change
 * Change VariableContainer more useful
-
-#### Parametric Data Type
-
-Change the type of `CERES` and `Value` as parametric to allow to change the type of Str, etc.
-
-#### Parametric CERES definition
-
-Currently, CEREScript defines interpreter dependent instructions.
-However, this is not a good approach even CEREScript-Core would branch CEREScript, SGript, and etc.
-
-Then, how about using parametric CEREScript like `CERES a b`?
-For example, CEREScript-Core01-BI could take it as `CERES BIIHeader BIIDescriptor`.
-This structure should be reflected to Parser.
-
+* Overhaul to split framework and implementation by parametric approach
+  * Framework goes ArchCEREScript
+  * CEREScript-SuperSet is now for experimental implementation
 
 ### Remove
 * Remove unnecessary instructions because of `AtHere`
+
+
 
 
 ## 0.18.0.0 -- 2020-04-18
