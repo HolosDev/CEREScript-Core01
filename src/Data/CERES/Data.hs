@@ -31,9 +31,15 @@ data CERES
   | CRSSetValue         VPosition VPosition
   -- | Delete Variable at VPosition A
   | CRSDeleteVariable   VPosition
-  -- | Modify Value at VPosition A by CERESOperator with Value at VPosition B
-  | CRSModifyValue      VPosition VPosition CERESOperator
-  -- | Copy Value at VPosition B to Variable at VPosition A
+  -- | Check existence of Variable at VPosition A and write the result to VPosition B
+  | CRSCheckVariable   VPosition VPosition
+  -- | Modify Value at VPosition A by CERESOperator
+  | CRSModifyValue1     VPosition CERESOperator
+  -- | Modify Value at VPosition A and Value at VPosition B by CERESOperator
+  | CRSModifyValue2     VPosition VPosition CERESOperator
+  -- | Modify Value at VPosition A and Value at VPosition B by CERESOperator and write the result to VPosition C
+  | CRSModifyValue3     VPosition VPosition CERESOperator VPosition
+  -- | Copy Value at VPosition B to Variable of VPosition A
   | CRSCopyValue        VPosition VPosition
   -- | Convert type of Value at VPosition A as like as Value at VPosition B
   | CRSConvertValue     VPosition ValueType
@@ -41,10 +47,12 @@ data CERES
   | CRSConvertValueBy   VPosition VPosition
   -- | Convert value at VPosition A with a given rule VPosition B
   | CRSConvertValueWith VPosition VPosition
-  -- | Replace StrValue at VPosition A with indicated Value in the StrValue
+  -- | Replace StrValue at VPosition A with indicated Variable in the StrValue
   | CRSReplaceText      VPosition
-  -- | Replace StrValue at VPosition A with indicated Value in the StrValue to VPosition B
+  -- | Replace StrValue at VPosition A with indicated Variable in the StrValue to VPosition B
   | CRSReplaceTextTo    VPosition VPosition
+  -- | Read & Parse StrValue of VPosition A as a PtrValue and write to VPosition B
+  | CRSGetVPosition     VPosition VPosition
   -- | Set PtrValue of VPosition A to VPosition B
   | CRSSetVPosition     VPosition VPosition
   -- | Generate Random Value at VPosition A as a ValueType
@@ -61,11 +69,13 @@ data CERES
   | CRSSPControl        VPosition
   -- | SIControl <{Retain,Forget,Init,Abolish}> <JumpOffset>
   | CRSSIControl        VPosition VPosition
-  -- | SIInit <SpoolID> <Given SIName> <where initiated SI ID store>
-  | CRSSIInit           VPosition VPosition VPosition
+  -- | SIInit <SpoolID> <Given SIName> <where initiated SI ID store> <JumpOffset>
+  | CRSSIInit           VPosition VPosition VPosition VPosition
+  -- | End SI when Value at VPosition A is True. This would be deprecated when Control Flow is implemented.
+  | CRSSIEnd            VPosition
   -- | No-Op
   | CRSNoop
-  -- | Log a content of VPosition A to VPosition B
+  -- | Log to VPosition A with a content of VPosition B
   | CRSLog VPosition VPosition
   -- | Parse a script text of VPosition A and store the script to VPosition B
   | CRSParseScript VPosition VPosition
@@ -115,13 +125,18 @@ instance TextShow CERES where
   showb (CRSInitVariableAt vpA vpB    ) = showbCS2 "InitVariableAt" vpA vpB
   showb (CRSSetValue       vpA vpB    ) = showbCS2 "SetValue" vpA vpB
   showb (CRSDeleteVariable vp         ) = showbCS1 "DeleteVariable" vp
-  showb (CRSModifyValue vpA vpB cOper ) = showbCS3 "ModifyValue" vpA vpB cOper
+  showb (CRSCheckVariable vpA vpB     ) = showbCS2 "CheckVariable" vpA vpB
+  showb (CRSModifyValue1  vpA cOper   ) = showbCS2 "ModifyValue1" vpA cOper
+  showb (CRSModifyValue2 vpA vpB cOper) = showbCS3 "ModifyValue2" vpA vpB cOper
+  showb (CRSModifyValue3 vpA vpB cOper vpC) =
+    showbCS4 "ModifyValue3" vpA vpB cOper vpC
   showb (CRSCopyValue        vpA vpB  ) = showbCS2 "CopyValue" vpA vpB
   showb (CRSConvertValue     vp  vType) = showbCS2 "ConvertValue" vp vType
   showb (CRSConvertValueBy   vpA vpB  ) = showbCS2 "ConvertValueBy" vpA vpB
   showb (CRSConvertValueWith vpA vpB  ) = showbCS2 "ConvertValueWith" vpA vpB
   showb (CRSReplaceText vp            ) = showbCS1 "ReplaceText" vp
   showb (CRSReplaceTextTo vpA vpB     ) = showbCS2 "ReplaceTextTo" vpA vpB
+  showb (CRSGetVPosition  vpA vpB     ) = showbCS2 "GetVPosition" vpA vpB
   showb (CRSSetVPosition  vpA vpB     ) = showbCS2 "SetVPosition" vpA vpB
   showb (CRSRandom        vp  vType   ) = showbCS2 "Random" vp vType
   showb (CRSRandomBy      vpA vpB     ) = showbCS2 "RandomBy" vpA vpB
@@ -129,11 +144,12 @@ instance TextShow CERES where
     showbCS5 "RandomWith" vpA vtB vpC vpD vpE
   showb (CRSRandomWithBy vpA vpB vpC vpD vpE) =
     showbCS5 "RandomWithBy" vpA vpB vpC vpD vpE
-  showb (CRSElapseTime vpA vpB)        = showbCS2 "ElapseTime" vpA vpB
-  showb (CRSSPControl vp      )        = showbCS1 "SPControl" vp
-  showb (CRSSIControl vpA vpB )        = showbCS2 "SIControl" vpA vpB
-  showb (CRSSIInit vpA vpB vpC)        = showbCS3 "SIInit" vpA vpB vpC
-  showb CRSNoop                        = fromLazyText "Noop"
+  showb (CRSElapseTime vpA vpB    )    = showbCS2 "ElapseTime" vpA vpB
+  showb (CRSSPControl vp          )    = showbCS1 "SPControl" vp
+  showb (CRSSIControl vpA vpB     )    = showbCS2 "SIControl" vpA vpB
+  showb (CRSSIInit vpA vpB vpC vpD)    = showbCS4 "SIInit" vpA vpB vpC vpD
+  showb (CRSSIEnd vp              )    = showbCS1 "SIEnd" vp
+  showb CRSNoop                        = fromText "Noop"
   showb (CRSLog         vpA vpB      ) = showbCS2 "Log" vpA vpB
   showb (CRSParseScript vpA vpB      ) = showbCS2 "ParseScript" vpA vpB
   showb (CRSToInterpreter0 cH        ) = showbCSC0 "ToInterpreter0" cH

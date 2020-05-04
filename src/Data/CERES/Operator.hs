@@ -54,7 +54,9 @@ instance TextShow CERESOperator where
   showb COAMod      = fromText "<Mod>"
   showb COAEql      = fromText "<Eql>"
   showb COACmp      = fromText "<Cmp>"
+  showb COANeg      = fromText "<Neg>"
   showb (COA o)     = fromText "<A:" <> fromText o <> singleton '>'
+  showb COBNot      = fromText "<Not>"
   showb CORSwp      = fromText "<Swp>"
   showb CORMov      = fromText "<Mov>"
   showb (COR o)     = fromText "<R:" <> fromText o <> singleton '>'
