@@ -4,8 +4,6 @@ module CERES.Operate where
 import qualified Data.IntMap                   as IM
 import qualified Data.Text                     as T
 import qualified Data.Text.Read                as T
-import qualified Data.Text.Lazy                as TL
-import qualified Data.Text.Lazy.Read           as TL
 
 import           TextShow
 
@@ -34,16 +32,16 @@ coaMod vA             vB             = errValueTEWith2 "coaMod" vA vB
 
 convertValue :: Value -> Value -> Value
 convertValue vA             AtomValue    = AtomValue
-convertValue vA             (StrValue _) = StrValue . showRawTL $ vA
+convertValue vA             (StrValue _) = StrValue . showRawT $ vA
 convertValue (StrValue rVA) (IntValue _) = read
  where
-  eRead = TL.decimal rVA
+  eRead = T.decimal rVA
   read  = case eRead of
     (Right (rV, _)) -> IntValue rV
     (Left  _      ) -> errValueWith2 "convertValue" "Str -> Int" rVA VTInt
 convertValue (StrValue rVA) (DblValue _) = read
  where
-  eRead = TL.rational rVA
+  eRead = T.rational rVA
   read  = case eRead of
     (Right (rV, _)) -> DblValue rV
     (Left  _      ) -> errValueWith2 "convertValue" "Str -> Dbl" rVA VTDbl
@@ -71,7 +69,7 @@ convertValue vA@(BoolValue _) (BoolValue _) = vA
 convertValue vA (BoolValue _) =
   errValueWith2 "convertValue" "Not-Num -> Int" vA VTInt
 convertValue vA@(ErrValue _) (ErrValue _) = vA
-convertValue vA              (ErrValue _) = ErrValue . showRawTL $ vA
+convertValue vA              (ErrValue _) = ErrValue . showRawT $ vA
 convertValue vA              vB           = errValueTEWith2 "convertValue" vA vB
 
 operatorSelector :: CERESOperator -> (Value -> Value -> Value)

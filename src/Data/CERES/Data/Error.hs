@@ -1,7 +1,7 @@
 module Data.CERES.Data.Error where
 
-import           Data.Text.Lazy                 ( Text )
-import qualified Data.Text.Lazy                as TL
+import           Data.Text                      ( Text )
+import qualified Data.Text                     as T
 
 import           TextShow
 
@@ -13,14 +13,14 @@ errValueWith2 :: (TextShow a, TextShow b) => Name -> Message -> a -> b -> Value
 errValueWith2 funcName errorType vA vB = ErrValue errorMessage
  where
   errorMessage =
-    toLazyText
-      $  fromLazyText "[Error]<"
-      <> fromLazyText funcName
-      <> fromLazyText " :=: "
-      <> fromLazyText errorType
-      <> fromLazyText "> "
+    toText
+      $  fromText "[Error]<"
+      <> fromText funcName
+      <> fromText " :=: "
+      <> fromText errorType
+      <> fromText "> "
       <> showb vA
-      <> fromLazyText " and "
+      <> fromText " and "
       <> showb vB
 
 errValueTEWith2 :: (TextShow a, TextShow b) => Name -> a -> b -> Value

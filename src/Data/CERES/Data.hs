@@ -3,9 +3,8 @@ module Data.CERES.Data where
 
 import           Data.IntMap                    ( IntMap )
 import qualified Data.IntMap                   as IM
+import           Data.Text                      ( Text )
 import qualified Data.Text                     as T
-import           Data.Text.Lazy                 ( Text )
-import qualified Data.Text.Lazy                as TL
 import           Data.Trie.Text                 ( Trie )
 import           Data.Trie.Text                as Trie
 
@@ -200,23 +199,23 @@ instance Show VariablePlace where
   show = toString . showb
 
 instance TextShow VariablePlace where
-  showb AtTricky = fromLazyText "AtTricky"
-  showb AtPtr    = fromLazyText "AtPtr"
-  showb AtWorld  = fromLazyText "AtWorld"
-  showb AtTime   = fromLazyText "AtTime"
-  showb AtNWorld = fromLazyText "AtNWorld"
-  showb AtNTime  = fromLazyText "AtNTime"
-  showb AtDict   = fromLazyText "AtDict"
-  showb AtNDict  = fromLazyText "AtNDict"
-  showb AtVars   = fromLazyText "AtVars"
-  showb AtNVars  = fromLazyText "AtNVars"
-  showb AtLVars  = fromLazyText "AtLVars"
-  showb AtLNVars = fromLazyText "AtLNVars"
-  showb AtLTemp  = fromLazyText "AtLTemp"
-  showb AtLNTemp = fromLazyText "AtLNTemp"
-  showb AtReg    = fromLazyText "AtReg"
-  showb AtHere   = fromLazyText "AtHere"
-  showb AtNull   = fromLazyText "AtNull"
+  showb AtTricky = fromText "AtTricky"
+  showb AtPtr    = fromText "AtPtr"
+  showb AtWorld  = fromText "AtWorld"
+  showb AtTime   = fromText "AtTime"
+  showb AtNWorld = fromText "AtNWorld"
+  showb AtNTime  = fromText "AtNTime"
+  showb AtDict   = fromText "AtDict"
+  showb AtNDict  = fromText "AtNDict"
+  showb AtVars   = fromText "AtVars"
+  showb AtNVars  = fromText "AtNVars"
+  showb AtLVars  = fromText "AtLVars"
+  showb AtLNVars = fromText "AtLNVars"
+  showb AtLTemp  = fromText "AtLTemp"
+  showb AtLNTemp = fromText "AtLNTemp"
+  showb AtReg    = fromText "AtReg"
+  showb AtHere   = fromText "AtHere"
+  showb AtNull   = fromText "AtNull"
 
 
 -------------------------------- VariableIndex --------------------------------
@@ -250,8 +249,8 @@ instance TextShow VariableIndex where
   showb (VINRIT  nKey indices time)  = showb3 "VINRIT" nKey indices time
   showb (VIpNRIT nKey indices time)  = showb3 "VIpNRIT" nKey indices time
   showb (VIV value                )  = showb1 "VIV" value
-  showb VIAtom                       = fromLazyText "VIAtom"
-  showb VINull                       = fromLazyText "VINull"
+  showb VIAtom                       = fromText "VIAtom"
+  showb VINull                       = fromText "VINull"
   showb (VIPtr vp                  ) = showb1 "VIPtr" vp
   showb (PVII  idx                 ) = showb1 "PVII" idx
   showb (PVIN  nKey                ) = showb1 "PVIN" nKey
@@ -284,41 +283,39 @@ instance Show Value where
   show = toString . showb
 
 instance TextShow Value where
-  showb (IntValue i) = fromLazyText "IV<| " <> showb i <> fromLazyText " |>"
-  showb (DblValue d) = fromLazyText "DV<| " <> showb d <> fromLazyText " |>"
-  showb (StrValue s) =
-    fromLazyText "SV<| " <> fromLazyText s <> fromLazyText " |>"
-  showb (BoolValue b) = fromLazyText "BV<| " <> showb b <> fromLazyText " |>"
-  showb AtomValue     = fromLazyText "AV<| - |>"
-  showb (PtrValue vp) = fromLazyText "PV<| " <> showb vp <> " |>"
-  showb (ScrValue c ) = fromLazyText "CV<| " <> showb c <> " |>"
-  showb (ArrValue a ) = fromLazyText "A[" <> showbArray a <> "]"
+  showb (IntValue  i) = fromText "IV<| " <> showb i <> fromText " |>"
+  showb (DblValue  d) = fromText "DV<| " <> showb d <> fromText " |>"
+  showb (StrValue  s) = fromText "SV<| " <> fromText s <> fromText " |>"
+  showb (BoolValue b) = fromText "BV<| " <> showb b <> fromText " |>"
+  showb AtomValue     = fromText "AV<| - |>"
+  showb (PtrValue vp) = fromText "PV<| " <> showb vp <> " |>"
+  showb (ScrValue c ) = fromText "CV<| " <> showb c <> " |>"
+  showb (ArrValue a ) = fromText "A[" <> showbArray a <> "]"
    where
     showbArray :: Array Value -> Builder
     showbArray a = if IM.null a
-      then fromLazyText "||  ||"
+      then fromText "||  ||"
       else IM.foldrWithKey
-        (\i v -> (<> TS.singleton ' ' <> showbElem i v <> fromLazyText " ||"))
-        (fromLazyText "||")
+        (\i v -> (<> TS.singleton ' ' <> showbElem i v <> fromText " ||"))
+        (fromText "||")
         a
     showbElem :: Idx -> Value -> Builder
     showbElem i v = showb i <> TS.singleton ':' <> showb v
-  showb (ErrValue e) =
-    fromLazyText "EV<| " <> fromLazyText e <> fromLazyText " |>"
+  showb (ErrValue e) = fromText "EV<| " <> fromText e <> fromText " |>"
 
 showRaw :: Value -> String
-showRaw = TL.unpack . showRawTL
+showRaw = T.unpack . showRawT
 
-showRawTL :: Value -> Text
-showRawTL (IntValue  i) = showtl i
-showRawTL (DblValue  d) = showtl d
-showRawTL (StrValue  s) = s
-showRawTL (BoolValue b) = showtl b
-showRawTL AtomValue     = "Atom"
-showRawTL (PtrValue vp) = showtl vp
-showRawTL (ArrValue a ) = showtl . IM.toList $ a
-showRawTL (ScrValue c ) = showtl c
-showRawTL (ErrValue e ) = e
+showRawT :: Value -> Text
+showRawT (IntValue  i) = showt i
+showRawT (DblValue  d) = showt d
+showRawT (StrValue  s) = s
+showRawT (BoolValue b) = showt b
+showRawT AtomValue     = "Atom"
+showRawT (PtrValue vp) = showt vp
+showRawT (ArrValue a ) = showt . IM.toList $ a
+showRawT (ScrValue c ) = showt c
+showRawT (ErrValue e ) = e
 
 
 -------------------------------- ValueType --------------------------------
@@ -338,14 +335,14 @@ instance Show ValueType where
   show = toString . showb
 
 instance TextShow ValueType where
-  showb VTInt  = fromLazyText "C-Int"
-  showb VTDbl  = fromLazyText "C-Dbl"
-  showb VTStr  = fromLazyText "C-Str"
-  showb VTBool = fromLazyText "CBool"
-  showb VTAtom = fromLazyText "CAtom"
-  showb VTArr  = fromLazyText "C-Arr"
-  showb VTPtr  = fromLazyText "C-Ptr"
-  showb VTErr  = fromLazyText "C-Err"
+  showb VTInt  = fromText "C-Int"
+  showb VTDbl  = fromText "C-Dbl"
+  showb VTStr  = fromText "C-Str"
+  showb VTBool = fromText "CBool"
+  showb VTAtom = fromText "CAtom"
+  showb VTArr  = fromText "C-Arr"
+  showb VTPtr  = fromText "C-Ptr"
+  showb VTErr  = fromText "C-Err"
 
 
 -------------------------------- Helper for Value --------------------------------
@@ -376,8 +373,8 @@ instance Show ValueInheritanceFlag where
   show = toString . showb
 
 instance TextShow ValueInheritanceFlag where
-  showb VIFInherit = fromLazyText "Inherit"
-  showb VIFOnce    = fromLazyText "Once"
+  showb VIFInherit = fromText "Inherit"
+  showb VIFOnce    = fromText "Once"
 
 
 -------------------------------- Helper for Value --------------------------------

@@ -1,7 +1,7 @@
 module Data.CERES.Data.Method where
 
 
-import           Data.Text.Lazy                 ( Text )
+import           Data.Text                      ( Text )
 
 import           TextShow
 
@@ -55,6 +55,6 @@ getValueType v = case v of
 showCEREScript :: CEREScript -> String
 showCEREScript = toString . showbCEREScript
 showtlCEREScript :: CEREScript -> Text
-showtlCEREScript = toLazyText . showbCEREScript
+showtlCEREScript = toText . showbCEREScript
 showbCEREScript :: CEREScript -> Builder
 showbCEREScript = foldr1 (<>) . map (\v -> showb v <> singleton '\n')
