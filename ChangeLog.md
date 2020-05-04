@@ -22,6 +22,14 @@ Changelog for CEREScript-SuperSet
 * Remove unnecessary instructions because of `AtHere`
 
 
+## 0.19.0.0 -- 2020-05-04
+
+### Added
+* Implement more instructions
+
+### Changed
+* Change name of the package as CEREScript-SuperSet
+* Use `Data.Text` instead of `Data.Text.Lazy` because of Lazy Text does not provide any performance advantage
 
 
 ## 0.18.0.0 -- 2020-04-18
