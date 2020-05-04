@@ -22,6 +22,12 @@ Changelog for CEREScript-SuperSet
 * Remove unnecessary instructions because of `AtHere`
 
 
+## 0.20.0.0 -- 2020-05-XX
+
+### Fixed
+* Fix type of `showtlCEREScript`
+
+
 ## 0.19.0.0 -- 2020-05-04
 
 ### Added

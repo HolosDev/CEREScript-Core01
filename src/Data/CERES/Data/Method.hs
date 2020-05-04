@@ -2,6 +2,7 @@ module Data.CERES.Data.Method where
 
 
 import           Data.Text                      ( Text )
+import qualified Data.Text.Lazy                as TL
 
 import           TextShow
 
@@ -54,7 +55,9 @@ getValueType v = case v of
 -- FIXME: This is temporal instance when type CEREScript = [CERES]
 showCEREScript :: CEREScript -> String
 showCEREScript = toString . showbCEREScript
-showtlCEREScript :: CEREScript -> Text
-showtlCEREScript = toText . showbCEREScript
+showtCEREScript :: CEREScript -> Text
+showtCEREScript = toText . showbCEREScript
+showtlCEREScript :: CEREScript -> TL.Text
+showtlCEREScript = toLazyText . showbCEREScript
 showbCEREScript :: CEREScript -> Builder
 showbCEREScript = foldr1 (<>) . map (\v -> showb v <> singleton '\n')
