@@ -49,6 +49,7 @@ getValueType v = case v of
   AtomValue     -> VTAtom
   (PtrValue _)  -> VTPtr
   (ArrValue _)  -> VTArr
+  (ScrValue _)  -> VTScr
   (ErrValue _)  -> VTErr
 
 

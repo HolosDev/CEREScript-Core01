@@ -344,6 +344,7 @@ data ValueType
   | VTAtom
   | VTArr
   | VTPtr
+  | VTScr
   | VTErr
   deriving (Eq, Ord, Enum, Read)
 
@@ -358,6 +359,7 @@ instance TextShow ValueType where
   showb VTAtom = fromText "CAtom"
   showb VTArr  = fromText "C-Arr"
   showb VTPtr  = fromText "C-Ptr"
+  showb VTScr  = fromText "C-Scr"
   showb VTErr  = fromText "C-Err"
 
 
