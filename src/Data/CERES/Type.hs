@@ -1,6 +1,6 @@
 module Data.CERES.Type where
 
-import           Data.Text                 ( Text )
+import           Data.Text                      ( Text )
 import           Data.IntMap                    ( IntMap )
 
 import           TextShow

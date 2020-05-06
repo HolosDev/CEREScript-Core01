@@ -1,7 +1,7 @@
 module Data.CERES.Util where
 
 
-import           Data.Text.Lazy                 ( Text )
+import           Data.Text                      ( Text )
 import           TextShow
 
 
@@ -9,13 +9,13 @@ import           Data.CERES.Type
 
 
 showb1 :: TextShow a => Text -> a -> Builder
-showb1 n a = fromLazyText n <> singleton '=' <> showb a
+showb1 n a = fromText n <> singleton '=' <> showb a
 showb2 :: (TextShow a, TextShow b) => Text -> a -> b -> Builder
 showb2 n a b =
-  fromLazyText n <> singleton '=' <> showb a <> singleton ':' <> showb b
+  fromText n <> singleton '=' <> showb a <> singleton ':' <> showb b
 showb3 :: (TextShow a, TextShow b, TextShow c) => Text -> a -> b -> c -> Builder
 showb3 n a b c =
-  fromLazyText n
+  fromText n
     <> singleton '='
     <> showb a
     <> singleton ':'
@@ -31,7 +31,7 @@ showb4
   -> d
   -> Builder
 showb4 n a b c d =
-  fromLazyText n
+  fromText n
     <> singleton '='
     <> showb a
     <> singleton ':'
@@ -50,7 +50,7 @@ showb5
   -> e
   -> Builder
 showb5 n a b c d e =
-  fromLazyText n
+  fromText n
     <> singleton '='
     <> showb a
     <> singleton ':'
@@ -72,7 +72,7 @@ showb6
   -> f
   -> Builder
 showb6 n a b c d e f =
-  fromLazyText n
+  fromText n
     <> singleton '='
     <> showb a
     <> singleton ':'
@@ -104,7 +104,7 @@ showb7
   -> g
   -> Builder
 showb7 n a b c d e f g =
-  fromLazyText n
+  fromText n
     <> singleton '='
     <> showb a
     <> singleton ':'
@@ -140,7 +140,7 @@ showb8
   -> h
   -> Builder
 showb8 n a b c d e f g h =
-  fromLazyText n
+  fromText n
     <> singleton '='
     <> showb a
     <> singleton ':'
@@ -159,14 +159,14 @@ showb8 n a b c d e f g h =
     <> showb h
 
 showbCS1 :: TextShow a => Text -> a -> Builder
-showbCS1 n a = fromLazyText n <> singleton ' ' <> showb a
+showbCS1 n a = fromText n <> singleton ' ' <> showb a
 showbCS2 :: (TextShow a, TextShow b) => Text -> a -> b -> Builder
 showbCS2 n a b =
-  fromLazyText n <> singleton ' ' <> showb a <> singleton ' ' <> showb b
+  fromText n <> singleton ' ' <> showb a <> singleton ' ' <> showb b
 showbCS3
   :: (TextShow a, TextShow b, TextShow c) => Text -> a -> b -> c -> Builder
 showbCS3 n a b c =
-  fromLazyText n
+  fromText n
     <> singleton ' '
     <> showb a
     <> singleton ' '
@@ -182,7 +182,7 @@ showbCS4
   -> d
   -> Builder
 showbCS4 n a b c d =
-  fromLazyText n
+  fromText n
     <> singleton ' '
     <> showb a
     <> singleton ' '
@@ -201,7 +201,7 @@ showbCS5
   -> e
   -> Builder
 showbCS5 n a b c d e =
-  fromLazyText n
+  fromText n
     <> singleton ' '
     <> showb a
     <> singleton ' '
@@ -223,7 +223,7 @@ showbCS6
   -> f
   -> Builder
 showbCS6 n a b c d e f =
-  fromLazyText n
+  fromText n
     <> singleton ' '
     <> showb a
     <> singleton ' '
@@ -255,7 +255,7 @@ showbCS7
   -> g
   -> Builder
 showbCS7 n a b c d e f g =
-  fromLazyText n
+  fromText n
     <> singleton ' '
     <> showb a
     <> singleton ' '
@@ -291,7 +291,7 @@ showbCS8
   -> h
   -> Builder
 showbCS8 n a b c d e f g h =
-  fromLazyText n
+  fromText n
     <> singleton ' '
     <> showb a
     <> singleton ' '
