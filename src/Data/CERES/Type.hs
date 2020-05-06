@@ -11,8 +11,9 @@ type Name = Text
 type NKey = Text
 type Operator = Text
 type Category = Text
-type IHeader = Text
-type CHeader = Text
+type Header = Text
+type IHeader = Header
+type CHeader = Header
 
 type Str = Text
 type Time = Int
