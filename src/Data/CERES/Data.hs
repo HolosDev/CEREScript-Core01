@@ -1,7 +1,6 @@
 module Data.CERES.Data where
 
 
-import           Data.IntMap                    ( IntMap )
 import qualified Data.IntMap                   as IM
 import           Data.Text                      ( Text )
 import qualified Data.Text                     as T

@@ -1,7 +1,6 @@
 module CERES.Operate where
 
 
-import qualified Data.IntMap                   as IM
 import qualified Data.Text                     as T
 import qualified Data.Text.Read                as T
 
