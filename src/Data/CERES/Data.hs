@@ -363,14 +363,6 @@ instance TextShow ValueType where
   showb VTErr  = fromText "C-Err"
 
 
--------------------------------- Helper for Value --------------------------------
-
-type ValueMap = IntMap Value
-type ValueNMap = Trie Value
-
-blankVM = IM.empty
-blankVNM = Trie.empty
-
 -------------------------------- ValueContainer --------------------------------
 
 data ValueContainer = VC
