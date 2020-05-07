@@ -88,22 +88,23 @@ cotIsNull (StrValue rV) = BoolValue (T.null rV)
 cotIsNull (ArrValue rV) = BoolValue (IM.null rV)
 cotIsNull v             = errValueTEWith1 "cotIsNull" v
 
-convertValue :: Value -> Value -> Value
-convertValue vA             AtomValue    = AtomValue
-convertValue vA             (StrValue _) = StrValue . showRawT $ vA
-convertValue (StrValue rVA) (IntValue _) = read
+
+convertValue :: Value -> ValueType -> Value
+convertValue vA             VTAtom = AtomValue
+convertValue vA             VTStr  = StrValue . showRawT $ vA
+convertValue (StrValue rVA) VTInt  = read
  where
   eRead = T.decimal rVA
   read  = case eRead of
     (Right (rV, _)) -> IntValue rV
     (Left  _      ) -> errValueWith2 "convertValue" "Str -> Int" rVA VTInt
-convertValue (StrValue rVA) (DblValue _) = read
+convertValue (StrValue rVA) VTDbl = read
  where
   eRead = T.rational rVA
   read  = case eRead of
     (Right (rV, _)) -> DblValue rV
     (Left  _      ) -> errValueWith2 "convertValue" "Str -> Dbl" rVA VTDbl
-convertValue (StrValue rVA) (BoolValue _) = case rVA of
+convertValue (StrValue rVA) VTBool = case rVA of
   "True"  -> BoolValue True
   "False" -> BoolValue False
   "true"  -> BoolValue True
@@ -115,20 +116,59 @@ convertValue (StrValue rVA) (BoolValue _) = case rVA of
   "1"     -> BoolValue True
   "0"     -> BoolValue False
   _       -> errValueWith2 "convertValue" "Str -> Bool" rVA VTBool
-convertValue (   StrValue rVA) (ErrValue _) = ErrValue rVA
-convertValue vA@(IntValue _  ) (IntValue _) = vA
-convertValue vA (IntValue _) =
-  errValueWith2 "convertValue" "Not-Num -> Int" vA VTInt
-convertValue (   IntValue rVA) (DblValue _) = DblValue . fromIntegral $ rVA
-convertValue vA@(DblValue _  ) (DblValue _) = vA
-convertValue vA (DblValue _) =
-  errValueWith2 "convertValue" "Not-Num -> Dbl" vA VTInt
-convertValue vA@(BoolValue _) (BoolValue _) = vA
-convertValue vA (BoolValue _) =
-  errValueWith2 "convertValue" "Not-Num -> Int" vA VTInt
-convertValue vA@(ErrValue _) (ErrValue _) = vA
-convertValue vA              (ErrValue _) = ErrValue . showRawT $ vA
-convertValue vA              vB           = errValueTEWith2 "convertValue" vA vB
+convertValue (   StrValue rVA) VTErr  = ErrValue rVA
+convertValue vA@(IntValue _  ) VTInt  = vA
+convertValue vA VTInt = errValueWith2 "convertValue" "Not-Num -> Int" vA VTInt
+convertValue (   IntValue rVA) VTDbl  = DblValue . fromIntegral $ rVA
+convertValue vA@(DblValue _  ) VTDbl  = vA
+convertValue vA VTDbl = errValueWith2 "convertValue" "Not-Num -> Dbl" vA VTInt
+convertValue vA@(BoolValue _)  VTBool = vA
+convertValue vA VTBool = errValueWith2 "convertValue" "Not-Num -> Int" vA VTInt
+convertValue vA@(ErrValue _)   VTErr  = vA
+convertValue vA                VTErr  = ErrValue . showRawT $ vA
+convertValue vA                vB     = errValueTEWith2 "convertValue" vA vB
+
+convertValueBy :: Value -> Value -> Value
+convertValueBy vA             AtomValue    = AtomValue
+convertValueBy vA             (StrValue _) = StrValue . showRawT $ vA
+convertValueBy (StrValue rVA) (IntValue _) = read
+ where
+  eRead = T.decimal rVA
+  read  = case eRead of
+    (Right (rV, _)) -> IntValue rV
+    (Left  _      ) -> errValueWith2 "convertValueBy" "Str -> Int" rVA VTInt
+convertValueBy (StrValue rVA) (DblValue _) = read
+ where
+  eRead = T.rational rVA
+  read  = case eRead of
+    (Right (rV, _)) -> DblValue rV
+    (Left  _      ) -> errValueWith2 "convertValueBy" "Str -> Dbl" rVA VTDbl
+convertValueBy (StrValue rVA) (BoolValue _) = case rVA of
+  "True"  -> BoolValue True
+  "False" -> BoolValue False
+  "true"  -> BoolValue True
+  "false" -> BoolValue False
+  "T"     -> BoolValue True
+  "F"     -> BoolValue False
+  "TRUE"  -> BoolValue True
+  "FALSE" -> BoolValue False
+  "1"     -> BoolValue True
+  "0"     -> BoolValue False
+  _       -> errValueWith2 "convertValueBy" "Str -> Bool" rVA VTBool
+convertValueBy (   StrValue rVA) (ErrValue _) = ErrValue rVA
+convertValueBy vA@(IntValue _  ) (IntValue _) = vA
+convertValueBy vA (IntValue _) =
+  errValueWith2 "convertValueBy" "Not-Num -> Int" vA VTInt
+convertValueBy (   IntValue rVA) (DblValue _) = DblValue . fromIntegral $ rVA
+convertValueBy vA@(DblValue _  ) (DblValue _) = vA
+convertValueBy vA (DblValue _) =
+  errValueWith2 "convertValueBy" "Not-Num -> Dbl" vA VTInt
+convertValueBy vA@(BoolValue _) (BoolValue _) = vA
+convertValueBy vA (BoolValue _) =
+  errValueWith2 "convertValueBy" "Not-Num -> Int" vA VTInt
+convertValueBy vA@(ErrValue _) (ErrValue _) = vA
+convertValueBy vA (ErrValue _) = ErrValue . showRawT $ vA
+convertValueBy vA vB = errValueTEWith2 "convertValueBy" vA vB
 
 operator2Selector :: CERESOperator -> Maybe (Value -> Value -> Value)
 operator2Selector operator = case operator of
