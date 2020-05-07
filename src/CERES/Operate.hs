@@ -71,11 +71,42 @@ convertValue vA@(ErrValue _) (ErrValue _) = vA
 convertValue vA              (ErrValue _) = ErrValue . showRawT $ vA
 convertValue vA              vB           = errValueTEWith2 "convertValue" vA vB
 
-operatorSelector :: CERESOperator -> (Value -> Value -> Value)
-operatorSelector operator = case operator of
-  COAAdd -> coaAdd
-  COASub -> coaSub
-  COAMul -> coaMul
-  COADiv -> coaDiv
-  COAMod -> coaMod
-  _      -> error "No such operator"
+operator2Selector :: CERESOperator -> Maybe (Value -> Value -> Value)
+operator2Selector operator = case operator of
+  COAAdd      -> Just coaAdd
+  COASub      -> Just coaSub
+  COAMul      -> Just coaMul
+  COADiv      -> Just coaDiv
+  COAMod      -> Just coaMod
+  COAEql      -> Just coaEql
+  COACmp      -> Just coaCmp
+  COTTake     -> Just cotTake
+  COTDrop     -> Just cotDrop
+  COTAppend   -> Just cotAppend
+  COTInter    -> Just cotInter
+  COTReplace  -> Just cotReplace
+  COTJustify  -> Just cotJustify
+  COTIsPrefix -> Just cotIsPrefix
+  COTIsInfix  -> Just cotIsInfix
+  COTIsSuffix -> Just cotIsSuffix
+  _           -> Nothing
+
+{-
+  COTSplit -> Just cotSplit
+-}
+
+operator1Selector :: CERESOperator -> Maybe (Value -> Value)
+operator1Selector operator = case operator of
+  COANeg     -> Just coaNeg
+  COBNot     -> Just cobNot
+  COTTrim    -> Just cotTrim
+  COTConcat  -> Just cotConcat
+  COTReverse -> Just cotReverse
+  COTLength  -> Just cotLength
+  COTIsNull  -> Just cotIsNull
+  _          -> Nothing
+
+{-
+  CORSwp -> Just
+  CORMov -> Just
+-}
