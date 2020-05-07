@@ -1,6 +1,7 @@
 module CERES.Operate where
 
 
+import qualified Data.IntMap.Lazy              as IM
 import qualified Data.Text                     as T
 import qualified Data.Text.Read                as T
 
@@ -28,6 +29,64 @@ coaDiv (DblValue rVA) (DblValue rVB) = DblValue $ rVA / rVB
 coaDiv vA             vB             = errValueTEWith2 "coaDiv" vA vB
 coaMod (IntValue rVA) (IntValue rVB) = IntValue $ mod rVA rVB
 coaMod vA             vB             = errValueTEWith2 "coaMod" vA vB
+
+coaEql vA vB = BoolValue (vA == vB)
+
+coaCmp (IntValue rVA) (IntValue rVB) = if rVA == rVB
+  then IntValue 0
+  else if rVA < rVB then IntValue 1 else IntValue (-1)
+coaCmp (IntValue rVA) (DblValue rVB) = if fromIntegral rVA == rVB
+  then IntValue 0
+  else if fromIntegral rVA < rVB then IntValue 1 else IntValue (-1)
+coaCmp (DblValue rVA) (IntValue rVB) = if rVA == fromIntegral rVB
+  then IntValue 0
+  else if rVA < fromIntegral rVB then IntValue 1 else IntValue (-1)
+coaCmp (DblValue rVA) (DblValue rVB) = if rVA == rVB
+  then IntValue 0
+  else if rVA < rVB then IntValue 1 else IntValue (-1)
+coaCmp vA vB = errValueTEWith2 "coaCmp" vA vB
+
+cotTake (StrValue rVA) (IntValue rVB) = StrValue $ T.take rVB rVA
+cotTake vA             vB             = errValueTEWith2 "cotTake" vA vB
+cotDrop (StrValue rVA) (IntValue rVB) = StrValue $ T.drop rVB rVA
+cotDrop vA             vB             = errValueTEWith2 "cotDrop" vA vB
+
+cotAppend (StrValue rVA) (StrValue rVB) = StrValue $ T.append rVA rVB
+cotAppend vA             vB             = errValueTEWith2 "cotAppend" vA vB
+
+cotInter (StrValue rVA) (ArrValue rVB) =
+  error "[ERROR]<cotInter> Not yet implemented"
+cotInter vA vB = errValueTEWith2 "cotInter" vA vB
+cotReplace _ _ =
+  error "[ERROR]<cotReplace> Should be implemented by Interpreter"
+cotReplace vA vB = errValueTEWith2 "cotReplace" vA vB
+cotJustify (StrValue rVA) (IntValue rVB) =
+  error "[ERROR]<cotJustify> Should be implemented with 2-byte length handler"
+cotJustify vA vB = errValueTEWith2 "cotJustify" vA vB
+cotIsPrefix (StrValue rVA) (StrValue rVB) = BoolValue (T.isPrefixOf rVA rVB)
+cotIsPrefix vA             vB             = errValueTEWith2 "cotIsPrefix" vA vB
+cotIsInfix (StrValue rVA) (StrValue rVB) = BoolValue (T.isInfixOf rVA rVB)
+cotIsInfix vA             vB             = errValueTEWith2 "cotIsInfix" vA vB
+cotIsSuffix (StrValue rVA) (StrValue rVB) = BoolValue (T.isSuffixOf rVA rVB)
+cotIsSuffix vA             vB             = errValueTEWith2 "cotIsSuffix" vA vB
+
+coaNeg (IntValue rV) = IntValue (-rV)
+coaNeg (DblValue rV) = DblValue (-rV)
+coaNeg v             = errValueTEWith1 "coaNeg" v
+cobNot (BoolValue rV) = BoolValue (not rV)
+cobNot v              = errValueTEWith1 "cobNot" v
+cotTrim (StrValue rV) = StrValue (T.strip rV)
+cotTrim v             = errValueTEWith1 "cotTrim" v
+cotConcat (ArrValue rV) = error "[ERROR]<cotConcat> Not yet implemented"
+cotConcat v             = errValueTEWith1 "cotConcat" v
+cotReverse (StrValue rV) = StrValue (T.reverse rV)
+cotReverse v             = errValueTEWith1 "cotReverse" v
+cotLength (StrValue rV) = IntValue (T.length rV)
+cotLength (ArrValue rV) = IntValue (IM.size rV)
+cotLength v             = errValueTEWith1 "cotLength" v
+cotIsNull (StrValue rV) = BoolValue (T.null rV)
+cotIsNull (ArrValue rV) = BoolValue (IM.null rV)
+cotIsNull v             = errValueTEWith1 "cotIsNull" v
 
 convertValue :: Value -> Value -> Value
 convertValue vA             AtomValue    = AtomValue
