@@ -11,6 +11,7 @@ import           Data.CERES.Operator
 import           Data.CERES.Type
 import           Data.CERES.Data
 import           Data.CERES.Data.Error
+import           Data.CERES.Data.Method
 
 
 -- TODO: Retry with https://phab.quietjoon.net/T178
@@ -129,46 +130,8 @@ convertValue vA                VTErr  = ErrValue . showRawT $ vA
 convertValue vA                vB     = errValueTEWith2 "convertValue" vA vB
 
 convertValueBy :: Value -> Value -> Value
-convertValueBy vA             AtomValue    = AtomValue
-convertValueBy vA             (StrValue _) = StrValue . showRawT $ vA
-convertValueBy (StrValue rVA) (IntValue _) = read
- where
-  eRead = T.decimal rVA
-  read  = case eRead of
-    (Right (rV, _)) -> IntValue rV
-    (Left  _      ) -> errValueWith2 "convertValueBy" "Str -> Int" rVA VTInt
-convertValueBy (StrValue rVA) (DblValue _) = read
- where
-  eRead = T.rational rVA
-  read  = case eRead of
-    (Right (rV, _)) -> DblValue rV
-    (Left  _      ) -> errValueWith2 "convertValueBy" "Str -> Dbl" rVA VTDbl
-convertValueBy (StrValue rVA) (BoolValue _) = case rVA of
-  "True"  -> BoolValue True
-  "False" -> BoolValue False
-  "true"  -> BoolValue True
-  "false" -> BoolValue False
-  "T"     -> BoolValue True
-  "F"     -> BoolValue False
-  "TRUE"  -> BoolValue True
-  "FALSE" -> BoolValue False
-  "1"     -> BoolValue True
-  "0"     -> BoolValue False
-  _       -> errValueWith2 "convertValueBy" "Str -> Bool" rVA VTBool
-convertValueBy (   StrValue rVA) (ErrValue _) = ErrValue rVA
-convertValueBy vA@(IntValue _  ) (IntValue _) = vA
-convertValueBy vA (IntValue _) =
-  errValueWith2 "convertValueBy" "Not-Num -> Int" vA VTInt
-convertValueBy (   IntValue rVA) (DblValue _) = DblValue . fromIntegral $ rVA
-convertValueBy vA@(DblValue _  ) (DblValue _) = vA
-convertValueBy vA (DblValue _) =
-  errValueWith2 "convertValueBy" "Not-Num -> Dbl" vA VTInt
-convertValueBy vA@(BoolValue _) (BoolValue _) = vA
-convertValueBy vA (BoolValue _) =
-  errValueWith2 "convertValueBy" "Not-Num -> Int" vA VTInt
-convertValueBy vA@(ErrValue _) (ErrValue _) = vA
-convertValueBy vA (ErrValue _) = ErrValue . showRawT $ vA
-convertValueBy vA vB = errValueTEWith2 "convertValueBy" vA vB
+convertValueBy vA vB = convertValue vA (getValueType vB)
+
 
 operator2Selector :: CERESOperator -> Maybe (Value -> Value -> Value)
 operator2Selector operator = case operator of
