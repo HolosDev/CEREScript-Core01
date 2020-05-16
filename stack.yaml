@@ -2,6 +2,11 @@ resolver: lts-14.27
 
 packages:
 - .
+# In development
+#- /AoDw/CEREScript/ArchCEREScript
 
 extra-deps:
-- text-trie-0.2.5.0
+# In public
+#- github: HolosDev/ArchCEREScript
+#- git: https://gitlab.com/holosdev/ArchCEREScript
+#  commit: 88519609a5b06a1dc7842904f1b4163fc0ca22d2

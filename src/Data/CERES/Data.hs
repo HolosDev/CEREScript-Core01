@@ -4,8 +4,6 @@ module Data.CERES.Data where
 import qualified Data.IntMap                   as IM
 import           Data.Text                      ( Text )
 import qualified Data.Text                     as T
-import           Data.Trie.Text                 ( Trie )
-import           Data.Trie.Text                as Trie
 
 import           TextShow                      as TS
 
