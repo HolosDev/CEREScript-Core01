@@ -19,6 +19,7 @@ dependencies:
 - text-show
 - text-show-instances
 - vector
+##- ArchCEREScript
 
 default-extensions:
 - OverloadedStrings
