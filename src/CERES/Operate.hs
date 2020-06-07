@@ -52,7 +52,7 @@ cotTake vA             vB             = errValueTEWith2 "cotTake" vA vB
 cotDrop (StrValue rVA) (IntValue rVB) = StrValue $ T.drop rVB rVA
 cotDrop vA             vB             = errValueTEWith2 "cotDrop" vA vB
 
-cotAppend (StrValue rVA) (StrValue rVB) = StrValue $ T.append rVA rVB
+cotAppend (StrValue rVA) (StrValue rVB) = StrValue $ rVA <> rVB
 cotAppend vA             vB             = errValueTEWith2 "cotAppend" vA vB
 
 cotInter (StrValue rVA) (ArrValue rVB) =
