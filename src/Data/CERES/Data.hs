@@ -52,6 +52,8 @@ data CERES
   | CRSGetVPosition     VPosition VPosition
   -- | Set PtrValue of VPosition A to VPosition B
   | CRSSetVPosition     VPosition VPosition
+  -- | Evaluate Reactive things
+  | CRSEvaluate         VPosition
   -- | Generate Random Value at VPosition A as a ValueType
   | CRSRandom           VPosition ValueType
   -- | Generate Random Value at VPosition A as a type VPosition B
@@ -205,6 +207,7 @@ data VariablePlace
   | AtWorld | AtTime | AtNWorld | AtNTime
   | AtDict | AtNDict | AtVars | AtNVars
   | AtLVars | AtLNVars | AtLTemp | AtLNTemp
+  | AtIRct | AtRct
   | AtReg | AtHere | AtNull
   deriving (Eq, Ord, Enum, Bounded, Read)
 
@@ -226,6 +229,8 @@ instance TextShow VariablePlace where
   showb AtLNVars = fromText "AtLNVars"
   showb AtLTemp  = fromText "AtLTemp"
   showb AtLNTemp = fromText "AtLNTemp"
+  showb AtIRct   = fromText "AtIRct"
+  showb AtRct    = fromText "AtRct"
   showb AtReg    = fromText "AtReg"
   showb AtHere   = fromText "AtHere"
   showb AtNull   = fromText "AtNull"
@@ -289,6 +294,8 @@ data Value
   | ArrValue { aV :: Array Value}
   | PtrValue { pV :: VariablePosition }
   | ScrValue { cV :: CEREScript }
+  | RctValue { rVT :: ValueType, rV :: CEREScript }
+  | RSValue { rsV :: ReactiveString }
   | ErrValue { errMessage :: Message }
   deriving (Eq, Ord)
 
@@ -303,6 +310,9 @@ instance TextShow Value where
   showb AtomValue     = fromText "AV<| - |>"
   showb (PtrValue vp) = fromText "PV<| " <> showb vp <> " |>"
   showb (ScrValue c ) = fromText "CV<| " <> showb c <> " |>"
+  showb (RctValue vt r) =
+    fromText "RV<| " <> showb vt <> " " <> showb r <> " |>"
+  showb (RSValue  rs) = fromText "RS<| " <> showb rs <> " |>"
   showb (ArrValue a ) = fromText "A[" <> showbArray a <> "]"
    where
     showbArray :: Array Value -> Builder
@@ -320,15 +330,17 @@ showRaw :: Value -> String
 showRaw = T.unpack . showRawT
 
 showRawT :: Value -> Text
-showRawT (IntValue  i) = showt i
-showRawT (DblValue  d) = showt d
-showRawT (StrValue  s) = s
-showRawT (BoolValue b) = showt b
-showRawT AtomValue     = "Atom"
-showRawT (PtrValue vp) = showt vp
-showRawT (ArrValue a ) = showt . IM.toList $ a
-showRawT (ScrValue c ) = showt c
-showRawT (ErrValue e ) = e
+showRawT (IntValue  i)   = showt i
+showRawT (DblValue  d)   = showt d
+showRawT (StrValue  s)   = s
+showRawT (BoolValue b)   = showt b
+showRawT AtomValue       = "Atom"
+showRawT (PtrValue vp  ) = showt vp
+showRawT (ArrValue a   ) = showt . IM.toList $ a
+showRawT (ScrValue c   ) = showt c
+showRawT (RctValue vt c) = showt c
+showRawT (RSValue  rs  ) = showt rs
+showRawT (ErrValue e   ) = e
 
 
 -------------------------------- ValueType --------------------------------
@@ -342,6 +354,7 @@ data ValueType
   | VTArr
   | VTPtr
   | VTScr
+  | VTRct
   | VTErr
   deriving (Eq, Ord, Enum, Read)
 
@@ -357,6 +370,7 @@ instance TextShow ValueType where
   showb VTArr  = fromText "C-Arr"
   showb VTPtr  = fromText "C-Ptr"
   showb VTScr  = fromText "C-Scr"
+  showb VTRct  = fromText "C-Rct"
   showb VTErr  = fromText "C-Err"
 
 
@@ -390,3 +404,17 @@ data ValueTyper = ValueTyper
   { valueTyperName :: Name
   , valueType      :: ValueType
   } deriving (Show, Eq)
+
+
+-------------------------------- ReactiveString --------------------------------
+
+data ReactiveString = RSStr Str ReactiveString | RSScr CEREScript ReactiveString | RSVP VPosition ReactiveString | RSEnd deriving (Eq, Ord)
+
+instance Show ReactiveString where
+  show = toString . showb
+
+instance TextShow ReactiveString where
+  showb (RSStr str rs) = fromText "<<<|>" <> fromText str <> fromText "<|>>>" <> showb rs
+  showb (RSScr scr rs) = fromText "<<|>>" <> showb scr <> fromText "<<|>>" <> showb rs
+  showb (RSVP  vp  rs) = fromText "<|>>>" <> showb vp <> fromText "<<<|>" <> showb rs
+  showb RSEnd          = fromText ""
