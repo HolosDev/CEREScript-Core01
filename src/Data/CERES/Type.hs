@@ -1,10 +1,8 @@
 module Data.CERES.Type where
 
-import           Data.Text                      ( Text )
-import           Data.IntMap                    ( IntMap )
-
-import           TextShow
-import           TextShow.Data.Vector
+import Data.IntMap (IntMap)
+import Data.Text (Text)
+import TextShow
 
 
 type Name = Text
